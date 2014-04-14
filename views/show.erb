@@ -1,0 +1,56 @@
+<code>
+  curl -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' <%= "#{request.scheme}://#{request.host}:#{request.port}/#{puts_req.id}" %>
+</code>
+<hr/>
+<form action="/<%= puts_req.id %>/response_builder" method="post">
+  <% if puts_req.response_builder %>
+    <textarea name="response_builder" rows="10" cols="50"><%= puts_req.response_builder %></textarea>
+  <% else %>
+<textarea name="response_builder" rows="10" cols="50">/*
+response.code = 200;
+response.headers['Content-Type'] = 'application/json';
+
+// response.body = { message: 'Hello World' }
+var parsedBody = JSON.parse(request.body);
+
+response.body = { message: parsedBody.message + ' Pablo' };
+*/</textarea>
+  <% end %>
+  <button>Update</button>
+</form>
+<hr/>
+<% puts_req.requests.to_a.each do |req| %>
+  <table>
+    <thead>
+      <tr>
+        <th>Header</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% req.headers.to_h.each do |header_key, header_value| %>
+      <tr>
+        <td><%= header_key %></td>
+        <td><%= header_value %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <hr/>
+  <table>
+    <thead>
+      <tr>
+        <th>Request Body</th>
+        <th>Full Response</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code><%= req.body %></code></td>
+        <td><code><%= req.response %></code></td>
+      </tr>
+    </tbody>
+  </table>
+  <hr/>
+  <hr/>
+<% end %>
