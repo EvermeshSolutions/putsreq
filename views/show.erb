@@ -4,9 +4,10 @@
 <hr/>
 <form action="/<%= puts_req.id %>/response_builder" method="post">
   <% if puts_req.response_builder %>
-    <textarea name="response_builder" rows="10" cols="50"><%= puts_req.response_builder %></textarea>
+    <textarea name="response_builder" style="width: 100%; height: 250px"><%= puts_req.response_builder %></textarea>
   <% else %>
-<textarea name="response_builder" rows="10" cols="50">/*
+<textarea name="response_builder" style="width: 100%; height: 250px">
+/*
 response.code = 200;
 response.headers['Content-Type'] = 'application/json';
 
@@ -14,9 +15,10 @@ response.headers['Content-Type'] = 'application/json';
 var parsedBody = JSON.parse(request.body);
 
 response.body = { message: parsedBody.message + ' Pablo' };
-*/</textarea>
+*/
+</textarea>
   <% end %>
-  <button>Update</button>
+  <p><button class="btn btn-primary">Update</button></p>
 </form>
 <hr/>
 <% puts_req.requests.to_a.each do |req| %>
@@ -51,6 +53,5 @@ response.body = { message: parsedBody.message + ' Pablo' };
       </tr>
     </tbody>
   </table>
-  <hr/>
   <hr/>
 <% end %>
