@@ -25,6 +25,15 @@ response.body = { message: parsedBody.message + ' Pablo' };
   <table>
     <thead>
       <tr>
+        <!--
+        TODO: Show fields below:
+        field :content_length
+        field :request_method
+        field :ip
+        field :url
+        field :params
+        Check: http://requestb.in/t3ivtbt3?inspect
+        -->
         <th>Header</th>
         <th>&nbsp;</th>
       </tr>
@@ -43,13 +52,14 @@ response.body = { message: parsedBody.message + ' Pablo' };
     <thead>
       <tr>
         <th>Request Body</th>
-        <th>Full Response</th>
+        <th>Response Body</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td><code><%= req.body %></code></td>
-        <td><code><%= req.response %></code></td>
+        <!-- TODO show response code and header -->
+        <td><code><%= req.response.to_h['body'] %></code></td>
       </tr>
     </tbody>
   </table>

@@ -4,6 +4,12 @@ development:
       database: puts_req
       hosts:
         - localhost:27017
+test:
+  sessions:
+    default:
+      database: puts_req_test
+      hosts:
+        - localhost:27017
 production:
   sessions:
     default:

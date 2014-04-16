@@ -54,10 +54,9 @@ class PutsReqApp < Sinatra::Base
   route :get, :post, :put, :patch, :delete, '/:id' do |id|
     puts_req = PutsReq.find(id)
 
-    # http://www.sinatrarb.com/intro#Accessing%20the%20Request%20Object
-    req = puts_req.requests.create(body: request.body.read, headers: request.env.select do |header_key, header_value|
-      header_key == header_key.upcase
-    end)
+    req = Request.from_request(request) do |req|
+      req.puts_req = puts_req
+    end
 
     return '' unless puts_req.response_builder
 
@@ -67,9 +66,9 @@ class PutsReqApp < Sinatra::Base
     context.eval(puts_req.response_builder.to_s)
     resp = context.eval('JSON.stringify(response)')
 
-    req.update_attribute :response, resp
-
     resp = JSON.parse(resp)
+
+    req.update_attribute :response, resp
 
     status resp['code']
     headers resp['headers']
