@@ -1,41 +1,40 @@
 require 'spec_helper'
 
 describe Request do
+  include Rack::Test::Methods
+
+  def app
+    Sinatra::Application.new
+  end
+
   let(:puts_req) { PutsReq.create }
-  let(:rack_request) { double(Rack::Request,
-                              body: double(StringIO, read: 'ok'),
-                              content_length: '25',
-                              request_method: 'POST',
-                              ip: '127.0.0.1',
-                              url: 'http://example.com',
-                              params: { 'foo' => 'bar' },
-                              env: { 'CONTENT_TYPE' => 'text/plain' }) }
 
   describe '.from_request' do
+    before { post '/test' }
+
     it 'copies required attributes' do
-      request = described_class.from_request(rack_request) do |request|
+      request = described_class.from_request(last_request) do |request|
         request.puts_req = puts_req
       end
 
       expect(request).to be_persisted
-      expect(request.body).to eq rack_request.body.read
-      expect(request.content_length).to eq rack_request.content_length
-      expect(request.request_method).to eq rack_request.request_method
-      expect(request.ip).to eq rack_request.ip
-      expect(request.url).to eq rack_request.url
-      expect(request.headers).to eq rack_request.env
-      expect(request.params).to eq rack_request.params
+      expect(request.body).to eq last_request.body.read
+      expect(request.content_length).to eq last_request.content_length
+      expect(request.request_method).to eq last_request.request_method
+      expect(request.ip).to eq last_request.ip
+      expect(request.url).to eq last_request.url
+      expect(request.params).to eq last_request.params
     end
 
     it 'skips lowercase headers (rack specific headers)' do
-      rack_request.env['foo'] = 'bar'
-      rack_request.env['REQUEST_METHOD'] = 'GET'
+      last_request.env['foo'] = 'bar'
+      last_request.env['REQUEST_METHOD'] = 'GET'
 
-      request = described_class.from_request(rack_request) do |request|
+      request = described_class.from_request(last_request) do |request|
         request.puts_req = puts_req
       end
 
-      expect(request.headers).to eq('CONTENT_TYPE' => 'text/plain', 'REQUEST_METHOD' => 'GET')
+      expect(request.headers).to_not include('foo')
     end
   end
 end
