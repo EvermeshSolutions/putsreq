@@ -82,6 +82,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   bson_ext
   database_cleaner
   mongoid

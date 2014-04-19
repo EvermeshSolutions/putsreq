@@ -5,6 +5,7 @@ gem 'sinatra-contrib'
 gem 'therubyracer'
 gem 'mongoid'
 gem 'bson_ext'
+gem 'activesupport'
 
 group :development do
   gem 'shotgun'

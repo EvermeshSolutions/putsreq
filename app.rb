@@ -4,6 +4,7 @@ require 'v8'
 require 'erb'
 require 'mongoid'
 require 'therubyracer'
+require 'active_support/all'
 
 Dir['./models/*.rb'].each &method(:load)
 
@@ -54,19 +55,8 @@ class PutsReqApp < Sinatra::Base
   route :get, :post, :put, :patch, :delete, '/:id' do |id|
     puts_req = PutsReq.find(id)
 
-    req = puts_req.record_request(request)
-
-    return '' unless puts_req.response_builder
-
-    context = V8::Context.new timeout: 10
-    context['response'] = { code: 200, headers: {}, body: 'ok' }
-    context['request']  = { body: req.body, headers: req.headers }
-    context.eval(puts_req.response_builder.to_s)
-    resp = context.eval('JSON.stringify(response)')
-
-    resp = JSON.parse(resp)
-
-    req.update_attribute :response, resp
+    req  = puts_req.record_request(request)
+    resp = puts_req.build_response(req)
 
     status resp['code']
     headers resp['headers']

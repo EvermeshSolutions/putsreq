@@ -6,6 +6,7 @@ require 'database_cleaner'
 require 'mongoid'
 require 'rack'
 require "rack/test"
+require 'active_support/all'
 
 ENV['RACK_ENV'] = 'test'
 
