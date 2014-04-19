@@ -9,9 +9,13 @@
       });
     })
 </script>
-<code>
-  curl -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' <%= "#{request.scheme}://#{request.host}:#{request.port}/#{puts_req.id}" %>
-</code>
+<ul>
+  <li><a href="/">PutsReq</a></li>
+  <li><a href="<%= "/#{puts_req.id}/inspect" %>">Inspect</a></li>
+  <li><a href="<%= "/#{puts_req.id}/last" %>">Last Request</a></li>
+  <li><a href="<%= "/#{puts_req.id}/last_response" %>">Last Response</a></li>
+</ul>
+<code>curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' <%= "#{request.url.gsub(request.path, '')}/#{puts_req.id}" %></code>
 <hr/>
 <form action="/<%= puts_req.id %>/response_builder" method="post">
   <div id="editor" name="editor" style="width: 100%; height: 250px"><%= puts_req.response_builder %></div>

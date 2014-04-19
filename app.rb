@@ -28,6 +28,7 @@ class PutsReqApp < Sinatra::Base
     redirect "/#{puts_req.id}/inspect"
   end
 
+  # Update Response Builder
   post '/:id/response_builder' do |id|
     puts_req = PutsReq.find(id)
 
@@ -39,7 +40,7 @@ class PutsReqApp < Sinatra::Base
   get '/:id/inspect' do |id|
     puts_req = PutsReq.find(id)
 
-    erb :show, locals: { request: request, puts_req: puts_req }
+    erb :show, locals: { puts_req: puts_req }
   end
 
   get '/:id/last' do |id|
@@ -47,9 +48,23 @@ class PutsReqApp < Sinatra::Base
 
     content_type :json
 
-    last_req = puts_req.requests.first # default_scope created_at.asc
+    last_req = puts_req.requests.first
+
+    not_found unless last_req
 
     return { body: last_req.body, headers: last_req.headers, created_at: last_req.created_at }.to_json
+  end
+
+  get '/:id/last_response' do |id|
+    puts_req = PutsReq.find(id)
+
+    content_type :json
+
+    last_resp = puts_req.responses.first
+
+    not_found unless last_resp
+
+    return { status: last_resp.status, body: last_resp.body, headers: last_resp.headers, created_at: last_resp.created_at }.to_json
   end
 
   route :get, :post, :put, :patch, :delete, '/:id' do |id|
@@ -58,13 +73,9 @@ class PutsReqApp < Sinatra::Base
     req  = puts_req.record_request(request)
     resp = puts_req.build_response(req)
 
-    status resp['code']
-    headers resp['headers']
+    status resp.status
+    headers resp.headers
 
-    if resp['body'].is_a? Hash
-      resp['body'].to_json
-    else
-      resp['body'].to_s
-    end
+    resp.body.is_a?(Hash) ? resp.body.to_json : resp.body.to_s
   end
 end
