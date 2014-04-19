@@ -64,7 +64,7 @@
       <tr>
         <td><code><%= req.body %></code></td>
         <!-- TODO show response code and header -->
-        <td><code><%= req.response.body.is_a?(Hash) ? req.response.body.to_json : req.response.body %></code></td>
+        <td><code><%= req.response.body_to_s %></code></td>
       </tr>
     </tbody>
   </table>

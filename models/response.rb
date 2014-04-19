@@ -13,4 +13,8 @@ class Response
 
   validates :puts_req, presence: true
   validates :request,  presence: true
+
+  def body_to_s
+    body.is_a?(Hash) ? body.to_json : body.to_s
+  end
 end

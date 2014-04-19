@@ -88,6 +88,6 @@ class PutsReqApp < Sinatra::Base
     status resp.status
     headers resp.headers
 
-    resp.body.is_a?(Hash) ? resp.body.to_json : resp.body.to_s
+    resp.body_to_s
   end
 end
