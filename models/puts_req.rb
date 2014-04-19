@@ -17,8 +17,8 @@ class PutsReq
                     params:          request.params)
   end
 
-  def build_response(req)
-    context = V8::Context.new timeout: 10
+  def build_response(req, timeout = 1)
+    context = V8::Context.new timeout: timeout
     context['response'] = { 'status' => 200, 'headers' => {}, 'body' => 'ok' }
     context['request']  = { 'body' => req.body, 'headers' => req.headers }
     context.eval(response_builder.to_s)

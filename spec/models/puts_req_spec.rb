@@ -12,6 +12,19 @@ describe PutsReq do
   describe '#build_response' do
     before { post '/test', '{"message":"Hello World"}' }
 
+    context 'when timeout' do
+      subject { PutsReq.create response_builder: 'while(true){}' }
+
+      it 'terminates builder' do
+        req = subject.record_request(last_request)
+
+        resp = subject.build_response(req, 0.1)
+
+        expect(resp.attributes).to include('status'  => 500,
+                                           'body'    => 'Script Timed Out')
+      end
+    end
+
     context 'when response_builder is absent' do
       subject { PutsReq.create response_builder: nil }
 
