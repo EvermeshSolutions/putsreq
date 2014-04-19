@@ -70,7 +70,7 @@
       <tr>
         <td><code><%= req.body %></code></td>
         <!-- TODO show response code and header -->
-        <td><code><%= req.response.body_to_s %></code></td>
+        <td><code><%= req.response.body_to_s.gsub('<', '&lt').gsub('>', '&gt') %></code></td>
       </tr>
     </tbody>
   </table>
