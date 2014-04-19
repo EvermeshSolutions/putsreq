@@ -9,6 +9,10 @@ describe PutsReq do
 
   subject { PutsReq.create }
 
+  describe '.create' do
+    its(:token) { should_not be_nil}
+  end
+
   describe '#build_response' do
     before { post '/test', '{"message":"Hello World"}' }
 

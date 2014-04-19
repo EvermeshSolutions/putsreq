@@ -5,7 +5,12 @@ class PutsReq
   has_many :requests, dependent: :delete
   has_many :responses, dependent: :delete
 
+  field :token
   field :response_builder, default: -> { default_response_builder }
+
+  index token: 1
+
+  before_create :generate_token
 
   def record_request(request)
     requests.create(body:            request.body.read,
@@ -37,6 +42,13 @@ class PutsReq
   end
 
   private
+
+  def generate_token
+    self.token = loop do
+      random_token = SecureRandom.urlsafe_base64(15).tr('_-', '0a')
+      break random_token unless PutsReq.where(token: random_token).exists?
+    end
+  end
 
   def parse_env_to_headers(env)
     # return only uppercase header keys
