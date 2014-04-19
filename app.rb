@@ -26,37 +26,37 @@ class PutsReqApp < Sinatra::Base
   post '/' do
     puts_req = PutsReq.create
 
-    redirect "/#{puts_req.id}/inspect"
+    redirect "/#{puts_req.token}/inspect"
   end
 
   # Update Response Builder
-  post '/:id/response_builder' do |id|
-    puts_req = PutsReq.find(id)
+  post '/:token/response_builder' do |token|
+    puts_req = PutsReq.find_by_token(token)
 
     puts_req.update_attribute :response_builder, params[:response_builder]
 
-    redirect "/#{puts_req.id}/inspect"
+    redirect "/#{puts_req.token}/inspect"
   end
 
   # Post sample request
-  post '/:id/post' do |id|
-    puts_req = PutsReq.find(id)
+  post '/:token/post' do |token|
+    puts_req = PutsReq.find_by_token(token)
 
-    HTTParty.post("#{request.url.gsub(request.path, '')}/#{puts_req.id}",
+    HTTParty.post("#{request.url.gsub(request.path, '')}/#{puts_req.token}",
                   body: { message: 'Hello World' }.to_json,
                   headers: { 'Content-Type' => 'application/json' })
 
-    redirect "/#{puts_req.id}/inspect"
+    redirect "/#{puts_req.token}/inspect"
   end
 
-  get '/:id/inspect' do |id|
-    puts_req = PutsReq.find(id)
+  get '/:token/inspect' do |token|
+    puts_req = PutsReq.find_by_token(token)
 
     erb :show, locals: { puts_req: puts_req }
   end
 
-  get '/:id/last' do |id|
-    puts_req = PutsReq.find(id)
+  get '/:token/last' do |token|
+    puts_req = PutsReq.find_by_token(token)
 
     content_type :json
 
@@ -67,8 +67,8 @@ class PutsReqApp < Sinatra::Base
     return { body: last_req.body, headers: last_req.headers, created_at: last_req.created_at }.to_json
   end
 
-  get '/:id/last_response' do |id|
-    puts_req = PutsReq.find(id)
+  get '/:token/last_response' do |token|
+    puts_req = PutsReq.find_by_token(token)
 
     content_type :json
 
@@ -79,8 +79,8 @@ class PutsReqApp < Sinatra::Base
     return { status: last_resp.status, body: last_resp.body, headers: last_resp.headers, created_at: last_resp.created_at }.to_json
   end
 
-  route :get, :post, :put, :patch, :delete, '/:id' do |id|
-    puts_req = PutsReq.find(id)
+  route :get, :post, :put, :patch, :delete, '/:token' do |token|
+    puts_req = PutsReq.find_by_token(token)
 
     req  = puts_req.record_request(request)
     resp = puts_req.build_response(req)

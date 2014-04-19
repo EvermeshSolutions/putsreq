@@ -9,6 +9,22 @@ describe PutsReq do
 
   subject { PutsReq.create }
 
+  describe '.find_by_token' do
+    it 'finds document' do
+      document = PutsReq.find_by_token(subject.token)
+
+      expect(document.id).to eq subject.id
+    end
+
+    context 'when not found' do
+      it 'returns nil' do
+        document = PutsReq.find_by_token('not found')
+
+        expect(document).to be_nil
+      end
+    end
+  end
+
   describe '.create' do
     its(:token) { should_not be_nil}
   end
