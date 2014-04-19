@@ -57,7 +57,7 @@
       <tr>
         <td><code><%= req.body %></code></td>
         <!-- TODO show response code and header -->
-        <td><code><%= req.response.to_h['body'].is_a?(Hash) ? req.response.to_h['body'].to_json : req.response.to_h['body'] %></code></td>
+        <td><code><%= req.response.body.is_a?(Hash) ? req.response.body.to_json : req.response.body %></code></td>
       </tr>
     </tbody>
   </table>

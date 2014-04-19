@@ -20,8 +20,8 @@ describe PutsReq do
 
         resp = subject.build_response(req)
 
-        expect(resp).to include('status'  => 200,
-                                'body'    => 'ok')
+        expect(resp.attributes).to include('status'  => 200,
+                                           'body'    => 'ok')
       end
     end
 
@@ -31,9 +31,9 @@ describe PutsReq do
 
         resp = subject.build_response(req)
 
-        expect(resp).to include('status'  => 200,
-                                'headers' => { 'Content-Type' => 'application/json' },
-                                'body'    => { 'message' => 'Hello World Pablo' })
+        expect(resp.attributes).to include('status'  => 200,
+                                           'headers' => { 'Content-Type' => 'application/json' },
+                                           'body'    => { 'message' => 'Hello World Pablo' })
       end
     end
 
@@ -45,9 +45,9 @@ describe PutsReq do
 
         resp = subject.build_response(req)
 
-        expect(resp).to include('status'  => 500,
-                                'headers' => { 'Content-Type' => 'text/plain' },
-                                'body'    => 'Unexpected identifier at <eval>:1:10')
+        expect(resp.attributes).to include('status'  => 500,
+                                           'headers' => { 'Content-Type' => 'text/plain' },
+                                           'body'    => 'Unexpected identifier at <eval>:1:10')
       end
     end
   end
@@ -59,12 +59,12 @@ describe PutsReq do
       req = subject.record_request(last_request)
 
       expect(req).to be_persisted
-      expect(req.body).to eq last_request.body.read
-      expect(req.content_length).to eq last_request.content_length
-      expect(req.request_method).to eq last_request.request_method
-      expect(req.ip).to eq last_request.ip
-      expect(req.url).to eq last_request.url
-      expect(req.params).to eq last_request.params
+      expect(req.attributes).to include('body'           => last_request.body.read,
+                                        'content_length' => last_request.content_length,
+                                        'request_method' => last_request.request_method,
+                                        'ip'             => last_request.ip,
+                                        'url'            => last_request.url,
+                                        'params'         => last_request.params)
     end
 
     it 'skips lowercase headers (rack specific headers)' do

@@ -3,9 +3,9 @@ class PutsReq
   include Mongoid::Timestamps
 
   has_many :requests, dependent: :delete
+  has_many :responses, dependent: :delete
 
   field :response_builder, default: -> { default_response_builder }
-
 
   def record_request(request)
     requests.create(body:            request.body.read,
@@ -24,25 +24,19 @@ class PutsReq
     context.eval(response_builder.to_s)
     resp = context.eval('JSON.stringify(response)')
 
-    resp = JSON.parse(resp).
-      reverse_merge(default_response)
+    resp = JSON.parse(resp).select { |key, value| %w[status headers body].include?(key) && !value.nil? }
 
-    req.update_attribute :response, resp
+    resp['request'] = req
 
-    resp
+    responses.create(resp)
   rescue => e
-    { 'status'  => 500,
-      'headers' => { 'Content-Type' => 'text/plain' },
-      'body'    => e.message }
+    responses.create('request' => req,
+                     'status'  => 500,
+                     'headers' => { 'Content-Type' => 'text/plain' },
+                     'body'    => e.message)
   end
 
   private
-
-  def default_response
-    { 'status'  => 200,
-      'headers' => { 'Content-Type' => 'text/plain' },
-      'body'    => 'ok' }
-  end
 
   def parse_env_to_headers(env)
     # return only uppercase header keys
