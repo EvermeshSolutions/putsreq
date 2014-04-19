@@ -5,6 +5,7 @@ require 'erb'
 require 'mongoid'
 require 'therubyracer'
 require 'active_support/all'
+require 'httparty'
 
 Dir['./models/*.rb'].each &method(:load)
 
@@ -33,6 +34,17 @@ class PutsReqApp < Sinatra::Base
     puts_req = PutsReq.find(id)
 
     puts_req.update_attribute :response_builder, params[:response_builder]
+
+    redirect "/#{puts_req.id}/inspect"
+  end
+
+  # Post sample request
+  post '/:id/post' do |id|
+    puts_req = PutsReq.find(id)
+
+    HTTParty.post("#{request.url.gsub(request.path, '')}/#{puts_req.id}",
+                  body: { message: 'Hello World' }.to_json,
+                  headers: { 'Content-Type' => 'application/json' })
 
     redirect "/#{puts_req.id}/inspect"
   end

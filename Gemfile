@@ -6,6 +6,7 @@ gem 'therubyracer'
 gem 'mongoid'
 gem 'bson_ext'
 gem 'activesupport'
+gem 'httparty'
 
 group :development do
   gem 'shotgun'
