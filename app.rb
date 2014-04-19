@@ -54,9 +54,7 @@ class PutsReqApp < Sinatra::Base
   route :get, :post, :put, :patch, :delete, '/:id' do |id|
     puts_req = PutsReq.find(id)
 
-    req = Request.from_request(request) do |req|
-      req.puts_req = puts_req
-    end
+    req = puts_req.record_request(request)
 
     return '' unless puts_req.response_builder
 
