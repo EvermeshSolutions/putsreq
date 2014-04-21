@@ -15,8 +15,9 @@
 
     <div class="container">
       <%= yield %>
+      <hr>
+      <strong>Requests Recorded: <%= Request.count %></strong>
     </div>
 
-    <!-- Show Request received count, like PutsMail "Tests Sent: N" -->
   </body>
 </html>
