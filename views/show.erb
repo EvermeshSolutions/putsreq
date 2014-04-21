@@ -1,16 +1,19 @@
 <script src="/js/ace.js"></script>
+<script src="/js/ZeroClipboard.min.js"></script>
 <script>
-    $(function(){
-      var editor = ace.edit('editor');
-      editor.setTheme('ace/theme/monokai');
-      editor.getSession().setMode('ace/mode/javascript');
-      editor.getSession().on('change', function(){
-        $('#response_builder').val(editor.getSession().getValue());
-      });
+$(function(){
+  var editor = ace.edit('editor');
+  editor.setTheme('ace/theme/monokai');
+  editor.getSession().setMode('ace/mode/javascript');
+  editor.getSession().on('change', function(){
+    $('#response_builder').val(editor.getSession().getValue());
+  });
 
-      editor.setValue($('#response-builder-container').text());
-      editor.clearSelection();
-    })
+  editor.setValue($('#response-builder-container').text());
+  editor.clearSelection();
+
+  new ZeroClipboard(document.getElementById('copy-puts_req-url'), { moviePath: '/js/ZeroClipboard.swf' });
+});
 </script>
 <ul>
   <li><a href="/">PutsReq</a></li>
@@ -19,9 +22,9 @@
   <li><a href="<%= "/#{puts_req.token}/last_response" %>">Last Response</a></li>
 </ul>
 <p>
-PutsReq URL
-<!-- Add https://github.com/zeroclipboard/zeroclipboard -->
-<input type="text" value="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %>"></input> <a href="#">COPY</a>
+<strong>PutsReq URL</strong>
+  <input type="text" value="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %>"></input>
+  <button id="copy-puts_req-url" data-clipboard-text="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %> " title="Click to copy me.">copy</button>
 </p>
 
 <code>curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' <%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %></code>
