@@ -7,6 +7,7 @@ gem 'mongoid'
 gem 'bson_ext'
 gem 'activesupport'
 gem 'httparty'
+gem 'unicorn'
 
 group :development do
   gem 'shotgun'

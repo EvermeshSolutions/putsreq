@@ -26,6 +26,7 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (0.6.9)
     json (1.8.1)
+    kgio (2.9.2)
     libv8 (3.16.14.3)
     method_source (0.8.2)
     mongoid (3.1.6)
@@ -49,6 +50,7 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    raindrops (0.13.0)
     ref (1.0.5)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
@@ -82,6 +84,10 @@ GEM
       ref
     tilt (1.4.1)
     tzinfo (0.3.39)
+    unicorn (4.8.2)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
@@ -100,3 +106,4 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   therubyracer
+  unicorn
