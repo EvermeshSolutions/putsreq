@@ -18,6 +18,12 @@
   <li><a href="<%= "/#{puts_req.token}/last" %>">Last Request</a></li>
   <li><a href="<%= "/#{puts_req.token}/last_response" %>">Last Response</a></li>
 </ul>
+<p>
+PutsReq URL
+<!-- Add https://github.com/zeroclipboard/zeroclipboard -->
+<input type="text" value="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %>"></input> <a href="#">COPY</a>
+</p>
+
 <code>curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' <%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %></code>
 <form action="/<%= puts_req.token %>/post" method="post">
   <p><button class="btn btn-primary">Record It!</button></p>
