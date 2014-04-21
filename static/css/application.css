@@ -1,4 +1,29 @@
+html { font-size: 62.5%; } 
+body { font-size: 14px; font-size: 1.4rem; } /* =14px */
 #editor {
   width: 100%;
   height: 100%;
+}
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+header {
+  margin-top: 50px;
+  text-align: center;
+}
+header h3 {
+  width: 750px;
+  margin: 20px auto;
+  line-height: 1.2em;
+  text-align: center;
+  font-weight: normal;
+}
+header h3 em {
+  font-weight: bold;
+  font-style: normal;
+}
+section.start {
+  color: #58585a;
+  width: 750px;
+  margin: 3em auto; 
 }

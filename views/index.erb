@@ -1,36 +1,28 @@
 <div class="row">
   <div class="span10">
     <div class="jumbotron masthead">
-      <h3>PutsReq lets you record HTTP requests and simulate responses, like no other tool available. Try it now!</h3>
-      <form action="/" method="post">
-        <p><button class="btn btn-primary btn-large">Create a PutsReq</button></p>
-      </form>
+      <header>
+        <img src="/img/logo.png" />
+        <h3><em>PutsReq</em> lets you record HTTP requests and simulate responses like no other tool available. Try it now!</h3>
+        <form action="/" method="post">
+          <button class="btn btn-primary btn-large">Create a PutsReq</button>
+        </form>
+      </header>
+      <section class="start">
 
-      <h4>Record the requests sent or received</h4>
-      <p>
-      Instead of sending data directly to an API, you can change the URL to a PutsReq URL and inspect all headers and body which are being sent.
+        <h4>Record the requests sent or received</h4>
+        <p>Instead of sending data directly to an API, you can change the URL to a PutsReq URL and inspect all headers and body which are being sent.<br/>
+        You can also debug the data being sent to your endpoint/webhook by configuring a PutsReq URL instead of your real URL.</p>
 
-      </p>
-      <p>
-      You can also debug the data being sent to your endpoint/webhook by configuring a PutsReq URL instead of your real URL.
-      </p>
+        <h4>Simulate responses</h4>
+        <p>PutsReq is the easiest way to simulate/stub HTTP responses. You can define the response status, headers and body programmatically with JavaScript using the Response Builder.
+        If you don't want to test against the real API, but you know how to mimic the response you can do it using the Response Builder.</p>
+        <p>Some use cases: <br/>
+        * You can get the real response once then create a Response Builder simulating it and use PutsReq for the next calls.<br/>
+        * You can use PutsReq for your Integration tests to check if your application is doing the calls correctly by checking "putsreq.com/123/last".</br>
+        * Checkout this <a href="https://github.com/phstc/putsreq_integration_sample">sample project</a> for Integration tests using PutsReq.</p>
 
-      <h4>Simulate responses</h4>
-      <p>
-      PutsReq is the easiest way to simulate/stub HTTP responses. You can define the response status, headers and body programmatically with JavaScript using the Response Builder.
-
-      If you don't want to test against the real API, but you know how to mimic the response you can do it using the Response Builder.
-
-      <p>
-      Some use cases: <br/>
-
-      * You can get the real response once then create a Response Builder simulating it and use PutsReq for the next calls.<br/>
-
-      * You can use PutsReq for your Integration tests to check if your application is doing the calls correctly by checking "putsreq.com/123/last".</br>
-
-      * Checkout this <a href="https://github.com/phstc/putsreq_integration_sample">sample project</a> for Integration tests using PutsReq.
-      </p>
-      </p>
+      </section>
     </div>
   </div>
 </div>
