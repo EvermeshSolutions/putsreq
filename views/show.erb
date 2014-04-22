@@ -15,13 +15,13 @@ $(function(){
   new ZeroClipboard(document.getElementById('copy-puts_req-url'), { moviePath: '/js/ZeroClipboard.swf' });
 });
 </script>
-<ul>
-  <li><a href="/">PutsReq</a></li>
+<ul class="nav">
+  <li class="logo"><a href="/"><img src="/img/logo.png" /></a></li>
   <li><a href="<%= "/#{puts_req.token}/inspect" %>">Inspect</a></li>
   <li><a href="<%= "/#{puts_req.token}/last" %>">Last Request</a></li>
   <li><a href="<%= "/#{puts_req.token}/last_response" %>">Last Response</a></li>
 </ul>
-<p>
+
 <strong>PutsReq URL</strong>
   <input type="text" value="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %>"></input>
   <button id="copy-puts_req-url" data-clipboard-text="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %> " title="Click to copy me.">copy</button>
@@ -29,7 +29,7 @@ $(function(){
 
 <code>curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' <%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %></code>
 <form action="/<%= puts_req.token %>/post" method="post">
-  <p><button class="btn btn-primary">Record It!</button></p>
+  <p><button class="btn btn-primary tm10">Record It!</button></p>
 </form>
 <hr/>
 
@@ -38,7 +38,7 @@ $(function(){
   <script id="response-builder-container"  type='application/vns.putsreq-response_builder'><%= puts_req.response_builder %></script>
   <div id="editor" name="editor" style="width: 100%; height: 250px"></div>
   <textarea id="response_builder" name="response_builder" style="display:none;"></textarea>
-  <p><button class="btn btn-primary">Update</button></p>
+  <p><button class="btn btn-primary tm10">Update</button></p>
 </form>
 <hr/>
 <% puts_req.requests.to_a.each do |req| %>
