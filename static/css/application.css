@@ -27,3 +27,25 @@ section.start {
   width: 750px;
   margin: 3em auto; 
 }
+.nav {
+  margin: 10px 0;
+  overflow: hidden;
+}
+.nav li {
+  float: left;
+  margin-right: 10px;
+  line-height: 30px;
+}
+.nav li a {
+  padding: 0 10px;
+}
+.nav li.logo img {
+  max-width: 100px;
+}
+.nav li.logo {
+  margin: 0;
+}
+.nav li.logo a {
+  background: none;
+  padding: 0 20px 0 0;
+}
