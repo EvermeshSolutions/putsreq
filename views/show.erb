@@ -12,7 +12,14 @@ $(function(){
   editor.setValue($('#response-builder-container').text());
   editor.clearSelection();
 
-  new ZeroClipboard(document.getElementById('copy-puts_req-url'), { moviePath: '/js/ZeroClipboard.swf' });
+  var client = new ZeroClipboard(document.getElementById('copy-puts_req-url'), { moviePath: '/js/ZeroClipboard.swf' });
+
+  client.addEventListener('complete', function(client, text) {
+    var previousTitle = $('#copy-puts_req-url').attr('title');
+    $('#copy-puts_req-url').attr('title', 'Copied.');
+    $('#copy-puts_req-url').tooltip('show');
+    $('#copy-puts_req-url').attr('title', previousTitle);
+   });
 });
 </script>
 <ul class="nav">
@@ -24,12 +31,12 @@ $(function(){
 
 <strong>PutsReq URL</strong>
   <input type="text" value="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %>"></input>
-  <button id="copy-puts_req-url" data-clipboard-text="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %> " title="Click to copy me.">copy</button>
+  <button id="copy-puts_req-url" data-clipboard-text="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %> " title="Click to copy me." class="btn"><span class="glyphicon glyphicon-link"></span>copy</button>
 </p>
 
 <code>curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' <%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %></code>
 <form action="/<%= puts_req.token %>/post" method="post">
-  <p><button class="btn btn-primary tm10">Record It!</button></p>
+  <p><button class="btn"><span class="glyphicon glyphicon-camera"></span></button></p>
 </form>
 <hr/>
 
