@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/phstc/putsreq.svg)](https://travis-ci.org/phstc/putsreq)
+
 ## PutsReq
 
 PutsReq lets you record HTTP requests and simulate responses like no other tool available. [Try it now](http://putsreq.com)!
