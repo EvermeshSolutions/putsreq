@@ -25,7 +25,7 @@ $(function(){
   client.on( "ready", function( readyEvent ) {
     $(htmlBridge).tipsy({ gravity: _defaults.gravity });
     $(htmlBridge).attr('title', _defaults.title);
-    client.on( "aftercopy", function( event ) {   
+    client.on( "aftercopy", function( event ) {
       // alert("Copied text to clipboard: " + event.data["text/plain"] );
       var copied_hint = $(this).data('copied-hint');
       if (!copied_hint) {
@@ -35,7 +35,7 @@ $(function(){
         .prop('title', copied_hint)
         .tipsy('show');
     });
-  
+
   });
 
 });
