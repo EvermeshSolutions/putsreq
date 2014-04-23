@@ -14,7 +14,7 @@
 <section class="putsreq-url-box">
   <h3>Your PutsReq URL</h3>
   <div class="input-group putsreq-url">
-    <input type="text" value="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %>" readonly="readonly"></input>
+    <input id="putsreq-url-input" type="text" value="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %>" readonly="readonly"></input>
     <span id="copy-button" data-clipboard-text="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %> " class="input-group-addon hastip">
       <span class="glyphicon glyphicon-link hastip"></span>
     </span>

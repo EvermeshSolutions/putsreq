@@ -26,7 +26,7 @@ $(function(){
 
     client.on('aftercopy', function(event){
       var copiedHint = tipsyConfig.copiedHint;
-
+      $('#putsreq-url-input').focus().blur();
       $(htmlBridge)
       .prop('title', tipsyConfig.copiedHint)
       .tipsy('show');
