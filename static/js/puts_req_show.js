@@ -9,30 +9,30 @@ $(function(){
   editor.setValue($('#response-builder-container').text());
   editor.clearSelection();
 
-  var _defaults = {
-    title: 'Copy to Clipboard',
-    copied_hint: 'Copied!',
-    gravity: $.fn.tipsy.autoNS
+  var tipsyConfig = {
+    title:       'Copy to Clipboard',
+    copiedHint:  'Copied!',
+    gravity:     $.fn.tipsy.autoNS
   };
-  ZeroClipboard.config( { swfPath: '/flash/ZeroClipboard.swf' } );
+
+  ZeroClipboard.config({ swfPath: '/flash/ZeroClipboard.swf' });
 
   var client = new ZeroClipboard($('#copy-button'));
-  var htmlBridge = "#global-zeroclipboard-html-bridge";
+  var htmlBridge = '#global-zeroclipboard-html-bridge';
 
-  client.on( "ready", function( readyEvent ) {
-    $(htmlBridge).tipsy({ gravity: _defaults.gravity });
-    $(htmlBridge).attr('title', _defaults.title);
-    client.on( "aftercopy", function( event ) {
-      // alert("Copied text to clipboard: " + event.data["text/plain"] );
-      var copied_hint = $(this).data('copied-hint');
-      if (!copied_hint) {
-        copied_hint = _defaults.copied_hint;
-      }
+  client.on('ready', function(readyEvent){
+    $(htmlBridge).tipsy({ gravity: tipsyConfig.gravity });
+    $(htmlBridge).attr('title', tipsyConfig.title);
+
+    client.on('aftercopy', function(event){
+      var copiedHint = tipsyConfig.copiedHint;
+
       $(htmlBridge)
-        .prop('title', copied_hint)
-        .tipsy('show');
+      .prop('title', tipsyConfig.copiedHint)
+      .tipsy('show');
+
+      $(htmlBridge)
+      .attr('original-title', tipsyConfig.title);
     });
-
   });
-
 });
