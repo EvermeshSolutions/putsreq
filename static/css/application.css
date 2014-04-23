@@ -28,7 +28,7 @@ section.start {
   margin: 3em auto; 
 }
 .nav {
-  margin: 10px 0;
+  margin: 10px 0 50px 0;
   overflow: hidden;
 }
 .nav li {
@@ -48,4 +48,16 @@ section.start {
 .nav li.logo a {
   background: none;
   padding: 0 20px 0 0;
+}
+.putsreq-url-box {
+  text-align: center;
+}
+.putsreq-url {
+  margin: 0 auto;
+  width: 633px;
+}
+.putsreq-url input {
+  font-size: 2em;
+  width: 595px;
+  text-indent: 10px;
 }

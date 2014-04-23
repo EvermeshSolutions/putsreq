@@ -9,25 +9,33 @@ $(function(){
   editor.setValue($('#response-builder-container').text());
   editor.clearSelection();
 
-  var clip = new ZeroClipboard($('#copy-puts_req-url'), {
-    moviePath: '/js/vendor/ZeroClipboard.swf'
+  var _defaults = {
+    title: 'Copy to Clipboard',
+    copied_hint: 'Copied!',
+    gravity: $.fn.tipsy.autoNS
+  };
+
+  var client = new ZeroClipboard($('#copy-button'), {
+    moviePath: '/flash/ZeroClipboard.swf',
+    title: "teste"
   });
 
-  clip.on('load', function(client) {
-    $('#copy-puts_req-url').prop('title', 'copy to clipboard').
-    tooltip('destroy').
-    tooltip({ 'delay': { show: 500, hide: 100 } })
+  var htmlBridge = "#global-zeroclipboard-html-bridge";
+
+  client.on( "ready", function( readyEvent ) {
+    $(htmlBridge).tipsy({ gravity: _defaults.gravity });
+    $(htmlBridge).attr('title', _defaults.title);
+    client.on( "aftercopy", function( event ) {   
+      // alert("Copied text to clipboard: " + event.data["text/plain"] );
+      var copied_hint = $(this).data('copied-hint');
+      if (!copied_hint) {
+        copied_hint = _defaults.copied_hint;
+      }
+      $(htmlBridge)
+        .prop('title', copied_hint)
+        .tipsy('show');
+    });
+  
   });
 
-  clip.on('complete', function(client, args) {
-    $('#copy-puts_req-url').
-    tooltip('destroy').
-    prop('title', 'copied!').
-    tooltip({ 'delay': { show: 500, hide: 100 } })
-    tooltip('show');
-  });
-
-  clip.on('noflash wrongflash', function(client) {
-    $('#copy-puts_req-url').hide();
-  });
 });
