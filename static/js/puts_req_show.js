@@ -14,12 +14,9 @@ $(function(){
     copied_hint: 'Copied!',
     gravity: $.fn.tipsy.autoNS
   };
+  ZeroClipboard.config( { swfPath: '/flash/ZeroClipboard.swf' } );
 
-  var client = new ZeroClipboard($('#copy-button'), {
-    moviePath: '/flash/ZeroClipboard.swf',
-    title: "teste"
-  });
-
+  var client = new ZeroClipboard($('#copy-button'));
   var htmlBridge = "#global-zeroclipboard-html-bridge";
 
   client.on( "ready", function( readyEvent ) {
