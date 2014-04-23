@@ -1,27 +1,7 @@
-<script src="/js/ace.js"></script>
-<script src="/js/ZeroClipboard.min.js"></script>
-<script>
-$(function(){
-  var editor = ace.edit('editor');
-  editor.setTheme('ace/theme/monokai');
-  editor.getSession().setMode('ace/mode/javascript');
-  editor.getSession().on('change', function(){
-    $('#response_builder').val(editor.getSession().getValue());
-  });
+<script src="/js/vendor/ace.js"></script>
+<script src="/js/vendor/ZeroClipboard.min.js"></script>
+<script src="/js/puts_req_show.js"></script>
 
-  editor.setValue($('#response-builder-container').text());
-  editor.clearSelection();
-
-  var client = new ZeroClipboard(document.getElementById('copy-puts_req-url'), { moviePath: '/js/ZeroClipboard.swf' });
-
-  client.addEventListener('complete', function(client, text) {
-    var previousTitle = $('#copy-puts_req-url').attr('title');
-    $('#copy-puts_req-url').attr('title', 'Copied.');
-    $('#copy-puts_req-url').tooltip('show');
-    $('#copy-puts_req-url').attr('title', previousTitle);
-   });
-});
-</script>
 <ul class="nav">
   <li class="logo"><a href="/"><img src="/img/logo.png" /></a></li>
   <li><a href="<%= "/#{puts_req.token}/inspect" %>">Inspect</a></li>
@@ -31,7 +11,7 @@ $(function(){
 
 <strong>PutsReq URL</strong>
   <input type="text" value="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %>"></input>
-  <button id="copy-puts_req-url" data-clipboard-text="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %> " title="Click to copy me." class="btn"><span class="glyphicon glyphicon-link"></span>copy</button>
+  <button id="copy-puts_req-url" data-clipboard-text="<%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %> " title="copy to clipboard" class="btn"><span class="glyphicon glyphicon-link"></span>copy</button>
 </p>
 
 <code>curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' <%= "#{request.url.gsub(request.path, '')}/#{puts_req.token}" %></code>
