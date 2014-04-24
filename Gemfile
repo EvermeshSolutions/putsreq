@@ -12,10 +12,6 @@ group :production do
   gem 'unicorn'
 end
 
-group :development do
-  gem 'shotgun'
-end
-
 group :test do
   gem 'simplecov', require: nil
 end

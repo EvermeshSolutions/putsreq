@@ -1,4 +1,5 @@
-require 'sinatra/base'
+require 'sinatra'
+require 'sinatra/reloader' if development?
 require 'sinatra/multi_route'
 require 'v8'
 require 'erb'
@@ -10,6 +11,10 @@ require 'httparty'
 Dir['./models/*.rb'].each &method(:load)
 
 class PutsReqApp < Sinatra::Base
+  configure :development do
+    register Sinatra::Reloader
+  end
+
   register Sinatra::MultiRoute
 
   set :public_folder, File.dirname(__FILE__) + '/static'

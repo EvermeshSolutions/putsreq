@@ -21,9 +21,7 @@ cd putsreq
 
 bundle install
 
-bundle exec shotgun -p 3000
-
-# or rackup -p 3000
+rackup -p 3000
 
 open http://localhost:3000
 ```
