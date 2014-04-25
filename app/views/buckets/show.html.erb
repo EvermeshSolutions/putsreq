@@ -1,0 +1,83 @@
+<ul class="nav">
+  <li class="logo"><a href="/"><%= image_tag 'logo.png' %></a></li>
+  <li><a href="<%= "/#{@bucket.token}/inspect" %>">Inspect</a></li>
+  <li><a href="<%= "/#{@bucket.token}/last" %>">Last Request</a></li>
+  <li><a href="<%= "/#{@bucket.token}/last_response" %>">Last Response</a></li>
+</ul>
+
+<section class="putsreq-url-box">
+  <h3>Your PutsReq URL</h3>
+  <div class="input-group putsreq-url">
+    <input id="putsreq-url-input" type="text" value="<%= "#{request.url.gsub(request.path, '')}/#{@bucket.token}" %>" readonly="readonly"></input>
+    <span id="copy-button" data-clipboard-text="<%= "#{request.url.gsub(request.path, '')}/#{@bucket.token}" %> " class="input-group-addon hastip">
+      <span class="glyphicon glyphicon-link hastip"></span>
+    </span>
+  </div>
+</section>
+
+<br/><br/>
+
+<section>
+  <h4>Sample Request using cURL</h4>
+  <code>curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' <%= "#{request.url.gsub(request.path, '')}/#{@bucket.token}" %></code>
+  <!-- TODO: Understand better the use of this button
+  <form action="/<%= @bucket.token %>/post" method="post">
+    <p><button class="btn"><span class="glyphicon glyphicon-camera"></span></button></p>
+  </form>
+  -->
+</section>
+
+<hr/>
+
+<h4>Response Builder</h4>
+  <%= form_for @bucket, url: bucket_response_builder_path(@bucket.token), method: :patch do %>
+    <script id="response-builder-container"  type='application/vns.putsreq-response_builder'><%== @bucket.response_builder %></script>
+    <div id="editor" name="editor" style="width: 100%; height: 250px"></div>
+    <textarea id="response_builder" name="response_builder" style="display:none;"></textarea>
+    <p><button class="btn btn-primary tm10">Update</button></p>
+  <% end %>
+<hr/>
+<% @bucket.requests.to_a.each do |req| %>
+  <table>
+    <thead>
+      <tr>
+        <!--
+        TODO: Show fields below:
+        field :content_length
+        field :request_method
+        field :ip
+        field :url
+        field :params
+        Check: http://requestb.in/t3ivtbt3?inspect
+        -->
+        <th>Header</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% req.headers.to_h.each do |header_key, header_value| %>
+      <tr>
+        <td><%= header_key %></td>
+        <td><%= header_value %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <hr/>
+  <table>
+    <thead>
+      <tr>
+        <th>Request Body</th>
+        <th>Response Body</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code><%= req.body %></code></td>
+        <!-- TODO show response code and header -->
+        <td><code><%= req.response.body_to_s.gsub('<', '&lt').gsub('>', '&gt') %></code></td>
+      </tr>
+    </tbody>
+  </table>
+  <hr/>
+<% end %>

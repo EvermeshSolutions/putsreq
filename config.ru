@@ -1,10 +1,4 @@
-require './app'
+# This file is used by Rack-based servers to start the application.
 
-begin
-  # should work only in development
-  require 'pry-byebug'
-rescue LoadError
-  # not installed
-end
-
-run PutsReqApp.new
+require ::File.expand_path('../config/environment',  __FILE__)
+run Rails.application

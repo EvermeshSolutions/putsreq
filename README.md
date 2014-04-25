@@ -21,7 +21,7 @@ cd putsreq
 
 bundle install
 
-rackup -p 3000
+rails s
 
 open http://localhost:3000
 ```
