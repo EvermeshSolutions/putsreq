@@ -24,7 +24,7 @@ production:
         #secondaries when possible.
         # Strong forces reads to primary.
         # We recommend using strong consistency.
-        consistency: :strong
+        # consistency: :strong
 
         # max_retries specifies the number of times to attempt
         # an operation before giving up.
