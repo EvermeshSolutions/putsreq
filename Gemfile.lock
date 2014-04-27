@@ -111,7 +111,6 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.4)
       sprockets-rails (~> 2.0.0)
-    rails-assets-ace (1.1.3)
     rails-assets-zeroclipboard (1.3.5)
     rails_12factor (0.0.2)
       rails_serve_static_assets
@@ -208,7 +207,6 @@ DEPENDENCIES
   quiet_assets
   rack-test
   rails (= 4.0.4)
-  rails-assets-ace
   rails-assets-zeroclipboard
   rails_12factor
   rspec-rails (~> 3.0.0.beta)

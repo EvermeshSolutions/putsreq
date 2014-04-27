@@ -51,7 +51,6 @@ gem 'httparty'
 
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'rails-assets-zeroclipboard'
-gem 'rails-assets-ace'
 
 group :production do
   gem 'unicorn'

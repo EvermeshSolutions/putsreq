@@ -16,7 +16,12 @@
 //= require bootstrap
 //= require jquery.tipsy
 //= require zeroclipboard
-//= require ace
+//
+//= require ace/ace
+//= require ace/theme-chrome
+//= require ace/mode-json
+//= require ace/mode-javascript
+//
 //= require dispatcher
 //= require initializers
 //= require_tree .
