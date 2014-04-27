@@ -39,7 +39,8 @@ class BucketsController < ApplicationController
     req  = @bucket.record_request(request)
     resp = @bucket.build_response(req)
 
-    render text: resp.body_to_s, status: resp.status, headers: resp.headers
+    response.headers.merge! resp.headers.to_h
+    render text: resp.body_to_s, status: resp.status
   end
 
   private
