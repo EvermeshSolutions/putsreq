@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 source 'https://rails-assets.org'
 
+ruby '2.0.0'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.4'
 
@@ -53,6 +55,7 @@ gem 'rails-assets-ace'
 
 group :production do
   gem 'unicorn'
+  gem 'rails_12factor'
 end
 
 group :test do
