@@ -37,7 +37,9 @@
     <p><button class="btn btn-primary tm10">Update</button></p>
   <% end %>
 <hr/>
-<% @bucket.requests.to_a.each do |req| %>
+<%= paginate @requests %>
+<hr/>
+<% @requests.to_a.each do |req| %>
   <table>
     <thead>
       <tr>
@@ -74,3 +76,4 @@
   </table>
   <hr/>
 <% end %>
+<%= paginate @requests %>

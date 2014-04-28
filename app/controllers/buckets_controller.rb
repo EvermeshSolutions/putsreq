@@ -10,6 +10,7 @@ class BucketsController < ApplicationController
   end
 
   def show
+    @requests = @bucket.requests.page(params[:page]).per 10
   end
 
   def last
