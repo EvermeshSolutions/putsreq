@@ -5,8 +5,8 @@ class Bucket
   # TODO rename production collection to buckets
   store_in collection: 'puts_reqs'
 
-  has_many :requests, dependent: :delete
-  has_many :responses, dependent: :delete
+  has_many :requests,   dependent: :delete,  order: [:created_at.desc]
+  has_many :responses,  dependent: :delete,  order: [:created_at.desc]
 
   field :token
   field :response_builder, default: -> { default_response_builder }
