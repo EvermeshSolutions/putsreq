@@ -12,7 +12,7 @@ class Request
   field :request_method
   field :ip
   field :url
-  field :params
+  field :params, type: Hash
 
   validates :bucket, presence: true
 end
