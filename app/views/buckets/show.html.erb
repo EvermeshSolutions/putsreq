@@ -40,39 +40,43 @@
 <%= paginate @requests %>
 <hr/>
 <% @requests.to_a.each do |req| %>
-  <table>
+  <table class="requests-header">
     <thead>
       <tr>
-        <th>Header</th>
+        <th>Request Headers</th>
         <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
     <% req.headers.to_h.each do |header_key, header_value| %>
       <tr>
-        <td><%= header_key %></td>
-        <td><%= header_value %></td>
+        <td class="key"><%= header_key %></td>
+        <td class="value" title="<%= header_value %>"><%= header_value %></td>
       </tr>
     <% end %>
     </tbody>
-  </table>
-  <hr/>
-  <table>
-    <thead>
+    <tfoot>
       <tr>
-        <th>When</th>
-        <th>Request Body</th>
-        <th>Response Body</th>
+        <td colspan="2">
+
+          <div class="request-footer-info">
+            <small>When</small>
+            <span><%= time_ago_in_words req.created_at %> ago</span>
+          </div>
+
+          <div class="request-footer-info">
+            <small>Request Body</small>
+            <span><code><%= req.body %></code></span>
+          </div>
+
+          <div class="request-footer-info">
+            <small>Response Body</small>
+            <span><code><%= req.response.body_to_s.gsub('<', '&lt').gsub('>', '&gt') %></code></span>
+          </div>
+
+        </td>
       </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><%= time_ago_in_words req.created_at %> ago</td>
-        <td><code><%= req.body %></code></td>
-        <!-- TODO show response code and header -->
-        <td><code><%= req.response.body_to_s.gsub('<', '&lt').gsub('>', '&gt') %></code></td>
-      </tr>
-    </tbody>
+    </tfoot>
   </table>
   <hr/>
 <% end %>

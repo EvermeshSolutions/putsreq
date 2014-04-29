@@ -1,3 +1,65 @@
 // Place all the styles related to the buckets controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.requests-header {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  font-size: 12px;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.requests-header thead th:nth-child(1) {
+  -moz-border-radius-topleft: 10px;
+  -webkit-border-top-left-radius: 10px;
+  width: 300px;
+}
+.requests-header thead th:nth-child(2) {
+  -moz-border-radius-topright: 10px;
+  -webkit-border-top-right-radius: 10px;
+  width: 700px;
+}
+.requests-header thead th {
+  font-weight: normal;
+  font-size: 13px;
+  color: #fff;
+  background: #428bca;
+  padding: 8px;
+}
+.requests-header tbody td {
+  background: #fff;
+  border-top: 1px solid #eee;
+  color: #669;
+  padding: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.requests-header tbody td.key {
+  width: 250px;
+}
+.requests-header tbody td.value {
+  width: 920px;
+  max-width: 920px;
+}
+.requests-header tfoot td {
+  margin-top: 10px;
+  -moz-border-radius-bottomright: 10px;
+  -moz-border-radius-bottomleft: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  padding: 10px;
+  background: #f2f2f2;
+}
+.request-footer-info {
+  float: left;
+  margin-right: 20px;
+}
+.request-footer-info small {
+  display: block;
+}
+.request-footer-info span {
+  white-space: nowrap;
+}
+.requests-header tbody tr:hover td{background:#d0dafd;}
