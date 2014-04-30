@@ -30,6 +30,23 @@ describe Bucket do
   describe '#build_response' do
     let(:last_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
+    context 'when forward to' do
+      subject { described_class.create response_builder: %{response.status = 200; response.body = "It's me, Mario!"; request.forwardTo = 'http://example.com'} }
+
+      it 'uses forwarded response' do
+        stub_request(:get, 'http://example.com').
+          to_return(body: %{It's me, Luigi!}, status: 202, headers: { 'Content-Type' => 'text/plain' })
+
+        req = subject.record_request(last_request)
+
+        resp = subject.build_response(req)
+
+        expect(resp.attributes).to include('status'  => 202,
+                                           'body'    => "It's me, Luigi!",
+                                           'headers' => { 'content-type' => ['text/plain'] })
+      end
+    end
+
     context 'when timeout' do
       subject { described_class.create response_builder: 'while(true){}' }
 

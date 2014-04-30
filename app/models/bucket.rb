@@ -1,3 +1,4 @@
+require 'httparty'
 class Bucket
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -30,11 +31,20 @@ class Bucket
   def build_response(req, timeout = 5)
     context = V8::Context.new timeout: timeout
     context['response'] = { 'status' => 200, 'headers' => {}, 'body' => 'ok' }
-    context['request']  = { 'body' => req.body, 'headers' => req.headers }
+    context['request']  = { 'requestMethod' => req.request_method, 'body' => req.body, 'headers' => req.headers }
     context.eval(response_builder.to_s)
-    resp = context.eval('JSON.stringify(response)')
+    builder_req = context.eval('JSON.stringify(request)')
 
-    resp = JSON.parse(resp).select { |key, value| %w[status headers body].include?(key) && !value.nil? }
+    builder_req  = JSON.parse(builder_req)
+
+    if forward_url = builder_req['forwardTo']
+      # use the forwarded response
+      resp = forward_to(builder_req, forward_url)
+    else
+      # use the response builder
+      resp = context.eval('JSON.stringify(response)')
+      resp = JSON.parse(resp).select { |key, value| %w[status headers body].include?(key) && !value.nil? }
+    end
 
     resp['request'] = req
 
@@ -59,6 +69,16 @@ class Bucket
   end
 
   private
+
+  def forward_to(req, forward_url, http_adapter = HTTParty)
+    body = req['body'].is_a?(Hash) ? req['body'].to_json : req['body'].to_s
+
+    options = { 'body' => body, 'timeout' => 5, 'headers' => req['headers'] }
+
+    resp = http_adapter.send(req['requestMethod'].downcase.to_sym, forward_url, options)
+
+    { 'status' => resp.code, 'headers' => resp.headers.to_h, 'body' => resp.body}
+  end
 
   def generate_token
     self.token = loop do

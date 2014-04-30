@@ -60,6 +60,7 @@ end
 
 group :test do
   gem 'simplecov', require: nil
+  gem 'webmock'
 end
 
 group :development do
