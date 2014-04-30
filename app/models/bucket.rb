@@ -9,9 +9,11 @@ class Bucket
   has_many :responses,  dependent: :delete,  order: [:created_at.desc]
 
   field :token
+  field :owner_token
   field :response_builder, default: -> { default_response_builder }
 
   index token: 1
+  index owner_token: 1
 
   before_create :generate_token
 

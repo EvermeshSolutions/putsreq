@@ -8,6 +8,14 @@
           <button class="btn btn-primary btn-large">Create a PutsReq</button>
         <% end %>
       </header>
+      <section>
+        <h2>History:</h2>
+        <ul>
+          <% @buckets.each do |bucket| %>
+            <li><%= link_to bucket.token, bucket_path(bucket.token) %></li>
+          <% end %>
+        </ul>
+      </section>
       <section class="start">
 
         <h4>Record the requests sent or received</h4>

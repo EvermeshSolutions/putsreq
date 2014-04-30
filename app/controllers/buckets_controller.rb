@@ -4,7 +4,7 @@ class BucketsController < ApplicationController
   before_filter :load_bucket, except: :create
 
   def create
-    bucket = Bucket.create
+    bucket = Bucket.create(owner_token: owner_token)
 
     redirect_to bucket_path(bucket.token)
   end
