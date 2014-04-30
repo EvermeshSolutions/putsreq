@@ -17,3 +17,4 @@ rdoc
 spec/reports
 tmp
 logs/
+log/
