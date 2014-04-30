@@ -73,7 +73,7 @@ class Bucket
   def forward_to(req, forward_url, http_adapter = HTTParty)
     body = req['body'].is_a?(Hash) ? req['body'].to_json : req['body'].to_s
 
-    options = { 'body' => body, 'timeout' => 5, 'headers' => req['headers'] }
+    options = { body: body, timeout: 5, headers: req['headers'].to_h  }
 
     resp = http_adapter.send(req['requestMethod'].downcase.to_sym, forward_url, options)
 
@@ -81,15 +81,12 @@ class Bucket
   end
 
   def forwardable_headers(headers)
-    if Rails.env.production?
-      # TODO Need to investigate which header is causing 502 on Heroku. The forward works, but it doesn't return the forwarded response.
-      # HTTP/1.1 502 BAD_GATEWAY
-      # Content-Length: 0
-      # Connection: keep-alive
-      {}
-    else
-      headers.to_h
-    end
+    # TODO Need to investigate which header is causing 502 on Heroku. The forward works, but it doesn't return the forwarded response.
+    # HTTP/1.1 502 BAD_GATEWAY
+    # Content-Length: 0
+    # Connection: keep-alive
+    # TODO In development: `curl: (56) Problem (2) in the Chunked-Encoded data`
+    {}
   end
 
   def generate_token
