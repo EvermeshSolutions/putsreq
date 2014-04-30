@@ -20,11 +20,6 @@
 <section>
   <h4>Sample Request using cURL</h4>
   <code>curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' <%= "#{request.url.gsub(request.path, '')}/#{@bucket.token}" %></code>
-  <!-- TODO: Understand better the use of this button
-  <form action="/<%= @bucket.token %>/post" method="post">
-    <p><button class="btn"><span class="glyphicon glyphicon-camera"></span></button></p>
-  </form>
-  -->
 </section>
 
 <hr/>
@@ -37,7 +32,12 @@
     <p><button class="btn btn-primary tm10">Update</button></p>
   <% end %>
 <hr/>
-<%= paginate @requests %>
+<p>
+  <%= page_entries_info @requests %>
+</p>
+<p>
+  <%= paginate @requests %>
+</p>
 <hr/>
 <% @requests.to_a.each do |req| %>
   <table class="requests-header">
@@ -80,4 +80,9 @@
   </table>
   <hr/>
 <% end %>
-<%= paginate @requests %>
+<p>
+  <%= page_entries_info @requests %>
+</p>
+<p>
+  <%= paginate @requests %>
+</p>
