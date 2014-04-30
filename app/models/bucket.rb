@@ -77,7 +77,19 @@ class Bucket
 
     resp = http_adapter.send(req['requestMethod'].downcase.to_sym, forward_url, options)
 
-    { 'status' => resp.code, 'headers' => resp.headers.to_h, 'body' => resp.body}
+    { 'status' => resp.code, 'headers' => forwardable_headers(resp.headers), 'body' => resp.body}
+  end
+
+  def forwardable_headers(headers)
+    if Rails.env.production?
+      # TODO Need to investigate which header is causing 502 on Heroku. The forward works, but it doesn't return the forwarded response.
+      # HTTP/1.1 502 BAD_GATEWAY
+      # Content-Length: 0
+      # Connection: keep-alive
+      {}
+    else
+      headers.to_h
+    end
   end
 
   def generate_token
