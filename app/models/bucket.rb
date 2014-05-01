@@ -25,13 +25,13 @@ class Bucket
                     ip:              request.ip,
                     url:             request.url,
                     headers:         parse_env_to_headers(request.env),
-                    params:          request.params)
+                    params:          request.request_parameters)
   end
 
   def build_response(req, timeout = 5)
     context = V8::Context.new timeout: timeout
     context['response'] = { 'status' => 200, 'headers' => {}, 'body' => 'ok' }
-    context['request']  = { 'requestMethod' => req.request_method, 'body' => req.body, 'headers' => req.headers }
+    context['request']  = { 'requestMethod' => req.request_method, 'body' => req.body, 'params' => req.params, 'headers' => req.headers }
     context.eval(response_builder.to_s)
     builder_req = context.eval('JSON.stringify(request)')
 
