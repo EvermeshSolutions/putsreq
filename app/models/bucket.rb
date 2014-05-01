@@ -86,7 +86,7 @@ class Bucket
     # Content-Length: 0
     # Connection: keep-alive
     # TODO In development: `curl: (56) Problem (2) in the Chunked-Encoded data`
-    {}
+    headers.to_h.select { |key, value| key.start_with?('x-') || %[content-type].include?(key) }
   end
 
   def generate_token
@@ -110,10 +110,10 @@ class Bucket
 
       response.headers['Content-Type'] = 'application/json';
 
-      // response.body = "{ message: 'Hello World' }"
+      // response.body = "{ 'message': 'Hello World' }"
       var parsedBody = JSON.parse(request.body);
 
-      response.body = { message: parsedBody.message + ' Pablo' };
+      response.body = { 'message': parsedBody.message + ' Pablo' };
 
       // Forward a request
       // request.forwardTo = 'http://example.com';
