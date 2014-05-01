@@ -32,6 +32,9 @@ class Bucket
     context = V8::Context.new timeout: timeout
     context['response'] = { 'status' => 200, 'headers' => {}, 'body' => 'ok' }
     context['request']  = { 'requestMethod' => req.request_method, 'body' => req.body, 'params' => req.params, 'headers' => req.headers }
+    if last_request = previous_request(req)
+      context['last_request']  = { 'requestMethod' => last_request.request_method, 'body' => last_request.body, 'params' => last_request.params, 'headers' => last_request.headers }
+    end
     context.eval(response_builder.to_s)
     builder_req = context.eval('JSON.stringify(request)')
 
@@ -69,6 +72,10 @@ class Bucket
   end
 
   private
+
+  def previous_request(current_request)
+    requests.lt(created_at: current_request.created_at).limit(1).order(:created_at.desc).first
+  end
 
   def forward_to(req, forward_url, http_adapter = HTTParty)
     body = req['body'].is_a?(Hash) ? req['body'].to_json : req['body'].to_s
