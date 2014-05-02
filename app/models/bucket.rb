@@ -33,7 +33,10 @@ class Bucket
     context['response'] = { 'status' => 200, 'headers' => {}, 'body' => 'ok' }
     context['request']  = { 'requestMethod' => req.request_method, 'body' => req.body, 'params' => req.params, 'headers' => req.headers }
     if last_request = previous_request(req)
+      last_response = last_request.response
+
       context['last_request']  = { 'requestMethod' => last_request.request_method, 'body' => last_request.body, 'params' => last_request.params, 'headers' => last_request.headers }
+      context['last_response'] = { 'status' => last_response.status, 'headers' => last_response.headers, 'body' => last_response.body_to_s }
     end
     context.eval(response_builder.to_s)
     builder_req = context.eval('JSON.stringify(request)')
