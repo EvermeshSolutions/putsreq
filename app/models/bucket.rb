@@ -28,45 +28,42 @@ class Bucket
                     params:          request.request_parameters)
   end
 
-  def build_response(req, timeout = 5)
+  def build_response(request, timeout = 5)
     context = V8::Context.new timeout: timeout
-    context['response'] = { 'status' => 200, 'headers' => {}, 'body' => 'ok' }
-    context['request']  = { 'requestMethod' => req.request_method, 'body' => req.body, 'params' => req.params, 'headers' => req.headers }
-    if last_request = previous_request(req)
-      last_response = last_request.response
 
-      context['last_request']  = { 'requestMethod' => last_request.request_method, 'body' => last_request.body, 'params' => last_request.params, 'headers' => last_request.headers }
-      context['last_response'] = { 'status' => last_response.status, 'headers' => last_response.headers, 'body' => last_response.body_to_s }
-    end
+    load_default_record(request, context)
+    load_last_record(request, context)
+
     context.eval(response_builder.to_s)
-    builder_req = context.eval('JSON.stringify(request)')
 
-    builder_req  = JSON.parse(builder_req)
+    request_hash = context.eval('JSON.stringify(request)')
 
-    if forward_url = builder_req['forwardTo']
+    request_hash  = JSON.parse(request_hash)
+
+    if forward_url = request_hash['forwardTo']
       # use the forwarded response
-      resp = forward_to(builder_req, forward_url)
+      response_hash = forward_to(request_hash, forward_url)
     else
       # use the response builder
-      resp = context.eval('JSON.stringify(response)')
-      resp = JSON.parse(resp).select { |key, value| %w[status headers body].include?(key) && !value.nil? }
+      response_hash = context.eval('JSON.stringify(response)')
+      response_hash = JSON.parse(response_hash).select { |key, value| %w[status headers body].include?(key) && value.to_s.present? }
     end
 
-    resp['request'] = req
+    response_hash['request'] = request
 
-    responses.create(resp)
+    responses.create(response_hash)
   rescue => e
-    responses.create('request' => req,
+    responses.create('request' => request,
                      'status'  => 500,
                      'headers' => { 'Content-Type' => 'text/plain' },
                      'body'    => e.message)
   end
 
-  def last_req
+  def last_request
     requests.order(:created_at.desc).first
   end
 
-  def last_resp
+  def last_response
     responses.order(:created_at.desc).first
   end
 
@@ -80,23 +77,27 @@ class Bucket
     requests.lt(created_at: current_request.created_at).limit(1).order(:created_at.desc).first
   end
 
-  def forward_to(req, forward_url, http_adapter = HTTParty)
-    body = req['body'].is_a?(Hash) ? req['body'].to_json : req['body'].to_s
+  def forward_to(request_hash, forward_url, http_adapter = HTTParty)
+    body = if request_hash['body'].is_a?(Hash)
+             request_hash['body'].to_json
+           else
+             request_hash['body'].to_s
+           end
 
-    options = { body: body, timeout: 5, headers: req['headers'].to_h  }
+    options = { timeout: 5, headers: request_hash['headers'].to_h, body: body }
 
-    resp = http_adapter.send(req['requestMethod'].downcase.to_sym, forward_url, options)
+    response = http_adapter.send(request_hash['request_method'].downcase.to_sym, forward_url, options)
 
-    { 'status' => resp.code, 'headers' => forwardable_headers(resp.headers), 'body' => resp.body}
+    { 'status'  => response.code,
+      'headers' => forwardable_headers(response.headers),
+      'body'    => response.body }
   end
 
   def forwardable_headers(headers)
-    # TODO Need to investigate which header is causing 502 on Heroku. The forward works, but it doesn't return the forwarded response.
-    # HTTP/1.1 502 BAD_GATEWAY
-    # Content-Length: 0
-    # Connection: keep-alive
-    # TODO In development: `curl: (56) Problem (2) in the Chunked-Encoded data`
-    headers.to_h.select { |key, value| key.start_with?('x-') || %[content-type].include?(key) }
+    headers.to_h.select do |key, value|
+      key = key.downcase
+      key.start_with?('x-') || %[content-type].include?(key)
+    end
   end
 
   def generate_token
@@ -110,6 +111,37 @@ class Bucket
     # return only uppercase header keys
     env.to_h.select do |header_key, header_value|
       header_key == header_key.upcase
+    end
+  end
+
+  def load_default_record(request, context)
+    context['response'] = { 'status'  => 200,
+                            'headers' => {},
+                            'body'    => 'ok' }
+
+    context['request']  = { 'request_method' => request.request_method,
+                            'body'           => request.body,
+                            'params'         => request.params,
+                            'headers'        => request.headers }
+  end
+
+  def load_last_record(request, context)
+    if last_request = previous_request(request)
+      last_response = last_request.response
+
+      context['last_request']  = { 'created_at'     => last_request.created_at,
+                                   'request_method' => last_request.request_method,
+                                   'body'           => last_request.body,
+                                   'params'         => last_request.params,
+                                   'headers'        => last_request.headers }
+
+      context['last_response'] = { 'created_at' => last_response.created_at,
+                                   'status'     => last_response.status,
+                                   'headers'    => last_response.headers,
+                                   'body'       => last_response.body }
+    else
+      context['last_request']  = nil
+      context['last_response'] = nil
     end
   end
 

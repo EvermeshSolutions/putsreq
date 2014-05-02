@@ -14,20 +14,20 @@ class BucketsController < ApplicationController
   end
 
   def last
-    last_req = @bucket.last_req
+    last_request = @bucket.last_request
 
-    render json: { body:        last_req.body,
-                   headers:     last_req.headers,
-                   created_at:  last_req.created_at }
+    render json: { body:        last_request.body,
+                   headers:     last_request.headers,
+                   created_at:  last_request.created_at }
   end
 
   def last_response
-    last_resp = @bucket.last_resp
+    last_response = @bucket.last_response
 
-    render json: { status:      last_resp.status,
-                   body:        last_resp.body,
-                   headers:     last_resp.headers,
-                   created_at:  last_resp.created_at }
+    render json: { status:      last_response.status,
+                   body:        last_response.body,
+                   headers:     last_response.headers,
+                   created_at:  last_response.created_at }
   end
 
   def response_builder
@@ -37,11 +37,12 @@ class BucketsController < ApplicationController
   end
 
   def record
-    req  = @bucket.record_request(request)
-    resp = @bucket.build_response(req)
+    recorded_request  = @bucket.record_request(request)
+    recorded_response = @bucket.build_response(recorded_request)
 
-    response.headers.merge! resp.headers.to_h
-    render text: resp.body_to_s, status: resp.status
+    response.headers.merge! recorded_response.headers.to_h
+
+    render text: recorded_response.body_to_s, status: recorded_response.status
   end
 
   private

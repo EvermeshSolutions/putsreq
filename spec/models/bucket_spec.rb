@@ -30,6 +30,23 @@ describe Bucket do
   describe '#build_response' do
     let(:last_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
+    context 'when last_response' do
+      subject { described_class.create response_builder: %{if(last_response) { response.body = last_response.body + ' world'; } else { response.body = 'hello'; }} }
+
+      it 'uses last_response' do
+        stub_request(:get, 'http://example.com').
+          to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
+
+        2.times {
+          subject.build_response(
+            subject.record_request(last_request)
+          )
+        }
+
+        expect(subject.last_response.attributes).to include('body' => "hello world")
+      end
+    end
+
     context 'when forward to' do
       subject { described_class.create response_builder: %{response.status = 200; response.body = "It's me, Mario!"; request.forwardTo = 'http://example.com'} }
 
@@ -37,13 +54,12 @@ describe Bucket do
         stub_request(:get, 'http://example.com').
           to_return(body: %{It's me, Luigi!}, status: 202, headers: { 'Content-Type' => 'text/plain' })
 
-        req = subject.record_request(last_request)
+        request = subject.record_request(last_request)
+        response = subject.build_response(request)
 
-        resp = subject.build_response(req)
-
-        expect(resp.attributes).to include('status'  => 202,
-                                           'body'    => "It's me, Luigi!",
-                                           'headers' => { 'content-type' => ['text/plain'] })
+        expect(response.attributes).to include('status'  => 202,
+                                               'body'    => "It's me, Luigi!",
+                                               'headers' => { 'content-type' => ['text/plain'] })
       end
     end
 
@@ -51,12 +67,12 @@ describe Bucket do
       subject { described_class.create response_builder: 'while(true){}' }
 
       it 'terminates builder' do
-        req = subject.record_request(last_request)
+        request = subject.record_request(last_request)
 
-        resp = subject.build_response(req, 0.1)
+        response = subject.build_response(request, 0.1)
 
-        expect(resp.attributes).to include('status'  => 500,
-                                           'body'    => 'Script Timed Out')
+        expect(response.attributes).to include('status'  => 500,
+                                               'body'    => 'Script Timed Out')
       end
     end
 
@@ -64,24 +80,24 @@ describe Bucket do
       subject { described_class.create response_builder: nil }
 
       it 'uses default_response' do
-        req = subject.record_request(last_request)
+        request = subject.record_request(last_request)
 
-        resp = subject.build_response(req)
+        response = subject.build_response(request)
 
-        expect(resp.attributes).to include('status'  => 200,
-                                           'body'    => 'ok')
+        expect(response.attributes).to include('status'  => 200,
+                                               'body'    => 'ok')
       end
     end
 
     context 'when default response_builder' do
       it 'builds Hello World Pablo' do
-        req = subject.record_request(last_request)
+        request = subject.record_request(last_request)
 
-        resp = subject.build_response(req)
+        response = subject.build_response(request)
 
-        expect(resp.attributes).to include('status'  => 200,
-                                           'headers' => { 'Content-Type' => 'application/json' },
-                                           'body'    => { 'message' => 'Hello World Pablo' })
+        expect(response.attributes).to include('status'  => 200,
+                                               'headers' => { 'Content-Type' => 'application/json' },
+                                               'body'    => { 'message' => 'Hello World Pablo' })
       end
     end
 
@@ -89,13 +105,13 @@ describe Bucket do
       subject { described_class.create(response_builder: 'will fail') }
 
       it 'returns error response' do
-        req = subject.record_request(last_request)
+        request = subject.record_request(last_request)
 
-        resp = subject.build_response(req)
+        response = subject.build_response(request)
 
-        expect(resp.attributes).to include('status'  => 500,
-                                           'headers' => { 'Content-Type' => 'text/plain' },
-                                           'body'    => 'Unexpected identifier at <eval>:1:10')
+        expect(response.attributes).to include('status'  => 500,
+                                               'headers' => { 'Content-Type' => 'text/plain' },
+                                               'body'    => 'Unexpected identifier at <eval>:1:10')
       end
     end
   end
@@ -117,12 +133,12 @@ describe Bucket do
       last_request.env['foo'] = 'bar'
       last_request.env['bar'] = 'foo'
 
-      req = subject.record_request(last_request)
+      request = subject.record_request(last_request)
 
-      expect(req.headers).to_not include('foo', 'bar')
+      expect(request.headers).to_not include('foo', 'bar')
     end
   end
 
-  pending '#last_req'
-  pending '#last_resp'
+  pending '#last_reqquest'
+  pending '#last_response'
 end
