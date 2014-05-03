@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Bucket do
-  let(:last_request) { ActionController::TestRequest.new }
+  let(:rack_request) { ActionController::TestRequest.new }
 
   subject { described_class.create }
 
@@ -28,9 +28,9 @@ describe Bucket do
   end
 
   describe '#build_response' do
-    let(:last_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+    let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
-    context 'when last_response' do
+    context 'when last_response is available' do
       subject { described_class.create response_builder: %{if(last_response) { response.body = last_response.body + ' world'; } else { response.body = 'hello'; }} }
 
       it 'uses last_response' do
@@ -39,7 +39,7 @@ describe Bucket do
 
         2.times {
           subject.build_response(
-            subject.record_request(last_request)
+            subject.record_request(rack_request)
           )
         }
 
@@ -54,7 +54,7 @@ describe Bucket do
         stub_request(:get, 'http://example.com').
           to_return(body: %{It's me, Luigi!}, status: 202, headers: { 'Content-Type' => 'text/plain' })
 
-        request = subject.record_request(last_request)
+        request = subject.record_request(rack_request)
         response = subject.build_response(request)
 
         expect(response.attributes).to include('status'  => 202,
@@ -67,7 +67,7 @@ describe Bucket do
       subject { described_class.create response_builder: 'while(true){}' }
 
       it 'terminates builder' do
-        request = subject.record_request(last_request)
+        request = subject.record_request(rack_request)
 
         response = subject.build_response(request, 0.1)
 
@@ -80,7 +80,7 @@ describe Bucket do
       subject { described_class.create response_builder: nil }
 
       it 'uses default_response' do
-        request = subject.record_request(last_request)
+        request = subject.record_request(rack_request)
 
         response = subject.build_response(request)
 
@@ -91,7 +91,7 @@ describe Bucket do
 
     context 'when default response_builder' do
       it 'builds Hello World Pablo' do
-        request = subject.record_request(last_request)
+        request = subject.record_request(rack_request)
 
         response = subject.build_response(request)
 
@@ -105,7 +105,7 @@ describe Bucket do
       subject { described_class.create(response_builder: 'will fail') }
 
       it 'returns error response' do
-        request = subject.record_request(last_request)
+        request = subject.record_request(rack_request)
 
         response = subject.build_response(request)
 
@@ -118,27 +118,27 @@ describe Bucket do
 
   describe '#record_request' do
     it 'copies required attributes' do
-      req = subject.record_request(last_request)
+      req = subject.record_request(rack_request)
 
       expect(req).to be_persisted
-      expect(req.attributes).to include('body'           => last_request.body.read,
-                                        'content_length' => last_request.content_length,
-                                        'request_method' => last_request.request_method,
-                                        'ip'             => last_request.ip,
-                                        'url'            => last_request.url,
-                                        'params'         => last_request.params)
+      expect(req.attributes).to include('body'           => rack_request.body.read,
+                                        'content_length' => rack_request.content_length,
+                                        'request_method' => rack_request.request_method,
+                                        'ip'             => rack_request.ip,
+                                        'url'            => rack_request.url,
+                                        'params'         => rack_request.params)
     end
 
     it 'skips lowercase headers (rack specific headers)' do
-      last_request.env['foo'] = 'bar'
-      last_request.env['bar'] = 'foo'
+      rack_request.env['foo'] = 'bar'
+      rack_request.env['bar'] = 'foo'
 
-      request = subject.record_request(last_request)
+      request = subject.record_request(rack_request)
 
       expect(request.headers).to_not include('foo', 'bar')
     end
   end
 
-  pending '#last_reqquest'
+  pending '#last_request'
   pending '#last_response'
 end

@@ -18,14 +18,14 @@ class Bucket
 
   before_create :generate_token
 
-  def record_request(request)
-    requests.create(body:            request.body.read,
-                    content_length:  request.content_length,
-                    request_method:  request.request_method,
-                    ip:              request.ip,
-                    url:             request.url,
-                    headers:         parse_env_to_headers(request.env),
-                    params:          request.request_parameters)
+  def record_request(rack_request)
+    requests.create(body:            rack_request.body.read,
+                    content_length:  rack_request.content_length,
+                    request_method:  rack_request.request_method,
+                    ip:              rack_request.ip,
+                    url:             rack_request.url,
+                    headers:         parse_env_to_headers(rack_request.env),
+                    params:          rack_request.request_parameters)
   end
 
   def build_response(request, timeout = 5)
