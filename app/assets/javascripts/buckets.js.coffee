@@ -1,6 +1,9 @@
 App.buckets = {}
 
 App.buckets['show'] = ->
+  $('#putsreq-url-input').on 'click', ->
+    $(this).select()
+
   editor = ace.edit 'editor'
   editor.setTheme 'ace/theme/monokai'
   editor.getSession().setMode 'ace/mode/javascript'
