@@ -90,14 +90,14 @@ describe Bucket do
     end
 
     context 'when default response_builder' do
-      it 'builds Hello World Pablo' do
+      it 'builds Hello World' do
         request = subject.record_request(rack_request)
 
         response = subject.build_response(request)
 
         expect(response.attributes).to include('status'  => 200,
-                                               'headers' => { 'Content-Type' => 'application/json' },
-                                               'body'    => { 'message' => 'Hello World Pablo' })
+                                               'headers' => {},
+                                               'body'    => 'Hello World')
       end
     end
 

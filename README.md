@@ -56,7 +56,7 @@ request.headers['HTTP_X_MYHEADER'];
 //=> MyHeaderValue
 ```
 
-JSON request:
+Sample JSON request:
 
 ```javascript
 // curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' https://putsreq.com/123...
@@ -75,7 +75,7 @@ response.headers = {};   // default value
 response.body    = 'ok'; // default value
 ```
 
-JSON response:
+Sample JSON response:
 
 ```javascript
 response.headers['Content-Type'] = 'application/json';
