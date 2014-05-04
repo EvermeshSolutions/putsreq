@@ -147,18 +147,17 @@ class Bucket
 
   def default_response_builder
     <<-DEFAULT.strip_heredoc
-      // Simulate a response
-      response.status = 200;
+      // Build a response
+      var msg = 'Hello World';
 
-      response.headers['Content-Type'] = 'application/json';
+      if(request.params.name) {
+        msg = 'Hello ' + request.params.name;
+      }
 
-      // response.body = "{ 'message': 'Hello World' }"
-      var parsedBody = JSON.parse(request.body);
-
-      response.body = { 'message': parsedBody.message + ' Pablo' };
+      response.body = msg;
 
       // Forward a request
-      // request.forwardTo = 'http://example.com';
+      // request.forwardTo = 'http://example.com/api';
     DEFAULT
   end
 end
