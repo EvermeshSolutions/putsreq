@@ -63,3 +63,15 @@
   white-space: nowrap;
 }
 .requests-header tbody tr:hover td{background:#d0dafd;}
+.history {
+  float: right;
+  background-color: #eee;
+  margin: 0 0 0 20px;
+  padding: 10px;
+  border-left: 3px solid #428bca;
+}
+.history ul {
+  margin: 0;
+  list-style-position: inside;
+  padding: 0;
+}
