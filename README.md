@@ -41,7 +41,7 @@ Here is the list of variables you can access to create your responses:
 #### request
 
 ```javascript
-// curl -X POST -H 'X-MyHeader: MyHeaderValue' -d 'name=Pablo' https://putsreq.com/123...
+// curl -X POST -H 'X-MyHeader: MyHeaderValue' -d 'name=Pablo' https://putsreq.com/<YOUR-TOKEN>
 
 request.request_method;
 // => POST
@@ -59,7 +59,7 @@ request.headers['HTTP_X_MYHEADER'];
 Sample JSON request:
 
 ```javascript
-// curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' https://putsreq.com/123...
+// curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' https://putsreq.com/<YOUR-TOKEN>
 
 var parsedBody = JSON.parse(request.body);
 
@@ -110,6 +110,23 @@ request.forwardTo = 'http://example.com/api';
 #### last_request & last_response
 
 The last received request and response are also available in the Response Builder context through the variables `last_request` and `last_response`.
+
+### Ajax
+
+PutsReq supports [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), so you can use it to test your Ajax calls.
+
+```javascript
+// Sample PutsReq Response Builder
+// https://putsreq.herokuapp.com/<YOUR-TOKEN>/inspect
+// response.headers['Content-Type'] = 'application/json';
+// response.body = { 'message': 'Hello World' };
+
+// Sample Ajax call
+$.get('https://putsreq.herokuapp.com/<YOUR-TOKEN>', function(data) {
+  alert(data.message);
+  // => 'Hello World'
+});
+```
 
 ### Sample Integration Tests
 
