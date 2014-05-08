@@ -49,6 +49,7 @@ gem 'mongoid', github: 'mongoid/mongoid', ref: '4893e77bb858'
 gem 'bson_ext'
 gem 'httparty'
 gem 'kaminari'
+gem 'rack-cors', require: 'rack/cors'
 
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'rails-assets-zeroclipboard'
