@@ -6,6 +6,7 @@ App.buckets['show'] = ->
 
   editor = ace.edit 'editor'
   editor.setTheme 'ace/theme/monokai'
+  editor.setShowPrintMargin(false)
   editor.getSession().setMode 'ace/mode/javascript'
   editor.getSession().on 'change', ->
     $('#response_builder').val editor.getSession().getValue()
