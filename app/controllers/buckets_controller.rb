@@ -54,8 +54,4 @@ class BucketsController < ApplicationController
   def load_bucket
     @bucket = Bucket.where(token: params[:token]).first
   end
-
-  def error_response
-    { error: 'You have not submitted a request yet' }
-  end
 end
