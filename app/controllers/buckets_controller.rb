@@ -14,20 +14,24 @@ class BucketsController < ApplicationController
   end
 
   def last
-    last_request = @bucket.last_request
-
-    render json: { body:        last_request.body,
-                   headers:     last_request.headers,
-                   created_at:  last_request.created_at }
+    if last_request = @bucket.last_request
+      render json: { body:        last_request.body,
+                     headers:     last_request.headers,
+                     created_at:  last_request.created_at }
+    else
+      redirect_to bucket_path(@bucket.token), alert: 'Please submit a request first'
+    end
   end
 
   def last_response
-    last_response = @bucket.last_response
-
-    render json: { status:      last_response.status,
-                   body:        last_response.body,
-                   headers:     last_response.headers,
-                   created_at:  last_response.created_at }
+    if last_response = @bucket.last_response
+      render json: { status:      last_response.status,
+                     body:        last_response.body,
+                     headers:     last_response.headers,
+                     created_at:  last_response.created_at }
+    else
+      redirect_to bucket_path(@bucket.token), alert: 'Please submit a request first'
+    end
   end
 
   def response_builder
@@ -49,5 +53,9 @@ class BucketsController < ApplicationController
 
   def load_bucket
     @bucket = Bucket.where(token: params[:token]).first
+  end
+
+  def error_response
+    { error: 'You have not submitted a request yet' }
   end
 end
