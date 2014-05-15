@@ -28,7 +28,7 @@ class Bucket
                     params:          rack_request.request_parameters)
   end
 
-  def build_response(request, timeout = 5)
+  def build_response(request, timeout = 10)
     context = V8::Context.new timeout: timeout
 
     load_default_record(request, context)
