@@ -8,8 +8,8 @@
 <section class="putsreq-url-box">
   <h3>Your PutsReq URL</h3>
   <div class="input-group putsreq-url">
-    <input id="putsreq-url-input" type="text" value="<%= "#{request.url.gsub(request.path, '')}/#{@bucket.token}" %>" readonly="readonly"></input>
-    <span id="copy-button" data-clipboard-text="<%= "#{request.url.gsub(request.path, '')}/#{@bucket.token}" %> " class="input-group-addon hastip">
+    <input id="putsreq-url-input" type="text" value="<%= token_url(request, @bucket.token) %>" readonly="readonly"></input>
+    <span id="copy-button" data-clipboard-text="<%=token_url(request, @bucket.token) %> " class="input-group-addon hastip">
       <span class="glyphicon glyphicon-link hastip"></span>
     </span>
   </div>
@@ -19,7 +19,7 @@
 
 <section>
   <h4>Sample Request using cURL</h4>
-  <code>curl -i -X POST -d 'name=Pablo' <%= "#{request.url.gsub(request.path, '')}/#{@bucket.token}" %></code>
+  <code>curl -i -X POST -d 'name=Pablo' <%= token_url(request, @bucket.token) %></code>
 </section>
 
 <hr/>

@@ -10,15 +10,15 @@
       </header>
       <section class="start">
         <% if @buckets.any?  %>
-        <div class="history">
-          <h4 class="bm0 tm0">History</h4>
-          <small>View and manage your previously created PutsReqs:</small>
-          <ul class="tm5">
-            <% @buckets.each do |bucket| %>
-              <li><%= link_to bucket.token, bucket_path(bucket.token) %></li>
-            <% end %>
-          </ul>
-        </div>
+          <div class="history">
+            <h4 class="bm0 tm0">History</h4>
+            <small>View and manage your previously created PutsReqs:</small>
+            <ul class="tm5">
+              <% @buckets.each do |bucket| %>
+                <li><%= link_to bucket.token, bucket_path(bucket.token) %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
         <h4>Record the requests sent or received</h4>
         <p>Instead of sending data directly to an API, you can change the URL to a PutsReq URL and inspect all headers and body which are being sent.
@@ -28,7 +28,7 @@
         If you don't want to test against the real API, but you know how to simulate the response, you can do it using the Response Builder.</p>
         <p>Some use cases:</p>
         <ul>
-          <li>Get the real response and once then create a Response Builder simulating it and use PutsReq for the next calls.</li>
+          <li>Get the real response once then create a Response Builder simulating it and use PutsReq for the next calls.</li>
           <li>Use PutsReq for your Integration tests to verify if your application is making the HTTP requests as expected <a href="https://github.com/phstc/putsreq_integration_sample/blob/master/spec/acceptance/create_user_spec.rb">by checking the last recorded request</a>.</li>
         </ul>
       </section>
