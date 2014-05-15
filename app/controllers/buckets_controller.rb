@@ -18,9 +18,10 @@ class BucketsController < ApplicationController
       render json: { body:        last_request.body,
                      headers:     last_request.headers,
                      created_at:  last_request.created_at }
-    else
-      redirect_to bucket_path(@bucket.token), alert: 'Please submit a request first'
+      return
     end
+
+    render_request_not_found
   end
 
   def last_response
@@ -29,9 +30,10 @@ class BucketsController < ApplicationController
                      body:        last_response.body,
                      headers:     last_response.headers,
                      created_at:  last_response.created_at }
-    else
-      redirect_to bucket_path(@bucket.token), alert: 'Please submit a request first'
+      return
     end
+
+    render_request_not_found
   end
 
   def response_builder
@@ -50,6 +52,13 @@ class BucketsController < ApplicationController
   end
 
   private
+
+  def render_request_not_found
+    respond_to do |format|
+      format.html { redirect_to bucket_path(@bucket.token), alert: 'Please submit a request first' }
+      format.all { render nothing: true, status: 404 }
+    end
+  end
 
   def load_bucket
     @bucket = Bucket.where(token: params[:token]).first

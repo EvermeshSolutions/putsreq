@@ -25,4 +25,80 @@ describe BucketsController do
       expect(assigns(:requests)).to eq(bucket.requests)
     end
   end
+
+  describe 'GET #last' do
+    let(:bucket) { Bucket.create(owner_token: owner_token) }
+
+    context 'when found' do
+      let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+
+      before do
+        stub_request(:get, 'http://example.com').
+          to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
+
+        bucket.record_request(rack_request)
+      end
+
+      it 'renders JSON' do
+        get :last, token: bucket.token, format: :json
+
+        expect(response.body).to be_present # TODO: test the contents
+        expect(response).to be_ok
+      end
+    end
+
+    context 'when not found' do
+      it 'redirects to root' do
+        get :last, token: bucket.token
+
+        expect(response).to redirect_to(bucket_path(bucket.token))
+      end
+
+      context 'when JSON' do
+        it 'renders not_found' do
+          get :last, token: bucket.token, format: :json
+
+          expect(response.status).to eq(404)
+        end
+      end
+    end
+  end
+
+  describe 'GET #last_response' do
+    let(:bucket) { Bucket.create(owner_token: owner_token) }
+
+    context 'when found' do
+      let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+
+      before do
+        stub_request(:get, 'http://example.com').
+          to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
+
+        bucket.build_response(bucket.record_request(rack_request))
+      end
+
+      it 'renders JSON' do
+        get :last_response, token: bucket.token, format: :json
+
+        expect(response.body).to be_present # TODO: test the contents
+        expect(response).to be_ok
+      end
+    end
+
+    context 'when not found' do
+      it 'redirects to root' do
+        get :last_response, token: bucket.token
+
+        expect(response).to redirect_to(bucket_path(bucket.token))
+      end
+
+      context 'when JSON' do
+        it 'renders not_found' do
+          get :last_response, token: bucket.token, format: :json
+
+          expect(response.status).to eq(404)
+        end
+      end
+    end
+  end
 end
