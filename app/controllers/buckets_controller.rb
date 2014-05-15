@@ -56,7 +56,7 @@ class BucketsController < ApplicationController
   def render_request_not_found
     respond_to do |format|
       format.html { redirect_to bucket_path(@bucket.token), alert: 'Please submit a request first' }
-      format.all { render nothing: true, status: 404 }
+      format.json { render nothing: true, status: 404 }
     end
   end
 
