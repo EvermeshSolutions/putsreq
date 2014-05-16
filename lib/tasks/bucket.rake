@@ -8,5 +8,5 @@ end
 task :clean_buckets => :environment do
   retention_period = 1.week.ago
 
-  Bucket.delete_all or: [created_at: { '$lt' => retention_period }, created_at: nil]
+  Bucket.delete_all or: [last_request_at: { '$lt' => retention_period }, last_request_at: nil]
 end
