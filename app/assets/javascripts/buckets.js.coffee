@@ -9,7 +9,7 @@ App.buckets['show'] = ->
   editor.setShowPrintMargin(false)
   editor.getSession().setMode 'ace/mode/javascript'
   editor.getSession().on 'change', ->
-    $('#response_builder').val editor.getSession().getValue()
+    $('#bucket_response_builder').val editor.getSession().getValue()
 
   editor.setValue $('#response-builder-container').text()
   editor.clearSelection()

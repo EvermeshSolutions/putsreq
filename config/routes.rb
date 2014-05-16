@@ -5,6 +5,6 @@ PutsReq::Application.routes.draw do
   get ':token/inspect' => 'buckets#show', as: :bucket
   get ':token/last' => 'buckets#last', as: :bucket_last
   get ':token/last_response' => 'buckets#last_response', as: :bucket_last_response
-  patch ':token/response_builder' => 'buckets#response_builder', as: :bucket_response_builder
+  put ':token/buckets' => 'buckets#update', as: :update_bucket
   match ':token' => 'buckets#record', via: :all, as: :bucket_record
 end

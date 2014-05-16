@@ -5,6 +5,22 @@ describe BucketsController do
 
   let(:owner_token) { 'dcc7d3b5152e86064a46e4fef5160d173fe2edd1f1c9c793' }
 
+  describe 'PUT #update' do
+    let(:bucket) { Bucket.create(owner_token: owner_token) }
+
+    it 'updates a bucket' do
+      bucket_params = { 'name' => 'test123', 'response_builder' => 'response.body = "ok";' }
+
+      put :update, token: bucket.token, bucket: bucket_params
+
+      bucket.reload
+
+      expect(bucket.attributes).to include(bucket_params)
+
+      expect(response).to redirect_to(bucket_path(bucket.token))
+    end
+  end
+
   describe 'POST #create' do
     it 'creates a new bucket' do
       expect {

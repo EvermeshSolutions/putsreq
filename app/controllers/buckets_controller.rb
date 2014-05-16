@@ -13,6 +13,12 @@ class BucketsController < ApplicationController
     @requests = @bucket.requests.page(params[:page]).per 10
   end
 
+  def update
+    @bucket.update_attributes bucket_params
+
+    redirect_to bucket_path(@bucket.token)
+  end
+
   def last
     if last_request = @bucket.last_request
       render json: { body:        last_request.body,
@@ -36,12 +42,6 @@ class BucketsController < ApplicationController
     render_request_not_found
   end
 
-  def response_builder
-    @bucket.update_attribute :response_builder, params[:response_builder]
-
-    redirect_to bucket_path(@bucket.token)
-  end
-
   def record
     recorded_request  = @bucket.record_request(request)
     recorded_response = @bucket.build_response(recorded_request)
@@ -62,5 +62,9 @@ class BucketsController < ApplicationController
 
   def load_bucket
     @bucket = Bucket.where(token: params[:token]).first
+  end
+
+  def bucket_params
+    params.require(:bucket).permit(:response_builder, :name)
   end
 end

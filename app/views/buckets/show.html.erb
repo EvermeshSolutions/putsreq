@@ -24,13 +24,18 @@
 
 <hr/>
 
-<h4>Response Builder&nbsp;<a href="https://github.com/phstc/putsreq#response-builder" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
-  <%= form_for @bucket, url: bucket_response_builder_path(@bucket.token), method: :patch do %>
-    <script id="response-builder-container"  type='application/vns.putsreq-response_builder'><%== @bucket.response_builder %></script>
-    <div id="editor" name="editor" style="width: 100%; height: 250px"></div>
-    <textarea id="response_builder" name="response_builder" style="display:none;"></textarea>
-    <p><button class="btn btn-primary tm10">Update</button></p>
-  <% end %>
+<%= form_for @bucket, url: update_bucket_path(@bucket.token), method: :put do |f| %>
+  <%= f.hidden_field :response_builder %>
+  <script id="response-builder-container"  type='application/vns.putsreq-response_builder'><%== @bucket.response_builder %></script>
+  <h4>Bucket name</h4>
+  <div class="input-group putsreq-name">
+    <%= f.text_field :name %>
+  </div>
+  <h4>Response Builder&nbsp;<a href="https://github.com/phstc/putsreq#response-builder" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+  <div id="editor" name="editor" style="width: 100%; height: 250px"></div>
+  <textarea id="response_builder" name="response_builder" style="display:none;"></textarea>
+  <p><button class="btn btn-primary tm10">Update</button></p>
+<% end %>
 <hr/>
 <p>
   <%= page_entries_info @requests %>

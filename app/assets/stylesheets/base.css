@@ -61,3 +61,9 @@ section.start {
   width: 595px;
   text-indent: 10px;
 }
+
+.putsreq-name input {
+  font-size: 2em;
+  width: 365px;
+  text-indent: 10px;
+}

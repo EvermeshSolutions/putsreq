@@ -10,6 +10,7 @@ class Bucket
   has_many :responses,  dependent: :delete,  order: [:created_at.desc]
 
   field :token
+  field :name
   field :owner_token
   field :response_builder, default: -> { default_response_builder }
 
@@ -17,6 +18,14 @@ class Bucket
   index owner_token: 1
 
   before_create :generate_token
+
+  def name
+    if (name = read_attribute(:name)).blank?
+      token
+    else
+      name
+    end
+  end
 
   def record_request(rack_request)
     requests.create(body:            rack_request.body.read,

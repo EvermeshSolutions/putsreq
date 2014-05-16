@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Bucket do
   let(:rack_request) { ActionController::TestRequest.new }
 
-  subject { described_class.create }
+  subject { described_class.create(name: 'test123') }
 
   describe '.find_by_token' do
     it 'finds document' do
@@ -24,6 +24,20 @@ describe Bucket do
   describe '.create' do
     it 'generates a token' do
       expect(subject.token).to be_present
+    end
+  end
+
+  describe '#name' do
+    it 'returns name' do
+      expect(subject.name).to eq 'test123'
+    end
+
+    context 'when name is blank' do
+      subject { described_class.create }
+
+      it 'returns token' do
+        expect(subject.name).to eq subject.token
+      end
     end
   end
 
