@@ -25,6 +25,8 @@ describe Bucket do
     it 'generates a token' do
       expect(subject.token).to be_present
     end
+
+    it { expect(subject.last_request_at).to be_nil }
   end
 
   describe '#name' do
@@ -132,6 +134,9 @@ describe Bucket do
 
   describe '#record_request' do
     it 'copies required attributes' do
+      now = Time.now
+      Time.stub(now: now)
+
       req = subject.record_request(rack_request)
 
       expect(req).to be_persisted
@@ -141,6 +146,8 @@ describe Bucket do
                                         'ip'             => rack_request.ip,
                                         'url'            => rack_request.url,
                                         'params'         => rack_request.params)
+
+      expect(subject.last_request_at).to eq(now)
     end
 
     it 'skips lowercase headers (rack specific headers)' do

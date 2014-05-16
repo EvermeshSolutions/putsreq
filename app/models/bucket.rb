@@ -13,6 +13,7 @@ class Bucket
   field :name
   field :owner_token
   field :response_builder, default: -> { default_response_builder }
+  field :last_request_at, type: Time
 
   index token: 1
   index owner_token: 1
@@ -28,13 +29,17 @@ class Bucket
   end
 
   def record_request(rack_request)
-    requests.create(body:            rack_request.body.read,
-                    content_length:  rack_request.content_length,
-                    request_method:  rack_request.request_method,
-                    ip:              rack_request.ip,
-                    url:             rack_request.url,
-                    headers:         parse_env_to_headers(rack_request.env),
-                    params:          rack_request.request_parameters)
+    request = requests.create(body:            rack_request.body.read,
+                              content_length:  rack_request.content_length,
+                              request_method:  rack_request.request_method,
+                              ip:              rack_request.ip,
+                              url:             rack_request.url,
+                              headers:         parse_env_to_headers(rack_request.env),
+                              params:          rack_request.request_parameters)
+
+    update_attribute :last_request_at, Time.now
+
+    request
   end
 
   def build_response(request, timeout = 10)
