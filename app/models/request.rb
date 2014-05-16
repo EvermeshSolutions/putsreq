@@ -4,7 +4,7 @@ class Request
 
   belongs_to :bucket
 
-  has_one :response
+  has_one :response, dependent: :delete
 
   field :body
   field :headers, type: Hash
