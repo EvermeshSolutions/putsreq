@@ -12,13 +12,14 @@ class Bucket
   field :token
   field :name
   field :owner_token
+  field :read_only_token
   field :response_builder, default: -> { default_response_builder }
   field :last_request_at, type: Time
 
   index token: 1
   index owner_token: 1
 
-  before_create :generate_token
+  before_create :generate_tokens
 
   def name
     if (name = read_attribute(:name)).blank?
@@ -114,10 +115,15 @@ class Bucket
     end
   end
 
-  def generate_token
+  def generate_tokens
     self.token = loop do
       random_token = SecureRandom.urlsafe_base64(15).tr('_-', '0a')
       break random_token unless Bucket.where(token: random_token).exists?
+    end
+
+    self.read_only_token = loop do
+      random_token = SecureRandom.urlsafe_base64(15).tr('_-', '0a')
+      break random_token unless Bucket.where(read_only_token: random_token).exists?
     end
   end
 

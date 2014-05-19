@@ -13,6 +13,11 @@ class BucketsController < ApplicationController
     @requests = @bucket.requests.page(params[:page]).per 10
   end
 
+  def share
+    @bucket = Bucket.where(read_only_token: params[:token]).first
+    @requests = @bucket.requests.page(params[:page]).per 10
+  end
+
   def update
     @bucket.update_attributes bucket_params
 

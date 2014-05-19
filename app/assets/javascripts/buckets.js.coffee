@@ -20,7 +20,7 @@ App.buckets['show'] = ->
   window.client = new ZeroClipboard $('#copy-button')
   htmlBridge = '#global-zeroclipboard-html-bridge'
 
-  tipsyConfig = title: 'Copy to Clipboard', copiedHint: 'Copied!'
+  tipsyConfig = title: 'Share Bucket', copiedHint: 'Copied!'
 
   $(htmlBridge).tipsy gravity: $.fn.tipsy.autoNS
   $(htmlBridge).attr 'title', tipsyConfig.title
@@ -30,3 +30,5 @@ App.buckets['show'] = ->
 
     $(htmlBridge).prop('title', tipsyConfig.copiedHint).tipsy 'show'
     $(htmlBridge).attr 'original-title', tipsyConfig.title
+
+App.buckets['share'] = App.buckets['show']
