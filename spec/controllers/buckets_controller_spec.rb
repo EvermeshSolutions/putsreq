@@ -42,6 +42,17 @@ describe BucketsController do
     end
   end
 
+  describe 'GET #share' do
+    let(:bucket) { Bucket.create(owner_token: owner_token) }
+
+    it 'shows a bucket' do
+      get :share, token: bucket.read_only_token
+
+      expect(assigns(:bucket)).to eq(bucket)
+      expect(assigns(:requests)).to eq(bucket.requests)
+    end
+  end
+
   describe 'GET #last' do
     let(:bucket) { Bucket.create(owner_token: owner_token) }
 
