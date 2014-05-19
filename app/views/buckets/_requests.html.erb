@@ -1,0 +1,53 @@
+<p>
+  <%= page_entries_info @requests %>
+</p>
+<p>
+  <%= paginate @requests %>
+</p>
+<hr/>
+<% @requests.to_a.each do |recorded_request| %>
+  <table class="requests-header">
+    <thead>
+      <tr>
+        <th>Request Headers</th>
+        <th>&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% recorded_request.headers.to_h.each do |header_key, header_value| %>
+      <tr>
+        <td class="key"><%= header_key %></td>
+        <td class="value" title="<%= header_value %>"><%= header_value %></td>
+      </tr>
+    <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">
+
+          <div class="request-footer-info">
+            <small>When</small>
+            <span><%= time_ago_in_words recorded_request.created_at %> ago</span>
+          </div>
+
+          <div class="request-footer-info">
+            <small>Request Body</small>
+            <span><code><%= recorded_request.body %></code></span>
+          </div>
+
+          <div class="request-footer-info">
+            <small>Response Body</small>
+            <span><code><%= recorded_request.response.body_to_s %></code></span>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <hr/>
+<% end %>
+<p>
+  <%= page_entries_info @requests %>
+</p>
+<p>
+  <%= paginate @requests %>
+</p>

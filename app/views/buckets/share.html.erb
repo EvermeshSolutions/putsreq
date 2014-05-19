@@ -1,0 +1,14 @@
+<ul class="nav">
+  <li class="logo"><a href="/"><%= image_tag 'logo.png' %></a></li>
+</ul>
+
+<br/><br/>
+<hr/>
+
+<h4>Response Builder&nbsp;<a href="https://github.com/phstc/putsreq#response-builder" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
+<div id="editor" name="editor" style="width: 100%; height: 250px"></div>
+<script id="response-builder-container"  type='application/vns.putsreq-response_builder'><%== @bucket.response_builder %></script>
+
+<hr/>
+
+<%= render 'requests' %>
