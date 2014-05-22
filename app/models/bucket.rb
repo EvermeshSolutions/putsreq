@@ -116,14 +116,14 @@ class Bucket
   end
 
   def generate_tokens
-    self.token = loop do
-      random_token = SecureRandom.urlsafe_base64(15).tr('_-', '0a')
-      break random_token unless Bucket.where(token: random_token).exists?
-    end
+    self.token = generate_token(:token)
+    self.read_only_token = generate_token(:read_only_token)
+  end
 
-    self.read_only_token = loop do
+  def generate_token(attr)
+    loop do
       random_token = SecureRandom.urlsafe_base64(15).tr('_-', '0a')
-      break random_token unless Bucket.where(read_only_token: random_token).exists?
+      break random_token unless Bucket.where(attr => random_token).exists?
     end
   end
 
