@@ -6,7 +6,7 @@ task :clean_requests => :environment do
 end
 
 task :clean_buckets => :environment do
-  retention_period = 2.week.ago
+  retention_period = 3.months.ago
 
   Bucket.delete_all(last_request_at: { '$lt' => retention_period }, updated_at:  { '$lt' => retention_period } )
 
