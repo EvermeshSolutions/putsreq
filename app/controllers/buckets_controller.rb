@@ -9,6 +9,13 @@ class BucketsController < ApplicationController
     redirect_to bucket_path(bucket.token)
   end
 
+  def destroy
+    binding.pry
+    @bucket.destroy
+
+    redirect_to root_path
+  end
+
   def show
     @requests = @bucket.requests.page(params[:page]).per 10
   end

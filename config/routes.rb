@@ -8,4 +8,5 @@ PutsReq::Application.routes.draw do
   get ':token/last_response' => 'buckets#last_response', as: :bucket_last_response
   put ':token/buckets' => 'buckets#update', as: :update_bucket
   match ':token' => 'buckets#record', via: :all, as: :bucket_record
+  delete ':token/delete' => 'buckets#destroy', as: :bucket_destroy
 end
