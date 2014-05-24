@@ -10,7 +10,6 @@ class BucketsController < ApplicationController
   end
 
   def destroy
-    binding.pry
     @bucket.destroy
 
     redirect_to root_path
