@@ -8,8 +8,8 @@
 <section class="putsreq-url-box">
   <h3>Your PutsReq URL</h3>
   <div class="input-group putsreq-url">
-    <input id="putsreq-url-input" type="text" value="<%= token_url(request, @bucket.token) %>" readonly="readonly"></input>
-    <span id="copy-button" data-clipboard-text="<%=share_bucket_url(@bucket.read_only_token) %> " class="input-group-addon hastip">
+      <input id="putsreq-url-input" type="text" value="<%= token_url(request, @bucket.token) %>" readonly="readonly"></input>
+      <span id="copy-button" data-clipboard-text="<%= token_url(request, @bucket.token) %>" class="input-group-addon hastip">
       <span class="glyphicon glyphicon-link hastip"></span>
     </span>
   </div>
