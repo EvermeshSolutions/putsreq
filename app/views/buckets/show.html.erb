@@ -8,8 +8,8 @@
 <section class="putsreq-url-box">
   <h3>Your PutsReq URL</h3>
   <div class="input-group putsreq-url">
-    <input id="putsreq-url-input" type="text" value="<%= bucket_url(@bucket.token) %>" readonly="readonly"></input>
-    <span id="copy-button" data-clipboard-text="<%=bucket_url(@bucket.token) %> " class="input-group-addon hastip clipboard">
+    <input id="putsreq-url-input" type="text" value="<%= token_url(@bucket.token) %>" readonly="readonly"></input>
+    <span id="copy-button" data-clipboard-text="<%= token_url(@bucket.token) %>" class="input-group-addon hastip clipboard">
       <span class="glyphicon glyphicon-link hastip"></span>
     </span>
 
@@ -23,7 +23,7 @@
 
 <section>
   <h4>Sample Request using cURL</h4>
-  <code>curl -i -X POST -d 'name=Pablo' <%= token_url(request, @bucket.token) %></code>
+  <code>curl -i -X POST -d 'name=Pablo' <%= token_url(@bucket.token) %></code>
 </section>
 
 <hr/>

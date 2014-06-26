@@ -9,4 +9,6 @@ PutsReq::Application.routes.draw do
   put ':token/buckets' => 'buckets#update', as: :update_bucket
   match ':token' => 'buckets#record', via: :all, as: :bucket_record
   delete ':token/delete' => 'buckets#destroy', as: :bucket_destroy
+  delete ':token/clear' => 'buckets#clear', as: :bucket_clear
+  post ':token/duplicate' => 'buckets#duplicate', as: :bucket_duplicate
 end

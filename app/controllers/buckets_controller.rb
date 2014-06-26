@@ -9,6 +9,13 @@ class BucketsController < ApplicationController
     redirect_to bucket_path(bucket.token)
   end
 
+  def clear
+    @bucket.requests.delete_all
+    @bucket.responses.delete_all
+
+    redirect_to bucket_path(@bucket.token)
+  end
+
   def destroy
     @bucket.destroy
 

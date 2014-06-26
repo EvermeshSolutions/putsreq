@@ -4,7 +4,7 @@ module ApplicationHelper
     "#{controller_name}##{action_name}"
   end
 
-  def token_url(request, token)
+  def token_url(token)
     request.url.gsub(request.path, '') + "/" + token
   end
 end

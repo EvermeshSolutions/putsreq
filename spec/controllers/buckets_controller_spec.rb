@@ -4,10 +4,31 @@ describe BucketsController do
   render_views
 
   let(:owner_token) { 'dcc7d3b5152e86064a46e4fef5160d173fe2edd1f1c9c793' }
+  let(:bucket) { Bucket.create(owner_token: owner_token) }
+
+  describe 'DELETE #clear' do
+    let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+
+    before do
+      stub_request(:get, 'http://example.com').
+        to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
+    end
+
+    it 'clears history' do
+      bucket.build_response(bucket.record_request(rack_request))
+
+      expect(bucket.requests).to have(1).item
+      expect(bucket.responses).to have(1).item
+
+      put :clear, token: bucket.token
+
+      bucket.reload
+      expect(bucket.requests).to be_empty
+      expect(bucket.responses).to be_empty
+    end
+  end
 
   describe 'PUT #update' do
-    let(:bucket) { Bucket.create(owner_token: owner_token) }
-
     it 'updates a bucket' do
       bucket_params = { 'name' => 'test123', 'response_builder' => 'response.body = "ok";' }
 
@@ -32,8 +53,6 @@ describe BucketsController do
   end
 
   describe 'GET #show' do
-    let(:bucket) { Bucket.create(owner_token: owner_token) }
-
     it 'shows a bucket' do
       get :show, token: bucket.token
 
@@ -43,8 +62,6 @@ describe BucketsController do
   end
 
   describe 'GET #share' do
-    let(:bucket) { Bucket.create(owner_token: owner_token) }
-
     it 'shows a bucket' do
       get :share, token: bucket.read_only_token
 
@@ -54,8 +71,6 @@ describe BucketsController do
   end
 
   describe 'GET #last' do
-    let(:bucket) { Bucket.create(owner_token: owner_token) }
-
     context 'when found' do
       let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
@@ -92,8 +107,6 @@ describe BucketsController do
   end
 
   describe 'GET #last_response' do
-    let(:bucket) { Bucket.create(owner_token: owner_token) }
-
     context 'when found' do
       let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
