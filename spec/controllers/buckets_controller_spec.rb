@@ -20,11 +20,25 @@ describe BucketsController do
       expect(bucket.requests).to have(1).item
       expect(bucket.responses).to have(1).item
 
-      put :clear, token: bucket.token
+      delete :clear, token: bucket.token
 
       bucket.reload
       expect(bucket.requests).to be_empty
       expect(bucket.responses).to be_empty
+    end
+  end
+
+  describe 'POST #duplicate' do
+    it 'duplicates bucket' do
+      name = bucket.name
+      expect {
+        post :duplicate, token: bucket.token
+
+        bucket2 = Bucket.last
+        expect(bucket2.name).to eq "Copy of #{name}"
+
+        expect(response).to redirect_to(bucket_path(bucket2.token))
+      }.to change(Bucket, :count).by(1)
     end
   end
 

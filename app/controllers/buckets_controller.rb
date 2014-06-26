@@ -9,6 +9,12 @@ class BucketsController < ApplicationController
     redirect_to bucket_path(bucket.token)
   end
 
+  def duplicate
+    bucket = Bucket.create(owner_token: owner_token, response_builder: @bucket.response_builder, name: "Copy of #{@bucket.name}")
+
+    redirect_to bucket_path(bucket.token)
+  end
+
   def clear
     @bucket.requests.delete_all
     @bucket.responses.delete_all

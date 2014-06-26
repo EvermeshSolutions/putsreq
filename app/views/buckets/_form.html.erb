@@ -12,6 +12,7 @@
   <textarea id="response_builder" name="response_builder" style="display:none;"></textarea>
   <p>
     <button class="btn btn-primary tm10">Update</button>
+    <%= link_to 'Duplicate', bucket_duplicate_path(@bucket.token), class: 'btn btn-default tm10 lm5', method: :post %>
     <%= link_to 'Clear', bucket_clear_path(@bucket.token), class: 'btn btn-default tm10 lm5', method: :delete, data: { confirm: 'Are you sure?' } %>
     <%= link_to 'Destroy', bucket_destroy_path(@bucket.token), class: 'btn btn-default tm10 lm5', method: :delete, data: { confirm: 'Are you sure?' } %>
   </p>
