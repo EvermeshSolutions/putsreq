@@ -1,11 +1,21 @@
 <%= form_for @bucket, url: update_bucket_path(@bucket.token), method: :put do |f| %>
   <%= f.hidden_field :response_builder %>
   <script id="response-builder-container"  type='application/vns.putsreq-response_builder'><%== @bucket.response_builder %></script>
-  <h4>Bucket name
-  <small><em>You can change it anytime.</em></small>
-  </h4>
-  <div class="input-group putsreq-name bm30">
-    <%= f.text_field :name %>
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Bucket name
+      <small><em>You can change it anytime.</em></small>
+      </h4>
+      <div class="input-group putsreq-name bm30">
+        <%= f.text_field :name %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h4>Requests
+      <small><em>The number of requests made to this bucket.</em></small>
+      </h4>
+      <h3><%= @bucket.requests_count %></h3>
+    </div>
   </div>
   <h4>Response Builder&nbsp;<a href="https://github.com/phstc/putsreq#response-builder" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a></h4>
   <div id="editor" name="editor" style="width: 100%; height: 250px"></div>

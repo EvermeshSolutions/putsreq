@@ -164,6 +164,14 @@ describe Bucket do
     end
   end
 
+  describe '#requests_count' do
+    it 'returns the number of requests made to the bucket' do
+      expect {
+        subject.record_request(rack_request)
+      }.to change { subject.requests_count }.from(0).to(1)
+    end
+  end
+
   pending '#last_request'
   pending '#last_response'
 end
