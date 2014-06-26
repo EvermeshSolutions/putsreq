@@ -47,7 +47,6 @@ class Bucket
     context = V8::Context.new timeout: timeout
 
     load_default_record(request, context)
-    load_last_record(request, context)
 
     context.eval(response_builder.to_s)
 
@@ -147,26 +146,6 @@ class Bucket
                             'body'           => request.body,
                             'params'         => request.params,
                             'headers'        => request.headers }
-  end
-
-  def load_last_record(request, context)
-    if last_request = previous_request(request)
-      last_response = last_request.response
-
-      context['last_request']  = { 'created_at'     => last_request.created_at,
-                                   'request_method' => last_request.request_method,
-                                   'body'           => last_request.body,
-                                   'params'         => last_request.params,
-                                   'headers'        => last_request.headers }
-
-      context['last_response'] = { 'created_at' => last_response.created_at,
-                                   'status'     => last_response.status,
-                                   'headers'    => last_response.headers,
-                                   'body'       => last_response.body }
-    else
-      context['last_request']  = nil
-      context['last_response'] = nil
-    end
   end
 
   def default_response_builder

@@ -50,23 +50,6 @@ describe Bucket do
   describe '#build_response' do
     let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
-    context 'when last_response is available' do
-      subject { described_class.create response_builder: %{if(last_response) { response.body = last_response.body + ' world'; } else { response.body = 'hello'; }} }
-
-      it 'uses last_response' do
-        stub_request(:get, 'http://example.com').
-          to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
-
-        2.times {
-          subject.build_response(
-            subject.record_request(rack_request)
-          )
-        }
-
-        expect(subject.last_response.attributes).to include('body' => "hello world")
-      end
-    end
-
     context 'when forward to' do
       subject { described_class.create response_builder: %{response.status = 200; response.body = "It's me, Mario!"; request.forwardTo = 'http://example.com'} }
 

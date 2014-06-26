@@ -107,10 +107,6 @@ request.body = parsedBody;
 request.forwardTo = 'http://example.com/api';
 ```
 
-#### last_request & last_response
-
-The last received request and response are also available in the Response Builder context through the variables `last_request` and `last_response`.
-
 ### Ajax
 
 PutsReq supports [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), so you can use it to test your Ajax calls.
