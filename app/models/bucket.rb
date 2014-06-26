@@ -74,6 +74,10 @@ class Bucket
                      'body'    => e.message)
   end
 
+  def requests_count
+    requests.count
+  end
+
   def last_request
     requests.order(:created_at.desc).first
   end
