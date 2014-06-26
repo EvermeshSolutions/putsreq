@@ -1,6 +1,6 @@
 App.buckets = {}
 
-App.buckets['show'] = ->
+App.buckets['share'] = App.buckets['show'] = ->
   $('#putsreq-url-input').on 'click', ->
     $(this).select()
 
@@ -17,23 +17,16 @@ App.buckets['show'] = ->
   ZeroClipboard.config
     moviePath: '/flash/ZeroClipboard.swf'
 
-  client = new ZeroClipboard($('.clipboard'))
-  htmlBridge = '.global-zeroclipboard-container'
+  window.client = new ZeroClipboard $('#copy-button')
+  htmlBridge = '#global-zeroclipboard-html-bridge'
+
+  tipsyConfig = title: 'Copy to Clipboard', copiedHint: 'Copied!'
+
   $(htmlBridge).tipsy gravity: $.fn.tipsy.autoNS
-  tipsyConfig = title: '', copiedHint: 'Copied!'
-
-  $('.clipboard').on 'mouseover', (e) ->
-    if e.currentTarget.id == 'copy-button'
-      tipsyConfig.title = 'Copy Bucket'
-    else
-      tipsyConfig.title = 'Share Bucket'
-
-    $(htmlBridge).attr 'original-title', tipsyConfig.title
+  $(htmlBridge).attr 'title', tipsyConfig.title
 
   client.on 'complete', (client, args) ->
     $('#putsreq-url-input').focus().blur()
 
     $(htmlBridge).prop('title', tipsyConfig.copiedHint).tipsy 'show'
     $(htmlBridge).attr 'original-title', tipsyConfig.title
-
-App.buckets['share'] = App.buckets['show']

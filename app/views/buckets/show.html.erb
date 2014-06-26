@@ -3,6 +3,7 @@
   <li><a href="<%= "/#{@bucket.token}/inspect" %>">Inspect</a></li>
   <li><a href="<%= "/#{@bucket.token}/last" %>">Last Request</a></li>
   <li><a href="<%= "/#{@bucket.token}/last_response" %>">Last Response</a></li>
+  <li><a href="<%= share_bucket_url(@bucket.read_only_token) %>">Read-only</a></li>
 </ul>
 
 <section class="putsreq-url-box">
@@ -11,10 +12,6 @@
     <input id="putsreq-url-input" type="text" value="<%= token_url(@bucket.token) %>" readonly="readonly"></input>
     <span id="copy-button" data-clipboard-text="<%= token_url(@bucket.token) %>" class="input-group-addon hastip clipboard">
       <span class="glyphicon glyphicon-link hastip"></span>
-    </span>
-
-    <span id="share-button" data-clipboard-text="<%=share_bucket_url(@bucket.read_only_token)%>" class="input-group-addon hastip clipboard">
-      <span class="glyphicon glyphicon-share-alt hastip"></span>
     </span>
   </div>
 </section>
