@@ -43,7 +43,7 @@ class Bucket
     request
   end
 
-  def build_response(request, timeout = 10)
+  def build_response(request, timeout = 2500)
     context = V8::Context.new timeout: timeout
 
     load_default_record(request, context)
