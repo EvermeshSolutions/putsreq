@@ -122,7 +122,7 @@ describe Bucket do
   describe '#record_request' do
     it 'copies required attributes' do
       now = Time.now
-      Time.stub(now: now)
+      allow(Time).to receive(:now) { now }
 
       req = subject.record_request(rack_request)
 
