@@ -50,6 +50,7 @@ gem 'bson_ext'
 gem 'httparty'
 gem 'kaminari'
 gem 'rack-cors', require: 'rack/cors'
+gem 'redis'
 
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'rails-assets-zeroclipboard'

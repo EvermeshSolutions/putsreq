@@ -15,4 +15,12 @@ class Request
   field :params, type: Hash
 
   validates :bucket, presence: true
+
+  after_create :bump_requests_recorded
+
+  private
+
+  def bump_requests_recorded
+    REDIS.incr 'requests_recorded'
+  end
 end

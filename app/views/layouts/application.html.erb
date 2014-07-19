@@ -28,7 +28,7 @@
     <%= render 'shared/flash' %>
     <%= yield %>
     <hr />
-    <strong>Requests Recorded: <%= Request.count %></strong>
+    <strong>Requests Recorded: <%= REDIS.get 'requests_recorded' %></strong>
   </div>
 
 </body>
