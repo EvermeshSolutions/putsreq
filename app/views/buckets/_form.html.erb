@@ -8,6 +8,9 @@
       </h4>
       <div class="input-group putsreq-name bm30">
         <%= f.text_field :name %>
+        <% if @bucket.fork %>
+          <p><small>forked from <%= link_to @bucket.fork.name, bucket_path(@bucket.fork.token) %></small></p>
+        <% end %>
       </div>
     </div>
     <div class="col-md-6">

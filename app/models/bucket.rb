@@ -10,7 +10,7 @@ class Bucket
   has_many :responses,  dependent: :delete,  order: [:created_at.desc]
   has_many :forks,      class_name: 'Bucket'
 
-  belongs_to :forked_from, class_name: 'Bucket'
+  belongs_to :fork, class_name: 'Bucket'
 
   field :token
   field :name

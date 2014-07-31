@@ -37,7 +37,7 @@ describe BucketsController do
         bucket2 = Bucket.last
 
         expect(bucket2.name).to eq "Copy of #{name}"
-        expect(bucket2.forked_from).to eq bucket
+        expect(bucket2.fork).to eq bucket
 
         expect(response).to redirect_to(bucket_path(bucket2.token))
       }.to change(Bucket, :count).by(1)

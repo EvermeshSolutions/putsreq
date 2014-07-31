@@ -13,7 +13,7 @@ class BucketsController < ApplicationController
     bucket = Bucket.create(owner_token:       owner_token,
                            response_builder:  @bucket.response_builder,
                            name:              "Copy of #{@bucket.name}",
-                           forked_from:       @bucket)
+                           fork:              @bucket)
 
     redirect_to bucket_path(bucket.token)
   end
