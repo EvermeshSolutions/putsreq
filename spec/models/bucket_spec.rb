@@ -26,10 +26,6 @@ describe Bucket do
       expect(subject.token).to be_present
     end
 
-    it 'generates a read_only_token' do
-      expect(subject.read_only_token).to be_present
-    end
-
     it { expect(subject.last_request_at).to be_nil }
   end
 

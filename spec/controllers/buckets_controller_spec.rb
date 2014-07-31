@@ -6,6 +6,10 @@ describe BucketsController do
   let(:owner_token) { 'dcc7d3b5152e86064a46e4fef5160d173fe2edd1f1c9c793' }
   let(:bucket) { Bucket.create(owner_token: owner_token) }
 
+  before do
+    request.cookies[:owner_token] = bucket.owner_token
+  end
+
   describe 'DELETE #clear' do
     let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
@@ -23,6 +27,7 @@ describe BucketsController do
       delete :clear, token: bucket.token
 
       bucket.reload
+
       expect(bucket.requests).to be_empty
       expect(bucket.responses).to be_empty
     end
@@ -71,15 +76,6 @@ describe BucketsController do
   describe 'GET #show' do
     it 'shows a bucket' do
       get :show, token: bucket.token
-
-      expect(assigns(:bucket)).to eq(bucket)
-      expect(assigns(:requests)).to eq(bucket.requests)
-    end
-  end
-
-  describe 'GET #share' do
-    it 'shows a bucket' do
-      get :share, token: bucket.read_only_token
 
       expect(assigns(:bucket)).to eq(bucket)
       expect(assigns(:requests)).to eq(bucket.requests)

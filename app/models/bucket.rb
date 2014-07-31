@@ -15,7 +15,6 @@ class Bucket
   field :token
   field :name
   field :owner_token
-  field :read_only_token
   field :response_builder, default: -> { default_response_builder }
   field :last_request_at, type: Time
 
@@ -123,7 +122,6 @@ class Bucket
 
   def generate_tokens
     self.token = generate_token(:token)
-    self.read_only_token = generate_token(:read_only_token)
   end
 
   def generate_token(attr)
