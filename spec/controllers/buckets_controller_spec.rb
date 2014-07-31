@@ -28,14 +28,16 @@ describe BucketsController do
     end
   end
 
-  describe 'POST #duplicate' do
-    it 'duplicates bucket' do
+  describe 'POST #fork' do
+    it 'forks a bucket' do
       name = bucket.name
       expect {
-        post :duplicate, token: bucket.token
+        post :fork, token: bucket.token
 
         bucket2 = Bucket.last
+
         expect(bucket2.name).to eq "Copy of #{name}"
+        expect(bucket2.forked_from).to eq bucket
 
         expect(response).to redirect_to(bucket_path(bucket2.token))
       }.to change(Bucket, :count).by(1)

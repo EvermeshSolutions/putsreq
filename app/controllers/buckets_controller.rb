@@ -9,8 +9,11 @@ class BucketsController < ApplicationController
     redirect_to bucket_path(bucket.token)
   end
 
-  def duplicate
-    bucket = Bucket.create(owner_token: owner_token, response_builder: @bucket.response_builder, name: "Copy of #{@bucket.name}")
+  def fork
+    bucket = Bucket.create(owner_token:       owner_token,
+                           response_builder:  @bucket.response_builder,
+                           name:              "Copy of #{@bucket.name}",
+                           forked_from:       @bucket)
 
     redirect_to bucket_path(bucket.token)
   end
