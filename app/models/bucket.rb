@@ -104,7 +104,8 @@ class Bucket
              request_hash['body'].to_s
            end
 
-    options = { timeout: 5, headers: request_hash['headers'].to_h, body: body }
+    # options = { timeout: 5, headers: request_hash['headers'].to_h, body: body }
+    options = { timeout: 5, headers: {}, body: body }
 
     response = http_adapter.send(request_hash['request_method'].downcase.to_sym, forward_url, options)
 
