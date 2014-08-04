@@ -104,20 +104,33 @@ class Bucket
              request_hash['body'].to_s
            end
 
-    # options = { timeout: 5, headers: request_hash['headers'].to_h, body: body }
-    options = { timeout: 5, headers: {}, body: body }
+    options = { timeout: 5,
+                headers: forwardable_request_headers(request_hash['headers']),
+                body: body }
 
     response = http_adapter.send(request_hash['request_method'].downcase.to_sym, forward_url, options)
 
     { 'status'  => response.code,
-      'headers' => forwardable_headers(response.headers),
+      'headers' => forwardable_response_headers(response.headers),
       'body'    => response.body }
   end
 
-  def forwardable_headers(headers)
+  def forwardable_request_headers(headers)
+    headers.to_h.reject do |key, value|
+      value.nil?
+    end.inject({}) do |headers, (key, value)|
+      headers[key.gsub(/^HTTP_/i, '')] = value
+      headers
+    end
+  end
+
+  def forwardable_response_headers(headers)
     headers.to_h.select do |key, value|
       key = key.downcase
       key.start_with?('x-') || %[content-type].include?(key)
+    end.inject({}) do |headers, (key, value)|
+      headers[key] = value.join
+      headers
     end
   end
 
