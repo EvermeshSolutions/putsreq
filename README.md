@@ -127,3 +127,7 @@ $.get('https://putsreq.herokuapp.com/<YOUR-TOKEN>', function(data) {
 ### Sample Integration Tests
 
 https://github.com/phstc/putsreq_integration_sample
+
+### License
+
+Please see [LICENSE](https://github.com/phstc/putsreq/blob/master/LICENSE) for licensing details.
