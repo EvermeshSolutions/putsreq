@@ -1,8 +1,8 @@
 <ul class="nav">
   <li class="logo"><a href="/"><%= image_tag 'logo.png' %></a></li>
   <li><a href="<%= "/#{@bucket.token}/inspect" %>">Inspect</a></li>
-  <li><a href="<%= "/#{@bucket.token}/last" %>">Last Request</a></li>
-  <li><a href="<%= "/#{@bucket.token}/last_response" %>">Last Response</a></li>
+  <li><a href="<%= "/#{@bucket.token}/last" %>" title="JSON-formatted">Last Request</a></li>
+  <li><a href="<%= "/#{@bucket.token}/last_response" %>" title="JSON-formatted">Last Response</a></li>
 </ul>
 
 <section class="putsreq-url-box">
