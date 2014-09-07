@@ -35,7 +35,7 @@ App.buckets['share'] = App.buckets['show'] = ->
 
 
 startFaviconUpdater = ->
-  favicon = new Favico(animation:'fade', bgColor: '#6C92C8')
+  favicon = new Favico(animation:'fade', bgColor: '#6C92C8', animation: 'none')
 
   updateFavicon(favicon)
 
