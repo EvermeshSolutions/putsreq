@@ -64,6 +64,10 @@ class BucketsController < ApplicationController
     render_request_not_found
   end
 
+  def requests_count
+    render text: bucket.requests_count
+  end
+
   def record
     recorded_request  = bucket.record_request(request)
     recorded_response = bucket.build_response(recorded_request)
