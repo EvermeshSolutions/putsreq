@@ -118,6 +118,9 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.4)
       sprockets-rails (~> 2.0.0)
+    rails-assets-bootstrap-less (3.2.0)
+    rails-assets-dispatcher (0.1.1)
+    rails-assets-favico.js (0.3.5)
     rails-assets-zeroclipboard (1.3.5)
     rails_12factor (0.0.2)
       rails_serve_static_assets
@@ -219,6 +222,9 @@ DEPENDENCIES
   rack-cors
   rack-test
   rails (= 4.0.4)
+  rails-assets-bootstrap-less
+  rails-assets-dispatcher
+  rails-assets-favico.js
   rails-assets-zeroclipboard
   rails_12factor
   redis

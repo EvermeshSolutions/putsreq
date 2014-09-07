@@ -75,3 +75,7 @@ group :development, :test do
   gem 'rack-test'
   gem 'database_cleaner'
 end
+
+gem 'rails-assets-favico.js'
+gem 'rails-assets-dispatcher'
+gem 'rails-assets-bootstrap-less'
