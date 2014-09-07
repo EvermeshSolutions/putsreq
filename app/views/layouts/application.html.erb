@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PutsReq</title>
+<title><%= content_for?(:title) ? yield(:title) : 'PutsReq' %></title>
   <link rel="apple-touch-icon-precomposed" href="/assets/favicon152.png" />
   <link rel="icon" href="/assets/favicon.png" />
   <meta name="msapplication-TileColor" content="#ffffff" />

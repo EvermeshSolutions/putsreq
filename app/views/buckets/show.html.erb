@@ -1,3 +1,5 @@
+<% content_for :title, "PutsReq: #{@bucket.name}" %>
+
 <ul class="nav">
   <li class="logo"><a href="/"><%= image_tag 'logo.png' %></a></li>
   <li><a href="<%= "/#{@bucket.token}/inspect" %>">Inspect</a></li>
