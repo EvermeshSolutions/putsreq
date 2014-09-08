@@ -31,15 +31,16 @@ App.buckets['share'] = App.buckets['show'] = ->
     $(htmlBridge).prop('title', tipsyConfig.copiedHint).tipsy 'show'
     $(htmlBridge).attr 'original-title', tipsyConfig.title
 
-  startFaviconUpdater()
+  RequestCountPoller.start()
 
 
-startFaviconUpdater = ->
-  favicon = new Favico(animation:'fade', bgColor: '#6C92C8', animation: 'none')
+RequestCountPoller =
+  start: ->
+    favicon = new Favico(animation:'fade', bgColor: '#6C92C8', animation: 'none')
 
-  updateFavicon(favicon)
+    @updateFavicon(favicon)
 
-  setInterval (-> updateFavicon(favicon)), 6000
+    setInterval (=> @updateFavicon(favicon)), 6000
 
-updateFavicon = (favicon) ->
-  $.get "#{$('#putsreq-url-input').val()}/requests/count", ((data) -> favicon.badge(data))
+  updateFavicon: (favicon) ->
+    $.get "#{$('#putsreq-url-input').val()}/requests/count", ((data) -> favicon.badge(data))
