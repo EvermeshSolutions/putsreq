@@ -40,7 +40,7 @@ RequestCountPoller =
 
     @updateFavicon(favicon)
 
-    setInterval (=> @updateFavicon(favicon)), 6000
+    setInterval (=> @updateFavicon(favicon)), 60000
 
   updateFavicon: (favicon) ->
     $.get "#{$('#putsreq-url-input').val()}/requests/count", ((data) -> favicon.badge(data))
