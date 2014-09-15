@@ -27,7 +27,7 @@
 
           <div class="request-footer-info">
             <small>When</small>
-            <span><%= time_ago_in_words recorded_request.created_at %> ago</span>
+            <span title="<%= recorded_request.created_at.utc %>"><%= time_ago_in_words recorded_request.created_at %> ago</span>
           </div>
 
           <div class="request-footer-info">
