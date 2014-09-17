@@ -20,14 +20,22 @@ class Bucket
   before_create :generate_tokens
 
   def requests
+    # couldn't make has_many + conditions work with Mongoid
+    # requests must be filtered by created_at see `clear_history`
     Request.where(bucket_id: id).gte(created_at: history_start_at || created_at).order(:created_at.asc)
   end
 
   def responses
+    # couldn't make has_many + conditions work with Mongoid
+    # responses must be filtered by created_at see `clear_history`
     Response.where(bucket_id: id).gte(created_at: history_start_at || created_at).order(:created_at.asc)
   end
 
   def clear_history
+    # requests and responses are capped collections in production, we cannot delete docs on a capped collection
+    # so we filter these objects by the history_start_at to "clear"
+    # db.runCommand({ "convertToCapped": "requests",  size: 25000000 });
+    # db.runCommand({ "convertToCapped": "responses", size: 25000000 });
     update_attribute :history_start_at, Time.now
   end
 

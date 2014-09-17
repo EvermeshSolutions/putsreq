@@ -10,7 +10,7 @@ task clean_requests: :environment do
   #
   #
   # To prevent MongoLab blows the quota:
-  # db.runCommand({ "convertToCapped": "requests",  size: 20000000 });
+  # db.runCommand({ "convertToCapped": "requests",  size: 25000000 });
   # db.runCommand({ "convertToCapped": "responses", size: 25000000 });
   # I know, it should be the same value for both, but I don't know why MongoLab doesn't allow that.
 end
