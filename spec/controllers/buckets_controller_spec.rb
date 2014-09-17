@@ -78,7 +78,7 @@ describe BucketsController do
       get :show, token: bucket.token
 
       expect(assigns(:bucket)).to eq(bucket)
-      expect(assigns(:requests)).to eq(bucket.requests)
+      expect(assigns(:requests).to_a).to eq(bucket.requests.to_a)
     end
   end
 

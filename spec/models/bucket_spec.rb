@@ -21,6 +21,28 @@ describe Bucket do
     end
   end
 
+  describe '#clear_history' do
+    it 'filters history' do
+      stub_request(:get, 'http://example.com').
+        to_return(body: %{It's me, Luigi!}, status: 202, headers: { 'Content-Type' => 'text/plain' })
+
+      subject.build_response(subject.record_request(rack_request))
+
+      expect(subject.requests.count).to eq 1
+      expect(subject.responses.count).to eq 1
+
+      subject.update_attribute :history_start_at, Time.now
+
+      expect(subject.requests.count).to eq 0
+      expect(subject.responses.count).to eq 0
+
+      subject.build_response(subject.record_request(rack_request))
+
+      expect(subject.requests.count).to eq 1
+      expect(subject.responses.count).to eq 1
+    end
+  end
+
   describe '.create' do
     it 'generates a token' do
       expect(subject.token).to be_present

@@ -3,9 +3,7 @@ class Bucket
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  has_many :requests,   dependent: :delete,  order: [:created_at.desc]
-  has_many :responses,  dependent: :delete,  order: [:created_at.desc]
-  has_many :forks,      class_name: 'Bucket'
+  has_many :forks, class_name: 'Bucket'
 
   belongs_to :fork, class_name: 'Bucket'
 
@@ -14,11 +12,24 @@ class Bucket
   field :owner_token
   field :response_builder, default: -> { default_response_builder }
   field :last_request_at, type: Time
+  field :history_start_at, type: Time
 
   index token: 1
   index owner_token: 1
 
   before_create :generate_tokens
+
+  def requests
+    Request.where(bucket_id: id).gte(created_at: history_start_at || created_at).order(:created_at.asc)
+  end
+
+  def responses
+    Response.where(bucket_id: id).gte(created_at: history_start_at || created_at).order(:created_at.asc)
+  end
+
+  def clear_history
+    update_attribute :history_start_at, Time.now
+  end
 
   def name
     if (name = read_attribute(:name)).blank?

@@ -19,8 +19,7 @@ class BucketsController < ApplicationController
   end
 
   def clear
-    bucket.requests.delete_all
-    bucket.responses.delete_all
+    bucket.clear_history
 
     redirect_to bucket_path(bucket.token)
   end
