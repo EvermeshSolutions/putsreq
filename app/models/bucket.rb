@@ -3,9 +3,6 @@ class Bucket
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  # TODO rename production collection to buckets
-  store_in collection: 'puts_reqs'
-
   has_many :requests,   dependent: :delete,  order: [:created_at.desc]
   has_many :responses,  dependent: :delete,  order: [:created_at.desc]
   has_many :forks,      class_name: 'Bucket'
