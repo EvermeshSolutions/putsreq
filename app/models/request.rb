@@ -14,6 +14,8 @@ class Request
   field :url
   field :params, type: Hash
 
+  index bucket_id: 1
+
   validates :bucket, presence: true
 
   after_create :bump_requests_recorded
