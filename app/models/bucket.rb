@@ -14,9 +14,7 @@ class Bucket
   field :last_request_at, type: Time
   field :first_request_at, type: Time
   field :history_start_at, type: Time
-  field :request_count, type: Integer
-
-  alias_method :requests_count, :request_count
+  field :requests_count, type: Integer, default: 0
 
   index token: 1
   index owner_token: 1
@@ -63,7 +61,7 @@ class Bucket
                               params:          rack_request.request_parameters)
 
     atomically do
-      inc(request_count: 1)
+      inc(requests_count: 1)
       set(last_request_at: Time.now)
       set(first_request_at: Time.now) unless first_request_at
     end

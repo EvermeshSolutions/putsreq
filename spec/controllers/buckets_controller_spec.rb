@@ -82,7 +82,7 @@ describe BucketsController do
     end
   end
 
-  describe 'GET #request_count' do
+  describe 'GET #requests_count' do
     it 'returns count' do
       get :requests_count, token: bucket.token
 
