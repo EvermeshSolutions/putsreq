@@ -16,6 +16,8 @@ class Bucket
   field :history_start_at, type: Time
   field :request_count, type: Integer
 
+  alias_method :requests_count, :request_count
+
   index token: 1
   index owner_token: 1
 
@@ -97,10 +99,6 @@ class Bucket
                      'status'  => 500,
                      'headers' => { 'Content-Type' => 'text/plain' },
                      'body'    => e.message)
-  end
-
-  def requests_count
-    requests.count
   end
 
   def last_request
