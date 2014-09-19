@@ -79,3 +79,5 @@ end
 gem 'rails-assets-favico.js'
 gem 'rails-assets-dispatcher'
 gem 'rails-assets-bootstrap-less'
+
+gem 'dotiw'
