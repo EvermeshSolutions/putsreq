@@ -12,7 +12,9 @@ class Bucket
   field :owner_token
   field :response_builder, default: -> { default_response_builder }
   field :last_request_at, type: Time
+  field :first_request_at, type: Time
   field :history_start_at, type: Time
+  field :request_count, type: Integer
 
   index token: 1
   index owner_token: 1
@@ -36,7 +38,9 @@ class Bucket
     # so we filter these objects by the history_start_at to "clear"
     # db.runCommand({ "convertToCapped": "requests",  size: 25000000 });
     # db.runCommand({ "convertToCapped": "responses", size: 25000000 });
-    update_attribute :history_start_at, Time.now
+    update_attributes(history_start_at: Time.now,
+                      first_request_at: nil,
+                      last_request_at: nil)
   end
 
   def name
@@ -56,7 +60,11 @@ class Bucket
                               headers:         parse_env_to_headers(rack_request.env),
                               params:          rack_request.request_parameters)
 
-    update_attribute :last_request_at, Time.now
+    atomically do
+      inc(request_count: 1)
+      set(last_request_at: Time.now)
+      set(first_request_at: Time.now) unless first_request_at
+    end
 
     request
   end

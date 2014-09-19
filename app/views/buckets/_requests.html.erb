@@ -1,3 +1,10 @@
+<% if @bucket.first_request_at %>
+  <p>
+    <em>First request at: <%= @bucket.first_request_at %></br>
+      Last request at: <%= @bucket.last_request_at %></em>
+  </p>
+<% end %>
+
 <p>
   <%= page_entries_info @requests %>
 </p>
