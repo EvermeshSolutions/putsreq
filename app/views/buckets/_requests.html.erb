@@ -1,7 +1,8 @@
 <% if @bucket.first_request_at %>
   <p>
     <em>First request at: <%= @bucket.first_request_at %></br>
-      Last request at: <%= @bucket.last_request_at %></em>
+    Last request at: <%= @bucket.last_request_at %></br>
+    Difference: <%= distance_of_time_in_words @bucket.first_request_at, @bucket.last_request_at, include_seconds: true %><em>
   </p>
 <% end %>
 
