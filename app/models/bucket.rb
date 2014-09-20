@@ -40,7 +40,8 @@ class Bucket
     # db.runCommand({ "convertToCapped": "responses", size: 25000000 });
     update_attributes(history_start_at: Time.now,
                       first_request_at: nil,
-                      last_request_at: nil)
+                      last_request_at: nil,
+                      requests_count: 0)
   end
 
   def name
