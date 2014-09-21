@@ -24,7 +24,16 @@ class Bucket
   def requests
     # couldn't make has_many + conditions work with Mongoid
     # requests must be filtered by created_at see `clear_history`
-    Request.where(bucket_id: id).gte(created_at: history_start_at || created_at).order(:created_at.desc)
+
+    # Avoid kaminari `.count` they are too expensive
+    r = Request.where(bucket_id: id).gte(created_at: history_start_at || created_at).order(:created_at.desc)
+    r.instance_variable_set :@requests_count, requests_count
+    r.instance_eval do
+      def total_count
+        @requests_count
+      end
+    end
+    r
   end
 
   def responses
