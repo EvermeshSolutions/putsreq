@@ -38,9 +38,11 @@ RequestCountPoller =
   start: ->
     favicon = new Favico(animation:'fade', bgColor: '#6C92C8', animation: 'none')
 
-    @updateFavicon(favicon)
+    @updateCount(favicon)
 
-    setInterval (=> @updateFavicon(favicon)), 60000
+    setInterval (=> @updateCount(favicon)), 60000
 
-  updateFavicon: (favicon) ->
-    $.get "#{$('#putsreq-url-input').val()}/requests/count", ((data) -> favicon.badge(data))
+  updateCount: (favicon) ->
+    $.get "#{$('#putsreq-url-input').val()}/requests/count", (data) ->
+      favicon.badge(data)
+      $('#bucket-request-count').text(data)
