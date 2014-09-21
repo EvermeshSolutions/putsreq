@@ -5,6 +5,6 @@ module ApplicationHelper
   end
 
   def token_url(token)
-    request.url.gsub(request.path, '') + "/" + token
+    "#{request.protocol}#{request.host_with_port}/#{token}"
   end
 end
