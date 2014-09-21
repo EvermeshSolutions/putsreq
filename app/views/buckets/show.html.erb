@@ -26,6 +26,6 @@
 
 <hr/>
 <%= render 'form' %>
-
 <hr/>
-<%= render 'requests' %>
+
+<%= render(partial: 'requests', collection: @requests) || content_tag(:p, 'No requests found. Run the cURL above to start having fun!') %>
