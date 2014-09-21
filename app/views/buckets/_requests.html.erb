@@ -5,7 +5,7 @@
     From first to last: <%= distance_of_time_in_words @bucket.first_request_at, @bucket.last_request_at, include_seconds: true %><em>
   </p>
 <% end %>
-
+<p id="new-requests-arrived-info">&nbsp;</p>
 <p>
   <%= page_entries_info @requests %>
 </p>

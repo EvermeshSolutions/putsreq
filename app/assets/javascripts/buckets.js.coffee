@@ -45,4 +45,8 @@ RequestCountPoller =
   updateCount: (favicon) ->
     $.get "#{$('#putsreq-url-input').val()}/requests/count", (data) ->
       favicon.badge(data)
+      currentCount = $('#bucket-request-count').text()
       $('#bucket-request-count').text(data)
+
+      if parseInt(data, 10) > parseInt(currentCount, 10)
+        $('#new-requests-arrived-info').hide().html('<em><a href="javascript:reload();">New requests arrived. Load newer requests?</a></em>').fadeIn('slow')
