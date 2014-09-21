@@ -11,6 +11,7 @@ task clean_requests: :environment do
   # Need to recreate the indexes
   # db.requests.ensureIndex({ "bucket_id": 1, "created_at": -1 })
   # db.responses.ensureIndex({ "bucket_id": 1, "created_at": -1 })
+  # db.responses.ensureIndex({ "request_id": 1 })
   #
   #
   # To prevent MongoLab blows the quota:
