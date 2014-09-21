@@ -1,17 +1,16 @@
-<% if @bucket.first_request_at %>
-  <p>
-    <em>First request at: <%= @bucket.first_request_at %></br>
-    Last request at: <%= @bucket.last_request_at %></br>
-    From first to last: <%= distance_of_time_in_words @bucket.first_request_at, @bucket.last_request_at, include_seconds: true %><em>
-  </p>
-<% end %>
-<p id="new-requests-arrived-info">&nbsp;</p>
-<p>
-  <%= page_entries_info @requests %>
-</p>
-<p>
-  <%= paginate @requests %>
-</p>
+<div class="row">
+  <div class="col-md-6">
+    <% if @bucket.first_request_at %>
+      <p>
+        <em>First request at: <%= @bucket.first_request_at %></br>
+        Last request at: <%= @bucket.last_request_at %></br>
+        From first to last: <%= distance_of_time_in_words @bucket.first_request_at, @bucket.last_request_at, include_seconds: true %><em>
+      </p>
+    <% end %>
+  </div>
+  <div class="col-md-6"></div>
+</div>
+<p><%= paginate @requests %></p>
 <hr/>
 <% @requests.to_a.each do |recorded_request| %>
   <table class="requests-header">
@@ -53,9 +52,4 @@
   </table>
   <hr/>
 <% end %>
-<p>
-  <%= page_entries_info @requests %>
-</p>
-<p>
-  <%= paginate @requests %>
-</p>
+<p><%= paginate @requests %></p>
