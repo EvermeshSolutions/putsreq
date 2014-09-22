@@ -61,7 +61,7 @@ RequestCountPoller =
 
     @updateCount(favicon)
 
-    setInterval (=> @updateCount(favicon)), 60
+    setInterval (=> @updateCount(favicon)), 60000
 
   updateCount: (favicon) ->
     $.get "#{$('#putsreq-url-input').val()}/requests/count", (data) ->
