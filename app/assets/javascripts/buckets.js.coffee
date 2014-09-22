@@ -69,6 +69,6 @@ RequestCountPoller =
       currentCount = $('#bucket-request-count').text()
       $('#bucket-request-count').text(data)
 
-      if parseInt(data, 10) > parseInt(currentCount, 10) && $('.pagination #new-requests-arrived').length == 0
+      if parseInt(data, 10) > parseInt(currentCount, 10) && $('.pagination #new-requests-received').length == 0
         $('.pagination').hide().
-          append('&nbsp;&nbsp;<a id="new-requests-arrived" href="javascript:window.location.reload();">New requests arrived. Load newer requests?</a>').fadeIn('slow')
+          append('&nbsp;&nbsp;<a id="new-requests-received" href="javascript:window.location.reload();">New requests received. Load newer requests?</a>').fadeIn('slow')
