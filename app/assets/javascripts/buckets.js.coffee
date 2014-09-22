@@ -61,7 +61,7 @@ RequestCountPoller =
 
     @updateCount(favicon)
 
-    setInterval (=> @updateCount(favicon)), 60000
+    setInterval (=> @updateCount(favicon)), 60
 
   updateCount: (favicon) ->
     $.get "#{$('#putsreq-url-input').val()}/requests/count", (data) ->
@@ -69,6 +69,6 @@ RequestCountPoller =
       currentCount = $('#bucket-request-count').text()
       $('#bucket-request-count').text(data)
 
-      if parseInt(data, 10) > parseInt(currentCount, 10) && $('.pagination #new-requests-received').length == 0
-        $('.pagination').hide().
-          append('&nbsp;&nbsp;<a id="new-requests-received" href="javascript:window.location.reload();">New requests received. Load newer requests?</a>').fadeIn('slow')
+      if parseInt(data, 10) > parseInt(currentCount, 10) && $('#new-requests-info #new-requests-received').length == 0
+        $('#new-requests-info').hide().
+          append('<em><a id="new-requests-received" href="javascript:window.location.reload();">New requests received. Load newer requests?</a></em>').fadeIn('slow')

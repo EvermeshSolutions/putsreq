@@ -28,4 +28,6 @@
 <%= render 'form' %>
 <hr/>
 
+<p id="new-requests-info"><!-- placeholder: New requests received. Load newer requests? --></p>
+
 <%= render(partial: 'requests', collection: @requests) || content_tag(:p, 'No requests received. Run the cURL above to start having fun!') %>
