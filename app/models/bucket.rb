@@ -18,6 +18,7 @@ class Bucket
 
   index token: 1
   index owner_token: 1
+  index fork_id: 1
 
   before_create :generate_tokens
 
