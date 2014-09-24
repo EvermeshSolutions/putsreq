@@ -122,6 +122,7 @@ class Bucket
     where(token: token).first
   end
 
+  # TODO Move to something else i.e. concerns/ForwardableHTTP
   def forwardable_request_headers(headers)
     headers.to_h.reject do |key, value|
       value.nil?

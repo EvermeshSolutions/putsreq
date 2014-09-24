@@ -80,7 +80,7 @@ describe Bucket do
 
         expect(response.attributes).to include('status'  => 202,
                                                'body'    => "It's me, Luigi!",
-                                               'headers' => { 'content-type' => 'text/plain' })
+                                               'headers' => { 'content-type' => ['text/plain'] })
       end
     end
 
