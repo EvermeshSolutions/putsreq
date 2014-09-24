@@ -16,7 +16,7 @@ class Response
   validates :bucket, presence: true
   validates :request,  presence: true
 
-  def body_to_s
+  def body_as_string
     body.is_a?(Hash) ? body.to_json : body.to_s
   end
 end

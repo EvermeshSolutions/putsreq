@@ -75,7 +75,7 @@ describe Bucket do
         stub_request(:get, 'http://example.com').
           to_return(body: %{It's me, Luigi!}, status: 202, headers: { 'Content-Type' => 'text/plain' })
 
-        request = subject.record_request(rack_request)
+        request  = subject.record_request(rack_request)
         response = subject.build_response(request)
 
         expect(response.attributes).to include('status'  => 202,

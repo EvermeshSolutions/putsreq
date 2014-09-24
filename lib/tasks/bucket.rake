@@ -4,9 +4,9 @@ task clean_requests: :environment do
   # Response.delete_all created_at: { '$lt' => retention_period }
   #
   #
-  # Not needed ^^^ anymore, it's using Mongo TTL 604800 = 7 days
-  # db.requests.ensureIndex({ "created_at": 1 }, { expireAfterSeconds: 604800 })
-  # db.responses.ensureIndex({ "created_at": 1 }, { expireAfterSeconds: 604800 })
+  # Not needed ^^^ anymore, it's using Mongo TTL 604800 = 3 days
+  # db.requests.ensureIndex({ "created_at": 1 }, { expireAfterSeconds: 259200 })
+  # db.responses.ensureIndex({ "created_at": 1 }, { expireAfterSeconds: 259200 })
   #
   # Need to recreate the indexes
   # db.requests.ensureIndex({ "bucket_id": 1, "created_at": -1 })

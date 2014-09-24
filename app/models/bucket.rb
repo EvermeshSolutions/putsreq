@@ -122,6 +122,25 @@ class Bucket
     where(token: token).first
   end
 
+  def forwardable_request_headers(headers)
+    headers.to_h.reject do |key, value|
+      value.nil?
+    end.inject({}) do |headers, (key, value)|
+      headers[key.gsub(/^HTTP_/i, '')] = value
+      headers
+    end
+  end
+
+  # def forwardable_response_headers(headers)
+    # headers.to_h.select do |key, value|
+      # key = key.downcase
+      # key.start_with?('x-') || %[content-type].include?(key)
+    # end.inject({}) do |headers, (key, value)|
+      # headers[key] = value.join
+      # headers
+    # end
+  # end
+
   private
 
   def previous_request(current_request)
@@ -142,27 +161,8 @@ class Bucket
     response = http_adapter.send(request_hash['request_method'].downcase.to_sym, forward_url, options)
 
     { 'status'  => response.code,
-      'headers' => forwardable_response_headers(response.headers),
+      'headers' => forwardable_request_headers(response.headers),
       'body'    => response.body }
-  end
-
-  def forwardable_request_headers(headers)
-    headers.to_h.reject do |key, value|
-      value.nil?
-    end.inject({}) do |headers, (key, value)|
-      headers[key.gsub(/^HTTP_/i, '')] = value
-      headers
-    end
-  end
-
-  def forwardable_response_headers(headers)
-    headers.to_h.select do |key, value|
-      key = key.downcase
-      key.start_with?('x-') || %[content-type].include?(key)
-    end.inject({}) do |headers, (key, value)|
-      headers[key] = value.join
-      headers
-    end
   end
 
   def generate_tokens

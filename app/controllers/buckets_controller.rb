@@ -42,9 +42,10 @@ class BucketsController < ApplicationController
 
   def last
     if last_request = bucket.last_request
-      render json: { body:        last_request.body,
-                     headers:     last_request.headers,
-                     created_at:  last_request.created_at }
+      response.headers.merge! bucket.forwardable_request_headers(last_request.headers)
+
+      render text: last_request.body
+
       return
     end
 
@@ -53,10 +54,10 @@ class BucketsController < ApplicationController
 
   def last_response
     if last_response = bucket.last_response
-      render json: { status:      last_response.status,
-                     body:        last_response.body,
-                     headers:     last_response.headers,
-                     created_at:  last_response.created_at }
+      response.headers.merge! bucket.forwardable_request_headers(last_response.headers)
+
+      render text: last_response.body_as_string
+
       return
     end
 
@@ -73,7 +74,7 @@ class BucketsController < ApplicationController
 
     response.headers.merge! recorded_response.headers.to_h
 
-    render text: recorded_response.body_to_s, status: recorded_response.status
+    render text: recorded_response.body_as_string, status: recorded_response.status
   end
 
   private
