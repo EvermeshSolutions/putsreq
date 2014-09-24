@@ -42,7 +42,7 @@ class BucketsController < ApplicationController
 
   def last
     if last_request = bucket.last_request
-      response.headers.merge! bucket.forwardable_request_headers(last_request.headers)
+      response.headers.merge! Bucket.forwardable_headers(last_request.headers)
 
       render text: last_request.body
 
@@ -54,7 +54,7 @@ class BucketsController < ApplicationController
 
   def last_response
     if last_response = bucket.last_response
-      response.headers.merge! bucket.forwardable_request_headers(last_response.headers)
+      response.headers.merge! Bucket.forwardable_headers(last_response.headers)
 
       render text: last_response.body_as_string
 

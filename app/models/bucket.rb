@@ -83,26 +83,24 @@ class Bucket
   def build_response(request, timeout = 2500)
     context = V8::Context.new timeout: timeout
 
-    load_default_record(request, context)
+    initialize_context(request, context)
 
-    context.eval(response_builder.to_s)
+    built_request = context.eval('JSON.stringify(request)')
 
-    request_hash = context.eval('JSON.stringify(request)')
+    built_request = JSON.parse(built_request)
 
-    request_hash  = JSON.parse(request_hash)
-
-    if forward_url = request_hash['forwardTo']
-      # use the forwarded response
-      response_hash = forward_to(request_hash, forward_url)
+    if forward_url = built_request['forwardTo']
+      # use the response from the forwarded URL
+      built_response = forward_to(built_request, forward_url)
     else
-      # use the response builder
-      response_hash = context.eval('JSON.stringify(response)')
-      response_hash = JSON.parse(response_hash).select { |key, value| %w[status headers body].include?(key) && value.to_s.present? }
+      # use the response from the builder
+      built_response = context.eval('JSON.stringify(response)')
+      built_response = JSON.parse(built_response).select { |key, value| %w[status headers body].include?(key) && value.to_s.present? }
     end
 
-    response_hash['request'] = request
+    built_response['request'] = request
 
-    responses.create(response_hash)
+    responses.create(built_response)
   rescue => e
     responses.create('request' => request,
                      'status'  => 500,
@@ -123,7 +121,7 @@ class Bucket
   end
 
   # TODO Move to something else i.e. concerns/ForwardableHTTP
-  def forwardable_request_headers(headers)
+  def self.forwardable_headers(headers)
     headers.to_h.reject do |key, value|
       value.nil?
     end.inject({}) do |headers, (key, value)|
@@ -132,37 +130,27 @@ class Bucket
     end
   end
 
-  # def forwardable_response_headers(headers)
-    # headers.to_h.select do |key, value|
-      # key = key.downcase
-      # key.start_with?('x-') || %[content-type].include?(key)
-    # end.inject({}) do |headers, (key, value)|
-      # headers[key] = value.join
-      # headers
-    # end
-  # end
-
   private
 
   def previous_request(current_request)
     requests.lt(created_at: current_request.created_at).limit(1).order(:created_at.desc).first
   end
 
-  def forward_to(request_hash, forward_url, http_adapter = HTTParty)
-    body = if request_hash['body'].is_a?(Hash)
-             request_hash['body'].to_json
+  def forward_to(built_request, forward_url, http_adapter = HTTParty)
+    body = if built_request['body'].is_a?(Hash)
+             built_request['body'].to_json
            else
-             request_hash['body'].to_s
+             built_request['body'].to_s
            end
 
     options = { timeout: 5,
-                headers: forwardable_request_headers(request_hash['headers']),
+                headers: Bucket.forwardable_headers(built_request['headers']),
                 body: body }
 
-    response = http_adapter.send(request_hash['request_method'].downcase.to_sym, forward_url, options)
+    response = http_adapter.send(built_request['request_method'].downcase.to_sym, forward_url, options)
 
     { 'status'  => response.code,
-      'headers' => forwardable_request_headers(response.headers),
+      'headers' => Bucket.forwardable_headers(response.headers),
       'body'    => response.body }
   end
 
@@ -184,7 +172,7 @@ class Bucket
     end
   end
 
-  def load_default_record(request, context)
+  def initialize_context(request, context)
     context['response'] = { 'status'  => 200,
                             'headers' => {},
                             'body'    => 'ok' }
@@ -193,6 +181,8 @@ class Bucket
                             'body'           => request.body,
                             'params'         => request.params,
                             'headers'        => request.headers }
+
+    context.eval(response_builder.to_s)
   end
 
   def default_response_builder
