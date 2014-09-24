@@ -102,6 +102,8 @@ class Bucket
 
     responses.create(built_response)
   rescue => e
+    Rails.logger.error e
+
     responses.create('request' => request,
                      'status'  => 500,
                      'headers' => { 'Content-Type' => 'text/plain' },
@@ -123,9 +125,9 @@ class Bucket
   # TODO Move to something else i.e. concerns/ForwardableHTTP
   def self.forwardable_headers(headers)
     headers.to_h.reject do |key, value|
-      value.nil?
+      value.nil? || key.downcase.include?('host')
     end.inject({}) do |headers, (key, value)|
-      headers[key.gsub(/^HTTP_/i, '')] = value
+      headers[key.sub('HTTP_', '')] = value
       headers
     end
   end
@@ -147,10 +149,24 @@ class Bucket
                 headers: Bucket.forwardable_headers(built_request['headers']),
                 body: body }
 
+    Rails.logger.info forward_url
+    Rails.logger.info body
+    Rails.logger.info '*' * 50
+    Rails.logger.info built_request['headers']
+    Rails.logger.info '*' * 50
+    Rails.logger.info Bucket.forwardable_headers(built_request['headers'])
+    Rails.logger.info '*' * 50
+
     response = http_adapter.send(built_request['request_method'].downcase.to_sym, forward_url, options)
 
+    Rails.logger.info response.code
+    Rails.logger.info response.body
+    Rails.logger.info '*' * 50
+    Rails.logger.info response.headers.to_h
+    Rails.logger.info '*' * 50
+
     { 'status'  => response.code,
-      'headers' => Bucket.forwardable_headers(response.headers),
+      'headers' => response.headers.to_h.inject({}) { |h, (k, v)| h[k] = v.join; h },
       'body'    => response.body }
   end
 
