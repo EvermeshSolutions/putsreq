@@ -15,7 +15,7 @@
             <small>View and manage your previously created PutsReqs:</small>
             <ul class="tm5">
               <% @buckets.each do |bucket| %>
-                <li><%= link_to bucket.name, bucket_path(bucket.token) %></li>
+                <li><%= link_to "#{bucket.name} (#{bucket.requests_count})", bucket_path(bucket.token) %></li>
               <% end %>
             </ul>
           </div>
