@@ -28,6 +28,8 @@ App.buckets.initializeAce = ->
     # http://stackoverflow.com/questions/11584061/
     newHeight = editor.getSession().getScreenLength() * editor.renderer.lineHeight + editor.renderer.scrollBar.getWidth()
 
+    newHeight = 150 if newHeight < 150
+
     $('#editor').height "#{newHeight}px"
     $('#editor-section').height "#{newHeight}x"
 
