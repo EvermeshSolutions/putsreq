@@ -9,4 +9,8 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-PutsReq::Application.config.secret_key_base = '24268090366914d4152aac043d61531a8278d482a8d527ae65a9e33c8f75146b8f9d678903984afeb5534d7a66f7f079b23e93f1b6f2eb552dafaa3d7fb726e1'
+PutsReq::Application.config.secret_key_base = if Rails.env.development? || Rails.env.test?
+                                                'x' * 30 # meets minimum requirement of 30 chars long
+                                              else
+                                                ENV['SECRET_TOKEN']
+                                              end
