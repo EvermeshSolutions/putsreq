@@ -31,7 +31,7 @@ class BucketsController < ApplicationController
   end
 
   def show
-    @requests = bucket.requests.page(params[:page]).per 10
+    @requests = bucket.requests.page(params[:page]).per 5
   end
 
   def update
