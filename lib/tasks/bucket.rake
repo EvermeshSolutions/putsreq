@@ -23,7 +23,5 @@ end
 task clean_buckets: :environment do
   retention_period = 3.months.ago
 
-  Bucket.delete_all(last_request_at: { '$lt' => retention_period }, updated_at:  { '$lt' => retention_period } )
-
-  Bucket.delete_all(last_request_at: nil, updated_at:  { '$lt' => retention_period } )
+  Bucket.for_js('this.created_at = this.updated_at && this.last_request_at == null && this.created_at < retention', retention: retention_period).delete_all
 end
