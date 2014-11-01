@@ -1,4 +1,6 @@
 PutsReq::Application.routes.draw do
+  devise_for :users
+
   root to: 'home#index'
 
   post 'buckets' => 'buckets#create', as: :buckets

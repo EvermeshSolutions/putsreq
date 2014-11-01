@@ -6,6 +6,14 @@
         <h3><em>PutsReq</em> lets you record HTTP requests and simulate responses like no other tool available. Try it now!</h3>
         <%= form_for :bucket, url: buckets_path do |f| %>
           <button class="btn btn-primary btn-large">Create a PutsReq</button>
+          <em>
+            <% if user_signed_in? %>
+              <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+            <% else %>
+              <%= link_to 'Sign in', new_user_session_path  %> |
+              <%= link_to 'Sign up', new_user_registration_path %>
+            <% end %>
+          </em>
         <% end %>
       </header>
       <section class="start">

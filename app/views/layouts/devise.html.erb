@@ -10,6 +10,9 @@
 
   <div class="container">
     <%= render 'shared/flash' %>
+    <ul class="nav">
+      <li class="logo"><a href="/"><%= image_tag 'logo.png' %></a></li>
+    </ul>
     <%= yield %>
     <hr />
     <strong>Requests Recorded: <%= REDIS.get 'requests_recorded' %></strong>

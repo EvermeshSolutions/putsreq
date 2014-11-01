@@ -5,6 +5,12 @@
   <li><a href="<%= "/#{@bucket.token}/inspect" %>">Inspect</a></li>
   <li><a href="<%= "/#{@bucket.token}/last" %>" title="JSON-formatted">Last Request</a></li>
   <li><a href="<%= "/#{@bucket.token}/last_response" %>" title="JSON-formatted">Last Response</a></li>
+  <% if user_signed_in? %>
+    <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete %></li>
+  <% else %>
+    <li><%= link_to 'Sign in', new_user_session_path  %></li>
+    <li><%= link_to 'Sign up', new_user_registration_path %></li>
+  <% end %>
 </ul>
 
 <section class="putsreq-url-box">

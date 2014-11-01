@@ -6,6 +6,7 @@ class Bucket
   has_many :forks, class_name: 'Bucket'
 
   belongs_to :fork, class_name: 'Bucket'
+  belongs_to :user
 
   field :token
   field :name

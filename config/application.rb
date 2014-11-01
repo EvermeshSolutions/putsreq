@@ -34,5 +34,9 @@ module PutsReq
         resource '*', headers: :any, methods: %i[get post put patch delete options]
       end
     end
+
+    config.to_prepare do
+      Devise::SessionsController.layout 'devise'
+    end
   end
 end

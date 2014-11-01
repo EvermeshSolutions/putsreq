@@ -4,7 +4,10 @@ class BucketsController < ApplicationController
   before_filter :check_ownership!, only: %i[clear destroy update]
 
   def create
-    bucket = Bucket.create(owner_token: owner_token)
+    new_bucket = { owner_token: owner_token }
+    new_bucket[:user_id] = current_user.id if user_signed_in?
+
+    bucket = Bucket.create(new_bucket)
 
     redirect_to bucket_path(bucket.token)
   end
@@ -35,7 +38,10 @@ class BucketsController < ApplicationController
   end
 
   def update
-    bucket.update_attributes bucket_params
+    update_bucket = bucket_params
+    update_bucket[:user_id] = current_user.id if user_signed_in?
+
+    bucket.update_attributes update_bucket
 
     redirect_to bucket_path(bucket.token)
   end

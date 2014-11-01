@@ -81,3 +81,4 @@ gem 'rails-assets-dispatcher'
 gem 'rails-assets-bootstrap-less'
 
 gem 'dotiw'
+gem 'devise'
