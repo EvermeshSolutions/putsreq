@@ -12,8 +12,14 @@
     <%= render 'shared/flash' %>
     <%= yield %>
     <hr />
-    <strong>Requests Recorded: <%= REDIS.get 'requests_recorded' %></strong>
+    <div class="row">
+      <div style="float:left">
+        <strong>Requests Recorded: <%= REDIS.get 'requests_recorded' %></strong>
+      </div>
+      <div style="float:right">
+        Developed by <a href="http://pablocantero.com">Pablo Cantero</a>.
+      </div>
+    </div>
   </div>
-
 </body>
 </html>
