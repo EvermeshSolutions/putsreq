@@ -55,5 +55,4 @@
 
 <hr/>
 <%= render(partial: 'requests', collection: @requests, as: :recorded_request) || show_no_requests_found(@bucket) %>
-<hr/>
 <p><%= paginate @requests %></p>
