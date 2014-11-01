@@ -35,4 +35,8 @@ class User
   # field :locked_at,       type: Time
 
   has_many :users
+
+  field :name
+
+  validates :name, presence: true
 end
