@@ -1,57 +1,37 @@
-<div class="row">
-  <div class="col-md-6">
-    <% if @bucket.first_request_at %>
-      <p>
-        <em>First request at: <%= @bucket.first_request_at %></br>
-        Last request at: <%= @bucket.last_request_at %></br>
-        <% if @bucket.last_request_at - @bucket.first_request_at > 0 %>
-          From first to last: <%= distance_of_time_in_words @bucket.first_request_at, @bucket.last_request_at, include_seconds: true %><em>
-        <% end %>
-      </p>
-    <% end %>
-  </div>
-  <div class="col-md-6"></div>
-</div>
-<p><%= paginate @requests %></p>
-<hr/>
-<% @requests.to_a.each do |recorded_request| %>
-  <table class="requests-header">
-    <thead>
-      <tr>
-        <th>Request Headers</th>
-        <th>&nbsp;</th>
-      </tr>
-    </thead>
-    <tbody>
-    <% recorded_request.headers.to_h.each do |header_key, header_value| %>
-      <tr>
-        <td class="key"><%= header_key %></td>
-        <td class="value" title="<%= header_value %>"><%= header_value %></td>
-      </tr>
-    <% end %>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="2">
+<table class="requests-header">
+  <thead>
+    <tr>
+      <th>Request Headers</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% recorded_request.headers.to_h.each do |header_key, header_value| %>
+    <tr>
+      <td class="key"><%= header_key %></td>
+      <td class="value" title="<%= header_value %>"><%= header_value %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">
 
-          <div class="request-footer-info">
-            <small>When</small>
-            <span title="<%= recorded_request.created_at.utc %>"><%= time_ago_in_words recorded_request.created_at %> ago</span>
-          </div>
+        <div class="request-footer-info">
+          <small>When</small>
+          <span title="<%= recorded_request.created_at.utc %>"><%= time_ago_in_words recorded_request.created_at %> ago</span>
+        </div>
 
-          <div class="request-footer-info">
-            <small>Request Body</small>
-            <span><code><%= recorded_request.body %></code></span>
-          </div>
+        <div class="request-footer-info">
+          <small>Request Body</small>
+          <span><code><%= recorded_request.body %></code></span>
+        </div>
 
-          <div class="request-footer-info">
-            <small>Response Body</small>
-            <span><code><%= recorded_request.response.body_as_string %></code></span>
-          </div>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-  <hr/>
-<% end %>
-<p><%= paginate @requests %></p>
+        <div class="request-footer-info">
+          <small>Response Body</small>
+          <span><code><%= recorded_request.response.body_as_string %></code></span>
+        </div>
+      </td>
+    </tr>
+  </tfoot>
+</table>
