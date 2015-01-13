@@ -150,21 +150,7 @@ class Bucket
                 headers: Bucket.forwardable_headers(built_request['headers']),
                 body: body }
 
-    Rails.logger.info forward_url
-    Rails.logger.info body
-    Rails.logger.info '*' * 50
-    Rails.logger.info built_request['headers']
-    Rails.logger.info '*' * 50
-    Rails.logger.info Bucket.forwardable_headers(built_request['headers'])
-    Rails.logger.info '*' * 50
-
     response = http_adapter.send(built_request['request_method'].downcase.to_sym, forward_url, options)
-
-    Rails.logger.info response.code
-    Rails.logger.info response.body
-    Rails.logger.info '*' * 50
-    Rails.logger.info response.headers.to_h
-    Rails.logger.info '*' * 50
 
     { 'status'  => response.code,
       'headers' => response.headers.to_h.inject({}) { |h, (k, v)| h[k] = v.join; h },
