@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :is_owner?
 
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   protected
 
   def check_ownership!
@@ -23,5 +25,11 @@ class ApplicationController < ActionController::Base
 
   def bucket
     @bucket ||= Bucket.where(token: params[:token]).first
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :email, :password, :password_confirmation, :remember_me) }
+    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:name, :email, :password, :remember_me) }
+    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:name, :email, :password, :password_confirmation, :current_password) }
   end
 end
