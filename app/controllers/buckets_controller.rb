@@ -70,20 +70,26 @@ class BucketsController < ApplicationController
     render_request_not_found
   end
 
-  def requests_count
-    render text: bucket.requests_count
-  end
-
   def record
     recorded_request  = bucket.record_request(request)
     recorded_response = bucket.build_response(recorded_request)
 
     response.headers.merge! recorded_response.headers.to_h
 
+    notify_count
+
     render text: recorded_response.body_as_string, status: recorded_response.status
   end
 
   private
+
+  def notify_count
+    return unless ENV['PUSHER_SECRET'] || ENV['PUSHER_APP_ID']
+
+    Pusher.url = "http://3466d56fe2ef1fdd2943:#{ENV['PUSHER_SECRET']}@api.pusherapp.com/apps/#{ENV['PUSHER_APP_ID']}"
+
+    Pusher["channel_#{bucket.token}"].trigger 'update_count', bucket.requests_count
+  end
 
   def render_request_not_found
     respond_to do |format|

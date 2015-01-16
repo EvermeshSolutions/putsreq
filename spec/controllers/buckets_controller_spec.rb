@@ -82,14 +82,6 @@ describe BucketsController do
     end
   end
 
-  describe 'GET #requests_count' do
-    it 'returns count' do
-      get :requests_count, token: bucket.token
-
-      expect(response.body).to eq '0'
-    end
-  end
-
   describe 'GET #last' do
     context 'when found' do
       let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }

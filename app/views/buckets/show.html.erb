@@ -56,3 +56,5 @@
 <hr/>
 <%= render(partial: 'requests', collection: @requests, as: :recorded_request) || show_no_requests_found(@bucket) %>
 <p><%= paginate @requests %></p>
+
+<script src="//js.pusher.com/2.2/pusher.min.js" type="text/javascript"></script>

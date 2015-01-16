@@ -61,16 +61,18 @@ RequestCountPoller =
   start: ->
     favicon = new Favico(animation:'fade', bgColor: '#6C92C8', animation: 'none')
 
-    @updateCount(favicon)
+    bucket = $('#putsreq-url-input').val().split('/')
+    bucket = bucket[bucket.length - 1]
 
-    setInterval (=> @updateCount(favicon)), 60000
+    pusher = new Pusher('3466d56fe2ef1fdd2943')
+    channel = pusher.subscribe("channel_#{bucket}")
+    channel.bind 'update_count', (count) ->
+      favicon.badge(count)
 
-  updateCount: (favicon) ->
-    $.get "#{$('#putsreq-url-input').val()}/requests/count", (data) ->
-      favicon.badge(data)
-      currentCount = $('#bucket-request-count').text()
-      $('#bucket-request-count').text(data)
+      previousCount = $('#bucket-request-count').text()
 
-      if parseInt(data, 10) > parseInt(currentCount, 10) && $('#new-requests-info #new-requests-received').length == 0
+      $('#bucket-request-count').text(count)
+
+      if parseInt(count, 10) > parseInt(previousCount, 10) && $('#new-requests-info #new-requests-received').length == 0
         $('#new-requests-info').hide().
           append('<em><a id="new-requests-received" href="javascript:window.location.reload();">New requests received. Load newer requests?</a></em>').fadeIn('slow')

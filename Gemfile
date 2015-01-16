@@ -82,3 +82,4 @@ gem 'rails-assets-bootstrap-less'
 
 gem 'dotiw'
 gem 'devise'
+gem 'pusher'
