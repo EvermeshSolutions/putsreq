@@ -68,11 +68,14 @@ RequestCountPoller =
     pusher = new Pusher('3466d56fe2ef1fdd2943')
     channel = pusher.subscribe("channel_#{bucket}")
     channel.bind 'update_count', (count) ->
-      favicon.badge(count)
+      try
+        previousCount = $('#bucket-request-count').text()
 
-      previousCount = $('#bucket-request-count').text()
+        $('#bucket-request-count').text(count)
 
-      $('#bucket-request-count').text(count)
+        favicon.badge(count)
+      catch  err
+
 
       if parseInt(count, 10) > parseInt(previousCount, 10) && $('#new-requests-info #new-requests-received').length == 0
         $('#new-requests-info').hide().
