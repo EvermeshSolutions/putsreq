@@ -127,9 +127,8 @@ class Bucket
   def self.forwardable_headers(headers)
     headers.to_h.reject do |key, value|
       value.nil? || key.downcase.include?('host')
-    end.inject({}) do |headers, (key, value)|
-      headers[key.sub('HTTP_', '')] = value
-      headers
+    end.each_with_object({}) do |(key, value), new_headers|
+      new_headers[key.sub('HTTP_', '')] = value
     end
   end
 
