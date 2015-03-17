@@ -80,6 +80,12 @@ describe BucketsController do
       expect(assigns(:bucket)).to eq(bucket)
       expect(assigns(:requests).to_a).to eq(bucket.requests.to_a)
     end
+
+    it 'renders not found' do
+      expect {
+        get :show, token: '123'
+      }.to raise_error(ActionController::RoutingError)
+    end
   end
 
   describe 'GET #last' do
