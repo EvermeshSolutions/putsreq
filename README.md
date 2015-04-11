@@ -36,7 +36,7 @@ open http://localhost:3000
 
 The Response Builder is the place where you can create your responses using JavaScript V8.
 
-Here is the list of variables you can access to create your responses:
+Here is the list of request attributes you can access to create your responses:
 
 #### request
 
@@ -53,10 +53,10 @@ request.params.name;
 // => Pablo
 
 request.headers['HTTP_X_MYHEADER'];
-//=> MyHeaderValue
+// => MyHeaderValue
 ```
 
-Sample JSON request:
+Parsing a JSON request:
 
 ```javascript
 // curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' https://putsreq.com/<YOUR-TOKEN>
@@ -75,7 +75,7 @@ response.headers = {};   // default value
 response.body    = 'ok'; // default value
 ```
 
-Sample JSON response:
+Returning a JSON response:
 
 ```javascript
 response.headers['Content-Type'] = 'application/json';
@@ -91,7 +91,7 @@ If you only want to log your requests, you can use PutsReq as a proxy to forward
 request.forwardTo = 'http://example.com/api';
 ```
 
-You can also modify the requests before forward them.
+You can also modify the requests before forwarding them.
 
 ```javascript
 // add or change a header
