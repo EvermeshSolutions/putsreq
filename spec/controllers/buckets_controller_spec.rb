@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BucketsController do
+RSpec.describe BucketsController do
   render_views
 
   let(:owner_token) { 'dcc7d3b5152e86064a46e4fef5160d173fe2edd1f1c9c793' }
@@ -19,7 +19,7 @@ describe BucketsController do
     end
 
     it 'clears history' do
-      bucket.build_response(bucket.record_request(rack_request))
+      RecordRequest.call(bucket: bucket, rack_request: rack_request)
 
       expect(bucket.requests).to have(1).item
       expect(bucket.responses).to have(1).item
@@ -96,7 +96,7 @@ describe BucketsController do
         stub_request(:get, 'http://example.com').
           to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
 
-        bucket.record_request(rack_request)
+        RecordRequest.call(bucket: bucket, rack_request: rack_request)
       end
 
       it 'renders JSON' do
@@ -132,7 +132,7 @@ describe BucketsController do
         stub_request(:get, 'http://example.com').
           to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
 
-        bucket.build_response(bucket.record_request(rack_request))
+        RecordRequest.call(bucket: bucket, rack_request: rack_request)
       end
 
       it 'renders JSON' do
