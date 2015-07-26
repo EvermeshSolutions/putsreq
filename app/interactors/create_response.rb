@@ -1,7 +1,6 @@
 class CreateResponse
   include Interactor
 
-
   def call
     v8_ctx = V8::Context.new timeout: timeout
 
@@ -49,7 +48,6 @@ class CreateResponse
       'headers' => response.headers.to_h.inject({}) { |h, (k, v)| h[k] = v.join; h },
       'body'    => response.body }
   end
-
 
   def timeout
     context.timeout ||= 2500
