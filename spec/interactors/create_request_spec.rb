@@ -19,8 +19,6 @@ RSpec.describe CreateRequest do
                                         'ip'             => rack_request.ip,
                                         'url'            => rack_request.url,
                                         'params'         => rack_request.params)
-
-      expect(bucket.last_request_at).to eq(now)
     end
 
     it 'skips lowercase headers (rack specific headers)' do

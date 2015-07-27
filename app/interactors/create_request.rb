@@ -7,25 +7,15 @@ class CreateRequest
                                              request_method:  rack_request.request_method,
                                              ip:              rack_request.ip,
                                              url:             rack_request.url,
-                                             headers:         filter_headers(rack_request.env),
+                                             headers:         filtered_headers,
                                              params:          rack_request.request_parameters)
-    update_bucket
   end
 
   private
 
-  def update_bucket
-    bucket.atomically do
-      now = Time.now
-      bucket.inc(requests_count: 1)
-      bucket.set(last_request_at: now)
-      bucket.set(first_request_at: now) unless bucket.first_request_at
-    end
-  end
-
-  def filter_headers(env)
-    # skips lowercase headers (rack specific headers)
-    env.to_h.select { |header_key, _header_value| header_key == header_key.upcase }
+  def filtered_headers
+    # skip lowercase headers (rack specific headers)
+    rack_request.env.to_h.select { |key, _value| key == key.upcase }
   end
 
   def bucket
