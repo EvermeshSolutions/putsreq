@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-source 'https://rails-assets.org'
 
 ruby '2.0.0'
 
@@ -53,7 +52,6 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'redis'
 
 gem 'bootstrap-sass', '~> 3.1.1'
-gem 'rails-assets-zeroclipboard'
 
 group :production do
   gem 'unicorn'
@@ -76,10 +74,14 @@ group :development, :test do
   gem 'database_cleaner'
 end
 
-gem 'rails-assets-favico.js'
-gem 'rails-assets-dispatcher'
-gem 'rails-assets-bootstrap-less'
+source 'https://rails-assets.org' do
+  gem 'rails-assets-zeroclipboard'
+  gem 'rails-assets-favico.js'
+  gem 'rails-assets-dispatcher'
+  gem 'rails-assets-bootstrap-less'
+end
 
 gem 'dotiw'
 gem 'devise'
 gem 'pusher'
+gem "interactor", "~> 3.0"

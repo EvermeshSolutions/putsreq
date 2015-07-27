@@ -71,8 +71,8 @@ class BucketsController < ApplicationController
   end
 
   def record
-    recorded_request  = bucket.record_request(request)
-    recorded_response = bucket.build_response(recorded_request)
+    result = RecordRequest.call(bucket: bucket, rack_request: request)
+    recorded_response = result.response
 
     response.headers.merge! recorded_response.headers.to_h
 

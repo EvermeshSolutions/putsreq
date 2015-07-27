@@ -79,6 +79,7 @@ GEM
       multi_xml (>= 0.5.2)
     httpclient (2.5.3.3)
     i18n (0.6.9)
+    interactor (3.1.0)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)
@@ -232,6 +233,7 @@ DEPENDENCIES
   devise
   dotiw
   httparty
+  interactor (~> 3.0)
   jbuilder (~> 1.2)
   jquery-rails
   kaminari
@@ -242,10 +244,10 @@ DEPENDENCIES
   rack-cors
   rack-test
   rails (= 4.0.4)
-  rails-assets-bootstrap-less
-  rails-assets-dispatcher
-  rails-assets-favico.js
-  rails-assets-zeroclipboard
+  rails-assets-bootstrap-less!
+  rails-assets-dispatcher!
+  rails-assets-favico.js!
+  rails-assets-zeroclipboard!
   rails_12factor
   redis
   rspec-rails (~> 3.0.0.beta)
@@ -256,3 +258,6 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   unicorn
   webmock
+
+BUNDLED WITH
+   1.10.6
