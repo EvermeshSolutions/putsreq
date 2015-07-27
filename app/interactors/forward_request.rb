@@ -28,8 +28,14 @@ class ForwardRequest
     forwarded_response = HTTParty.send(built_request['request_method'].downcase.to_sym, forward_url, options)
 
     { 'status'  => forwarded_response.code,
-      'headers' => forwarded_response.headers.to_h.each_with_object({}) { |(k, v), h| h[k] = v.join },
+      'headers' => filter_forwarded_response(forwarded_response.headers),
       'body'    => forwarded_response.body }
+  end
+
+  def filter_forwarded_response(headers)
+    blacklisted = %(transfer-encoding)
+    headers.to_h.each_with_object({}) { |(k, v), h| h[k] = v.join }
+      .reject { |key, value| blacklisted.include? key.downcase }
   end
 
   def built_request
