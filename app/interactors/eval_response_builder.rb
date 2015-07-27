@@ -4,7 +4,7 @@ class EvalResponseBuilder
   def call
     v8_ctx = V8::Context.new timeout: timeout
 
-    eval_response_builder(v8_ctx, request)
+    eval_response_builder(v8_ctx)
 
     eval_request(v8_ctx)
 
@@ -41,7 +41,7 @@ class EvalResponseBuilder
                            'headers'        => request.headers }
   end
 
-  def eval_response_builder(v8_ctx, request)
+  def eval_response_builder(v8_ctx)
     initialize_response_builder_attrs(v8_ctx)
 
     v8_ctx.eval(context.bucket.response_builder.to_s)
