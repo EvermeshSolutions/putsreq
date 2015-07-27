@@ -7,7 +7,7 @@ class CreateRequest
                                              request_method:  rack_request.request_method,
                                              ip:              rack_request.ip,
                                              url:             rack_request.url,
-                                             headers:         parse_env_to_headers(rack_request.env),
+                                             headers:         filter_headers(rack_request.env),
                                              params:          rack_request.request_parameters)
     update_bucket
   end
@@ -23,7 +23,7 @@ class CreateRequest
     end
   end
 
-  def parse_env_to_headers(env)
+  def filter_headers(env)
     # skips lowercase headers (rack specific headers)
     env.to_h.select { |header_key, _header_value| header_key == header_key.upcase }
   end
