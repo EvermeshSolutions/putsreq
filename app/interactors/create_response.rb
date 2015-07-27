@@ -45,7 +45,7 @@ class CreateResponse
     response = http_adapter.send(built_request['request_method'].downcase.to_sym, forward_url, options)
 
     { 'status'  => response.code,
-      'headers' => response.headers.to_h.inject({}) { |h, (k, v)| h[k] = v.join; h },
+      'headers' => response.headers.to_h.each_with_object({}) { |(k, v), h| h[k] = v.join },
       'body'    => response.body }
   end
 
