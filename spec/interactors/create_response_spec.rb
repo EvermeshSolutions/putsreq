@@ -10,13 +10,19 @@ RSpec.describe CreateResponse do
 
   describe '#call' do
     context 'when forward to' do
-      let(:bucket) do
-        Bucket.create(response_builder: %{response.status = 200; response.body = "It's me, Mario!"; request.forwardTo = "http://example.com"})
+      let(:response_builder) do
+        <<-EOF.strip_heredoc
+          response.status = 200;
+          response.body = "It's me, Mario!";
+          request.forwardTo = "http://example.com";
+        EOF
       end
 
+      let(:bucket) { Bucket.create(response_builder: response_builder) }
+
       it 'uses forwarded response' do
-        stub_request(:get, 'http://example.com').
-          to_return(body: "It's me, Luigi!", status: 202, headers: { 'Content-Type' => 'text/plain' })
+        stub_request(:get, 'http://example.com')
+          .to_return(body: "It's me, Luigi!", status: 202, headers: { 'Content-Type' => 'text/plain' })
 
         result = described_class.call(bucket: bucket, request: request)
         resp = result.response
