@@ -4,7 +4,7 @@ class CreateResponse
   def call
     v8_ctx = V8::Context.new timeout: timeout
 
-    initialize_context(request, v8_ctx)
+    eval_response_builder(request, v8_ctx)
 
     built_request = v8_ctx.eval('JSON.stringify(request)')
 
@@ -61,7 +61,7 @@ class CreateResponse
     context.request
   end
 
-  def initialize_context(request, v8_ctx)
+  def eval_response_builder(request, v8_ctx)
     v8_ctx['response'] = { 'status'  => 200,
                            'headers' => {},
                            'body'    => 'ok' }
