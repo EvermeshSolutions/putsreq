@@ -35,7 +35,7 @@ class ForwardRequest
   def filter_forwarded_response(headers)
     blacklisted = %(transfer-encoding)
     headers.to_h.each_with_object({}) { |(k, v), h| h[k] = v.join }
-      .reject { |key, value| blacklisted.include? key.downcase }
+      .reject { |key, _value| blacklisted.include? key.downcase }
   end
 
   def built_request
