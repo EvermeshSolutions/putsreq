@@ -256,7 +256,6 @@ DEPENDENCIES
   rspec-rails (~> 3.0.0.beta)
   sass-rails (~> 4.0.2)
   sdoc
-  simplecov
   therubyracer
   uglifier (>= 1.3.0)
   unicorn
