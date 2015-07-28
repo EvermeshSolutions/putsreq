@@ -1,5 +1,5 @@
 class RecordRequest
   include Interactor::Organizer
 
-  organize CreateRequest, CreateResponse
+  organize CreateRequest, EvalResponseBuilder, ForwardRequest, CreateResponse, UpdateBucketStats
 end
