@@ -20,7 +20,7 @@ class Bucket
   index owner_token: 1
   index fork_id: 1
 
-  before_create :generate_tokens
+  before_create :generate_token
 
   def requests
     # I couldn't make has_many + conditions work with Mongoid
@@ -87,14 +87,10 @@ class Bucket
 
   private
 
-  def generate_tokens
-    self.token = generate_token(:token)
-  end
-
-  def generate_token(attr)
-    loop do
+  def generate_token
+    self.token = loop do
       random_token = SecureRandom.urlsafe_base64(15).tr('_-', '0a')
-      break random_token unless Bucket.where(attr => random_token).exists?
+      break random_token unless Bucket.where(token: random_token).exists?
     end
   end
 
