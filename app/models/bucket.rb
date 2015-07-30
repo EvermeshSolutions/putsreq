@@ -87,10 +87,6 @@ class Bucket
 
   private
 
-  def previous_request(current_request)
-    requests.lt(created_at: current_request.created_at).limit(1).order(:created_at.desc).first
-  end
-
   def generate_tokens
     self.token = generate_token(:token)
   end
