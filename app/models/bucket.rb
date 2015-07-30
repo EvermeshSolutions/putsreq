@@ -1,4 +1,3 @@
-require 'httparty'
 class Bucket
   include Mongoid::Document
   include Mongoid::Timestamps
