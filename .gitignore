@@ -6,7 +6,6 @@
 .config
 .DS_Store
 .yardoc
-Gemfile.lock
 InstalledFiles
 _yardoc
 coverage
