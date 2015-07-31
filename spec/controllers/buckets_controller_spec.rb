@@ -84,7 +84,7 @@ RSpec.describe BucketsController do
     it 'renders not found' do
       expect {
         get :show, token: '123'
-      }.to raise_error(ActionController::RoutingError)
+      }.to raise_error(Mongoid::Errors::DocumentNotFound)
     end
   end
 

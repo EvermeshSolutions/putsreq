@@ -72,10 +72,6 @@ class Bucket
     responses.order(:created_at.desc).first
   end
 
-  def self.find_by_token(token)
-    where(token: token).first
-  end
-
   # TODO Move to something else i.e. concerns/ForwardableHTTP
   def self.forwardable_headers(headers)
     headers.to_h.reject do |key, value|

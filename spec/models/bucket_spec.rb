@@ -6,22 +6,6 @@ RSpec.describe Bucket do
   let(:bucket_name) { 'My Bucket' }
   subject { described_class.create(name: bucket_name) }
 
-  describe '.find_by_token' do
-    it 'finds document' do
-      document = described_class.find_by_token(subject.token)
-
-      expect(document.id).to eq subject.id
-    end
-
-    context 'when not found' do
-      it 'returns nil' do
-        document = described_class.find_by_token('not found')
-
-        expect(document).to be_nil
-      end
-    end
-  end
-
   describe '#clear_history' do
     it 'filters history' do
       stub_request(:get, 'http://example.com').
