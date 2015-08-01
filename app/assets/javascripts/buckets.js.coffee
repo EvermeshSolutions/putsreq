@@ -73,7 +73,7 @@ RequestCountPoller =
         $('#bucket-request-count').text(count)
 
         favicon.badge(count)
-      catch  err
+      catch error
 
 
       if parseInt(count, 10) > parseInt(previousCount, 10) && $('#new-requests-info #new-requests-received').length == 0
