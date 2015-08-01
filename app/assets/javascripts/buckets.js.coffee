@@ -62,8 +62,7 @@ RequestCountPoller =
     favicon = new Favico(bgColor: '#6C92C8', animation: 'none')
     favicon.badge($('#bucket-request-count').text())
 
-    bucket = $('#putsreq-url-input').val().split('/')
-    bucket = bucket[bucket.length - 1]
+    bucket = $('#putsreq-url-input').data('token')
 
     pusher = new Pusher('3466d56fe2ef1fdd2943')
     channel = pusher.subscribe("channel_requests_#{bucket}")
