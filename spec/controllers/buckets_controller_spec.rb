@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe BucketsController do
+RSpec.describe BucketsController, type: :controller do
   render_views
 
   let(:owner_token) { 'dcc7d3b5152e86064a46e4fef5160d173fe2edd1f1c9c793' }
@@ -21,8 +21,8 @@ RSpec.describe BucketsController do
     it 'clears history' do
       RecordRequest.call(bucket: bucket, rack_request: rack_request)
 
-      expect(bucket.requests).to have(1).item
-      expect(bucket.responses).to have(1).item
+      expect(bucket.requests.count).to eq(1)
+      expect(bucket.responses.count).to eq(1)
 
       delete :clear, token: bucket.token
 
