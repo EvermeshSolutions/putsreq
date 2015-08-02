@@ -51,13 +51,46 @@ RSpec.describe Bucket do
   end
 
   describe '#requests_count' do
-    it 'returns the number of requests made to the bucket' do
+    it 'returns count' do
       expect {
-        RecordRequest.call(bucket: subject, rack_request: rack_request)
+        Request.create(bucket: subject)
       }.to change { subject.requests_count }.from(0).to(1)
+    end
+
+    context 'when no requests' do
+      it 'returns 0' do
+        expect(subject.requests_count).to eq(0)
+      end
     end
   end
 
-  pending '#last_request'
-  pending '#last_response'
+  describe '#last_request_at' do
+    it 'returns last_email_at' do
+      Request.create bucket: subject
+      last = Request.create bucket: subject
+
+      expect(subject.last_request_at).to eq(last.reload.created_at)
+    end
+
+    context 'when no emails' do
+      it 'returns nil' do
+        expect(subject.last_request_at).to be_nil
+      end
+    end
+  end
+
+  describe '#first_request_at' do
+    it 'returns first_email_at' do
+      first = Request.create bucket: subject
+      Request.create bucket: subject
+
+      expect(subject.first_request_at).to eq(first.reload.created_at)
+    end
+
+    context 'when no requests' do
+      it 'returns nil' do
+        expect(subject.first_request_at).to be_nil
+      end
+    end
+  end
 end

@@ -11,10 +11,7 @@ class Bucket
   field :name
   field :owner_token
   field :response_builder, default: -> { default_response_builder }
-  field :last_request_at, type: Time
-  field :first_request_at, type: Time
   field :history_start_at, type: Time
-  field :requests_count, type: Integer, default: 0
 
   index token: 1
   index owner_token: 1
@@ -27,15 +24,7 @@ class Bucket
     # requests must be filtered by created_at
     # see clear_history
 
-    # Avoid kaminari `.count` they are too expensive
-    r = Request.where(bucket_id: id).gte(created_at: history_start_at || created_at).order(:created_at.desc)
-    r.instance_variable_set :@requests_count, requests_count
-    r.instance_eval do
-      def total_count
-        @requests_count
-      end
-    end
-    r
+    Request.where(bucket_id: id).gte(created_at: history_start_at || created_at).order(:created_at.desc)
   end
 
   def responses
@@ -50,10 +39,7 @@ class Bucket
     # so we filter these objects by the history_start_at to "clear"
     # db.runCommand({ "convertToCapped": "requests",  size: 25000000 });
     # db.runCommand({ "convertToCapped": "responses", size: 25000000 });
-    update_attributes(history_start_at: Time.now,
-                      first_request_at: nil,
-                      last_request_at: nil,
-                      requests_count: 0)
+    update_attribute :history_start_at, Time.now
   end
 
   def name
@@ -70,6 +56,18 @@ class Bucket
 
   def last_response
     responses.order(:created_at.desc).first
+  end
+
+  def last_request_at
+    last_request.try(:created_at)
+  end
+
+  def first_request_at
+    requests.order(:created_at.asc).first.try(:created_at)
+  end
+
+  def requests_count
+    requests.count
   end
 
   # TODO Move to something else i.e. concerns/ForwardableHTTP
