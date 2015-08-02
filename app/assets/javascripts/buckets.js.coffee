@@ -78,4 +78,4 @@ RequestCountPoller =
 
       if parseInt(count, 10) > parseInt(previousCount, 10) && $('#new-requests-info #new-requests-received').length == 0
         $('#new-requests-info').hide().
-          append('<em><a id="new-requests-received" href="javascript:window.location.reload();">New requests received. Load newer requests?</a></em>').fadeIn('slow')
+          append('<em><a id="new-requests-received" href="javascript:window.location.reload();">New requests found. Load newer requests?</a></em>').fadeIn('slow')

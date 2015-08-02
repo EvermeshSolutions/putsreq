@@ -9,10 +9,6 @@ module ApplicationHelper
   end
 
   def show_no_requests_found(bucket)
-    if bucket.requests_count > 0
-      content_tag(:p, "Oops... You received #{bucket.requests_count} requests, but they have expired.")
-    else
-      content_tag(:p, 'No requests received.')
-    end
+    content_tag(:p, 'No requests found.')
   end
 end
