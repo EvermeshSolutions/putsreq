@@ -2,7 +2,7 @@ class Request
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  belongs_to :bucket
+  belongs_to :bucket, touch: true
 
   has_one :response, dependent: :delete
 
@@ -14,7 +14,6 @@ class Request
   field :url
   field :params, type: Hash
 
-  # index created_at: 1, options { expireAfterSeconds: 604800 }
   index bucket_id: 1, created_at: -1
 
   validates :bucket, presence: true
