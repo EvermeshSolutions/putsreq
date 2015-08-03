@@ -16,7 +16,7 @@ RSpec.describe Bucket do
       expect(subject.requests.count).to eq 1
       expect(subject.responses.count).to eq 1
 
-      subject.update_attribute :history_start_at, Time.now
+      subject.clear_history
 
       expect(subject.requests.count).to eq 0
       expect(subject.responses.count).to eq 0
