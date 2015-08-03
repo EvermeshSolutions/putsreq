@@ -1,5 +1,10 @@
-<% if msg = alert || notice %>
+<% if alert %>
   <div id="main-alert" class="alert alert-danger">
-    <h4><%= msg %></h4>
+    <h4><%= alert %></h4>
+  </div>
+<% end %>
+<% if notice %>
+  <div id="main-alert" class="alert alert-success">
+    <h4><%= notice %></h4>
   </div>
 <% end %>
