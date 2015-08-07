@@ -2,7 +2,7 @@ class ForwardRequest
   include Interactor
 
   def call
-    return unless forward_url = built_request['forwardTo']
+    return unless forward_url = built_request.try(:[], 'forwardTo')
 
     # use the response from the forwarded URL
     context.built_response = forward_to(built_request, forward_url)

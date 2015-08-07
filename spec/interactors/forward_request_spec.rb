@@ -29,5 +29,14 @@ RSpec.describe ForwardRequest do
                                 'headers' => { 'Content-Type' => 'text/plain' })
       end
     end
+
+    context 'when built_response is nil' do
+      it 'skips forwarding' do
+        built_response = { 'status' => 200 }
+        result = described_class.call(built_request: nil, built_response: built_response)
+
+        expect(result.built_response).to eq(built_response)
+      end
+    end
   end
 end
