@@ -84,4 +84,5 @@ end
 gem 'dotiw'
 gem 'devise'
 gem 'pusher'
-gem "interactor", "~> 3.0"
+gem 'interactor', '~> 3.0'
+gem 'staccato'
