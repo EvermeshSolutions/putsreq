@@ -1,4 +1,4 @@
-class TrackPageView
+class UpdateGA
   include Interactor
 
   def call
