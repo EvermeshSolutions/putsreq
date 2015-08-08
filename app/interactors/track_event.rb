@@ -15,12 +15,12 @@ class TrackEvent
 
     tracker = Staccato.tracker(ENV['GA'], nil, options)
 
-    event = tracker.build_event(category: 'Emails',
+    event = tracker.build_event(category: 'Requests',
                                 action: 'record',
                                 label: bucket.token,
                                 non_interactive: true)
 
-    event.add_measurement(:email, token: bucket.token)
+    event.add_measurement(:request, token: bucket.token)
 
     event.track!
   rescue => e

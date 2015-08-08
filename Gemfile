@@ -61,6 +61,7 @@ end
 group :test do
   gem 'webmock'
   gem 'codeclimate-test-reporter', require: nil
+  gem 'stub_env'
 end
 
 group :development do

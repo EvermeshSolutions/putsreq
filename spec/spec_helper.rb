@@ -62,4 +62,5 @@ RSpec.configure do |config|
   end
 
   config.include Devise::TestHelpers, type: :controller
+  config.include StubEnv::Helpers
 end
