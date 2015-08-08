@@ -47,24 +47,24 @@ class BucketsController < ApplicationController
   end
 
   def last
+    TrackPageView.call(rack_request: request)
+
     if last_request = bucket.last_request
       response.headers.merge! Bucket.forwardable_headers(last_request.headers)
 
-      render text: last_request.body
-
-      return
+      return render text: last_request.body
     end
 
     render_request_not_found
   end
 
   def last_response
+    TrackPageView.call(rack_request: request)
+
     if last_response = bucket.last_response
       response.headers.merge! Bucket.forwardable_headers(last_response.headers)
 
-      render text: last_response.body_as_string
-
-      return
+      return render text: last_response.body_as_string
     end
 
     render_request_not_found

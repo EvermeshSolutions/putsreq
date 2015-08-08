@@ -1,4 +1,4 @@
-class UpdateGA
+class TrackEvent
   include Interactor
 
   def call
@@ -7,6 +7,7 @@ class UpdateGA
     options = {
       hostname:    rack_request.host,
       path:        rack_request.path,
+      user_id:     rack_request.session.id,
       user_ip:     rack_request.remote_ip,
       user_agent:  rack_request.user_agent,
       referrer:    rack_request.referer
@@ -14,11 +15,12 @@ class UpdateGA
 
     tracker = Staccato.tracker(ENV['GA'], nil, options)
 
-    tracker.pageview(title: bucket.name)
+    event = tracker.build_event(category: 'Emails',
+                                action: 'record',
+                                label: bucket.token,
+                                non_interactive: true)
 
-    event = tracker.build_event(category: 'Requests', action: 'record', non_interactive: true)
-
-    event.add_measurement(:request, token: bucket.token)
+    event.add_measurement(:email, token: bucket.token)
 
     event.track!
   rescue => e
