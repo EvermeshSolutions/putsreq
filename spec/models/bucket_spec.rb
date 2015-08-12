@@ -72,7 +72,7 @@ RSpec.describe Bucket do
       expect(subject.last_request_at).to eq(last.reload.created_at)
     end
 
-    context 'when no emails' do
+    context 'when no requests' do
       it 'returns nil' do
         expect(subject.last_request_at).to be_nil
       end
