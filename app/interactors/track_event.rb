@@ -17,7 +17,7 @@ class TrackEvent
 
     event = tracker.build_event(category: 'Requests',
                                 action: 'record',
-                                label: bucket.token,
+                                label: "#{bucket.name} - #{bucket.token}",
                                 non_interactive: true)
 
     event.add_measurement(:request, token: bucket.token)
