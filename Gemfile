@@ -44,7 +44,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'therubyracer'
-gem 'mongoid', github: 'mongoid/mongoid', ref: '4893e77bb858'
+gem 'mongoid' # , github: 'mongoid/mongoid', ref: '4893e77bb858'
 gem 'bson_ext'
 gem 'httparty'
 gem 'kaminari'

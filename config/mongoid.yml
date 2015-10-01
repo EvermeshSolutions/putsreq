@@ -1,17 +1,17 @@
 development:
-  sessions:
+  clients:
     default:
       database: puts_req
       hosts:
         - localhost:27017
 test:
-  sessions:
+  clients:
     default:
       database: puts_req_test
       hosts:
         - localhost:27017
 production:
-  sessions:
+  clients:
     default:
       # The standard MongoDB connection URI allows for easy
       # replica set connection setup.
