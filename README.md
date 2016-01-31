@@ -115,12 +115,12 @@ PutsReq supports [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_shar
 
 ```javascript
 // Sample PutsReq Response Builder
-// https://putsreq.herokuapp.com/<YOUR-TOKEN>/inspect
+// https://putsreq.com/<YOUR-TOKEN>/inspect
 // response.headers['Content-Type'] = 'application/json';
 // response.body = { 'message': 'Hello World' };
 
 // Sample Ajax call
-$.get('https://putsreq.herokuapp.com/<YOUR-TOKEN>', function(data) {
+$.get('https://putsreq.com/<YOUR-TOKEN>', function(data) {
   alert(data.message);
   // => 'Hello World'
 });
