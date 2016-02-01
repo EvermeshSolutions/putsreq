@@ -8,3 +8,6 @@ rvm:
   - 2.1.6
 services:
   - mongodb
+
+before_install:
+ - gem update bundler
