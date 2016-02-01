@@ -39,7 +39,9 @@ RSpec.describe BucketsController, type: :controller do
       expect {
         post :fork, token: bucket.token
 
-        bucket2 = Bucket.last
+        expect(bucket.forks.count).to eq 1
+
+        bucket2 = bucket.forks.first
 
         expect(bucket2.name).to eq "Copy of #{name}"
         expect(bucket2.fork).to eq bucket
@@ -69,7 +71,7 @@ RSpec.describe BucketsController, type: :controller do
         post :create
       }.to change(Bucket, :count).by(1)
 
-      expect(response).to redirect_to(bucket_path(Bucket.last.token))
+      expect(response).to redirect_to(bucket_path(Bucket.order(:id.asc).last.token))
     end
   end
 
