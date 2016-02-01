@@ -113,7 +113,9 @@ request.forwardTo = 'http://example.com/api';
 
 PutsReq supports [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), so you can use it to test your Ajax calls.
 
-```javascript
+```html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
 // Sample PutsReq Response Builder
 // https://putsreq.com/<YOUR-TOKEN>/inspect
 // response.headers['Content-Type'] = 'application/json';
@@ -124,6 +126,7 @@ $.get('https://putsreq.com/<YOUR-TOKEN>', function(data) {
   alert(data.message);
   // => 'Hello World'
 });
+</script>
 ```
 
 ### Sample Integration Tests
