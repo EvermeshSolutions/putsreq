@@ -6,6 +6,8 @@
 
 PutsReq lets you record HTTP requests and simulate responses like no other tool available. [Try it now](http://putsreq.com)!
 
+Check this post: [Play Rock-paper-scissors with Slack and PutsReq](http://www.pablocantero.com/blog/2014/10/12/play-rock-paper-scissors-with-slack-and-putsreq/) for some other examples.
+
 ### Getting Started
 
 Steps to run PutsReq in development.
