@@ -17,3 +17,4 @@ spec/reports
 tmp
 logs/
 log/
+.env

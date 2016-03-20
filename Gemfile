@@ -73,6 +73,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.3'
   gem 'rack-test'
   gem 'database_cleaner'
+  gem 'dotenv-rails'
 end
 
 source 'https://rails-assets.org' do
