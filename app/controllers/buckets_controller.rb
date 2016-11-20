@@ -47,19 +47,21 @@ class BucketsController < ApplicationController
   end
 
   def last
-    if last_request = bucket.last_request
-      return render text: last_request.body
-    end
+    return render_request_not_found unless last_request = bucket.last_request
 
-    render_request_not_found
+    respond_to do |format|
+      format.html { render text: last_request.body }
+      format.json { render json: JSON.pretty_generate(last_request.attributes) }
+    end
   end
 
   def last_response
-    if last_response = bucket.last_response
-      return render text: last_response.body_as_string
-    end
+    return render_request_not_found unless last_response = bucket.last_response
 
-    render_request_not_found
+    respond_to do |format|
+      format.html { render text: last_response.body }
+      format.json { render json: JSON.pretty_generate(last_response.attributes) }
+    end
   end
 
   def record
