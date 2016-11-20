@@ -1,6 +1,8 @@
 class ForwardRequest
   include Interactor
 
+  delegate :built_request, to: :context
+
   def call
     return unless forward_url = built_request.try(:[], 'forwardTo')
 
@@ -15,30 +17,23 @@ class ForwardRequest
   private
 
   def forward_to(built_request, forward_url)
-    body = if built_request['body'].is_a?(Hash)
-             built_request['body'].to_json
-           else
-             built_request['body'].to_s
-           end
 
     options = { timeout: 5,
-                headers: Bucket.forwardable_headers(built_request['headers']),
+                headers: built_request['headers'],
                 body: body }
 
     forwarded_response = HTTParty.send(built_request['request_method'].downcase.to_sym, forward_url, options)
 
     { 'status'  => forwarded_response.code,
-      'headers' => filter_forwarded_response(forwarded_response.headers),
+      'headers' => forwarded_response.headers,
       'body'    => forwarded_response.body }
   end
 
-  def filter_forwarded_response(headers)
-    blacklisted = %(transfer-encoding)
-    headers.to_h.each_with_object({}) { |(k, v), h| h[k] = v.join }
-      .reject { |key, _value| blacklisted.include? key.downcase }
-  end
-
-  def built_request
-    context.built_request
+  def body
+    if built_request['body'].is_a?(Hash)
+      JSON.dump(built_request['body'])
+    else
+      built_request['body'].to_s
+    end
   end
 end

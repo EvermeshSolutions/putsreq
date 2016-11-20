@@ -1,6 +1,8 @@
 class EvalResponseBuilder
   include Interactor
 
+  delegate :request, to: :context
+
   def call
     v8_ctx = V8::Context.new timeout: timeout
 
@@ -26,7 +28,7 @@ class EvalResponseBuilder
 
     # filter allowed parameters
     context.built_response = JSON.parse(context.built_response).select do |key, value|
-      %w[status headers body].include?(key) && value.to_s.present?
+      %w(status headers body).include?(key) && value.to_s.present?
     end
   end
 
@@ -49,9 +51,5 @@ class EvalResponseBuilder
 
   def timeout
     context.timeout ||= 2500
-  end
-
-  def request
-    context.request
   end
 end

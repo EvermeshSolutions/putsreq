@@ -80,12 +80,12 @@ GEM
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
-    json (1.8.1)
+    json (1.8.3)
     kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.9.2)
-    libv8 (3.16.14.3)
+    libv8 (3.16.14.15)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -148,7 +148,7 @@ GEM
     rdoc (4.1.1)
       json (~> 1.4)
     redis (3.1.0)
-    ref (1.0.5)
+    ref (2.0.0)
     rspec (3.3.0)
       rspec-core (~> 3.3.0)
       rspec-expectations (~> 3.3.0)
@@ -199,7 +199,7 @@ GEM
     staccato (0.3.1)
     stub_env (1.0.3)
       rspec (>= 2.0, < 4.0)
-    therubyracer (0.12.1)
+    therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
@@ -245,7 +245,7 @@ DEPENDENCIES
   quiet_assets
   rack-cors
   rack-test
-  rails (= 4.0.4)
+  rails (~> 4.0.4)
   rails-assets-bootstrap-less!
   rails-assets-dispatcher!
   rails-assets-favico.js!
@@ -262,5 +262,8 @@ DEPENDENCIES
   unicorn
   webmock
 
+RUBY VERSION
+   ruby 2.3.1p112
+
 BUNDLED WITH
-   1.10.6
+   1.13.6

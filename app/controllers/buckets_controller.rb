@@ -34,7 +34,7 @@ class BucketsController < ApplicationController
   end
 
   def show
-    @requests = bucket.requests.page(params[:page]).per 5
+    @requests = bucket.requests.page(params[:page]).per 1
   end
 
   def update
@@ -47,11 +47,7 @@ class BucketsController < ApplicationController
   end
 
   def last
-    TrackPageView.call(rack_request: request)
-
     if last_request = bucket.last_request
-      response.headers.merge! Bucket.forwardable_headers(last_request.headers)
-
       return render text: last_request.body
     end
 
@@ -59,11 +55,7 @@ class BucketsController < ApplicationController
   end
 
   def last_response
-    TrackPageView.call(rack_request: request)
-
     if last_response = bucket.last_response
-      response.headers.merge! Bucket.forwardable_headers(last_response.headers)
-
       return render text: last_response.body_as_string
     end
 

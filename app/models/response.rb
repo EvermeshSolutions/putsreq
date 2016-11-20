@@ -17,6 +17,6 @@ class Response
   validates :request,  presence: true
 
   def body_as_string
-    body.is_a?(Hash) ? body.to_json : body.to_s
+    body.is_a?(Hash) ? JSON.pretty_generate(body) : body.to_s
   end
 end
