@@ -25,7 +25,7 @@ class ForwardRequest
     forwarded_response = HTTParty.send(built_request['request_method'].downcase.to_sym, forward_url, options)
 
     { 'status'  => forwarded_response.code,
-      'headers' => forwarded_response.headers,
+      'headers' => forwarded_response.headers.to_h,
       'body'    => forwarded_response.body }
   end
 
