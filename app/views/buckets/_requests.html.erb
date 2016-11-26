@@ -1,38 +1,44 @@
-<table class="requests-header">
-  <thead>
-    <tr>
-      <th>Request Headers</th>
-      <th>&nbsp;</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% recorded_request.headers.to_h.each do |header_key, header_value| %>
-    <tr>
-      <td class="key"><%= header_key %></td>
-      <td class="value" title="<%= header_value %>"><%= header_value %></td>
-    </tr>
-  <% end %>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="2">
-
-        <div class="request-footer-info">
-          <small>When</small>
-          <span title="<%= recorded_request.created_at.utc %>"><%= time_ago_in_words recorded_request.created_at %> ago</span>
-        </div>
-
-        <div class="request-footer-info">
-          <small>Request Body</small>
-          <span><code><%= recorded_request.body %></code></span>
-        </div>
-
-        <div class="request-footer-info">
-          <small>Response Body</small>
-          <span><code><%= recorded_request.response.body_as_string %></code></span>
-        </div>
-      </td>
-    </tr>
-  </tfoot>
-</table>
-<hr/>
+<div class="panel-group request-show" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Headers
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <pre><%= simple_format recorded_request.headers_as_string %></pre>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+          Request
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        <pre><%= simple_format recorded_request.body_as_string %></pre>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+          Response
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+        <pre><%= simple_format recorded_request.response.body_as_string %></pre>
+      </div>
+    </div>
+  </div>
+</div>
