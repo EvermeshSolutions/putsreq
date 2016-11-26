@@ -10,11 +10,9 @@ RSpec.describe ForwardRequest do
         .to_return(body: "It's me, Luigi!", status: 202, headers: { 'Content-Type' => 'text/plain' })
 
       result = described_class.call(built_request: built_request)
-      resp = result.built_response
 
-      expect(resp).to include('status'  => 202,
-                              'body'    => "It's me, Luigi!",
-                              'headers' => { 'content-type' => 'text/plain' })
+      expect(result.built_response).to include('status'  => 202,
+                                               'body'    => "It's me, Luigi!")
     end
 
     context 'when forward raises an error' do
@@ -25,8 +23,7 @@ RSpec.describe ForwardRequest do
         resp = result.built_response
 
         expect(resp).to include('status'  => 500,
-                                'body'    => 'error error',
-                                'headers' => { 'Content-Type' => 'text/plain' })
+                                'body'    => 'error error')
       end
     end
 

@@ -1,28 +1,27 @@
 class CreateRequest
   include Interactor
 
+  delegate :bucket, :rack_request, to: :context
+
   def call
     context.request = bucket.requests.create(body:            rack_request.body.read,
                                              content_length:  rack_request.content_length,
                                              request_method:  rack_request.request_method,
                                              ip:              rack_request.ip,
                                              url:             rack_request.url,
-                                             headers:         filtered_headers,
+                                             headers:         client_supplied_headers,
                                              params:          rack_request.request_parameters)
   end
 
   private
 
-  def filtered_headers
-    # skip lowercase headers (rack specific headers)
-    rack_request.env.to_h.select { |key, _value| key == key.upcase }
-  end
+  def client_supplied_headers
+    rack_request.env.to_h.each_with_object({}) do |(key, value), h|
+      next unless value.to_s.present?
+      next unless key.upcase == key
+      next if %w(host transfer-encoding).include? key.downcase
 
-  def bucket
-    context.bucket
-  end
-
-  def rack_request
-    context.rack_request
+      h[key.sub('HTTP_', '').tr('_', '-')] = value
+    end
   end
 end

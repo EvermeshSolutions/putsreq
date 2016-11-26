@@ -1,9 +1,8 @@
 class SafeRedis
   def initialize
-    uri = URI.parse ENV['REDISTOGO_URL']
     @redis = Redis.new url: ENV['REDISTOGO_URL']
   rescue => e
-    # bad URI(is not URI?):  (URI::InvalidURIError)
+    # Bad URI i.e. URI::InvalidURIError
     Rails.logger.error e
   end
 

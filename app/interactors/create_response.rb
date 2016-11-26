@@ -1,19 +1,11 @@
 class CreateResponse
   include Interactor
 
+  delegate :bucket, :request, :built_response, to: :context
+
   def call
-    built_response['request'] = context.request
+    built_response['request'] = request
 
     context.response = bucket.responses.create(built_response)
-  end
-
-  private
-
-  def bucket
-    context.bucket
-  end
-
-  def built_response
-    context.built_response
   end
 end

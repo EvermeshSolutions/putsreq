@@ -52,8 +52,6 @@
   <div class="col-md-6"></div>
 </div>
 <p><%= paginate @requests %></p>
-
-<hr/>
 <%= render(partial: 'requests', collection: @requests, as: :recorded_request) || show_no_requests_found(@bucket) %>
 <p><%= paginate @requests %></p>
 

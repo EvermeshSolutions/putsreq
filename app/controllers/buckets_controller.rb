@@ -34,7 +34,7 @@ class BucketsController < ApplicationController
   end
 
   def show
-    @requests = bucket.requests.page(params[:page]).per 5
+    @requests = bucket.requests.page(params[:page]).per 1
   end
 
   def update
@@ -47,27 +47,21 @@ class BucketsController < ApplicationController
   end
 
   def last
-    TrackPageView.call(rack_request: request)
+    return render_request_not_found unless last_request = bucket.last_request
 
-    if last_request = bucket.last_request
-      response.headers.merge! Bucket.forwardable_headers(last_request.headers)
-
-      return render text: last_request.body
+    respond_to do |format|
+      format.html { render text: last_request.body }
+      format.json { render json: JSON.pretty_generate(last_request.attributes) }
     end
-
-    render_request_not_found
   end
 
   def last_response
-    TrackPageView.call(rack_request: request)
+    return render_request_not_found unless last_response = bucket.last_response
 
-    if last_response = bucket.last_response
-      response.headers.merge! Bucket.forwardable_headers(last_response.headers)
-
-      return render text: last_response.body_as_string
+    respond_to do |format|
+      format.html { render text: last_response.body }
+      format.json { render json: JSON.pretty_generate(last_response.attributes) }
     end
-
-    render_request_not_found
   end
 
   def record

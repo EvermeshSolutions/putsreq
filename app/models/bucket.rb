@@ -72,15 +72,6 @@ class Bucket
     requests.count
   end
 
-  # TODO Move to something else i.e. concerns/ForwardableHTTP
-  def self.forwardable_headers(headers)
-    headers.to_h.reject do |key, value|
-      value.nil? || key.downcase.include?('host')
-    end.each_with_object({}) do |(key, value), new_headers|
-      new_headers[key.sub('HTTP_', '')] = value
-    end
-  end
-
   private
 
   def generate_token
