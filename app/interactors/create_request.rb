@@ -16,14 +16,12 @@ class CreateRequest
   private
 
   def client_supplied_headers
-    # See HTTP_ Variables
-    # http://www.rubydoc.info/github/rack/rack/file/SPEC
-    headers = rack_request.env.to_h.select { |key, _value| key.upcase.start_with? 'HTTP_' }
-
-    headers.each_with_object({}) do |(key, value), h|
+    rack_request.env.to_h.each_with_object({}) do |(key, value), h|
       next unless value.to_s.present?
-      # See http://www.andhapp.com/blog/2013/03/03/rack-nginx-custom-http-header-http_-and-_/
-      h[key.sub('HTTP_', '').gsub('_', '-')] = value
+      next unless key.upcase == key
+      next if %w(host transfer-encoding).include? key.downcase
+
+      h[key.sub('HTTP_', '').tr('_', '-')] = value
     end
   end
 end
