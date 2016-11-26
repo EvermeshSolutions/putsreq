@@ -13,3 +13,5 @@ services:
 
 before_install:
  - gem update bundler
+ after_success:
+  - bundle exec codeclimate-test-reporter
