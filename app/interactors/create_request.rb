@@ -19,9 +19,12 @@ class CreateRequest
     rack_request.env.to_h.each_with_object({}) do |(key, value), h|
       next unless value.to_s.present?
       next unless key.upcase == key
+
+      key = key.sub('HTTP_', '').tr('_', '-')
+
       next if %w(host transfer-encoding).include? key.downcase
 
-      h[key.sub('HTTP_', '').tr('_', '-')] = value
+      h[key] = value
     end
   end
 end
