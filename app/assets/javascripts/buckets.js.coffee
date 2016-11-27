@@ -74,4 +74,4 @@ RequestCountPoller =
       catch error
 
       $('#new-requests-info').hide().
-        append('<em><a id="new-requests-received" href="javascript:window.location.reload();">New requests found. Load newer requests?</a></em>').fadeIn('slow')
+        html('<em><a id="new-requests-received" href="javascript:window.location.reload();">New requests found. Load newer requests?</a></em>').fadeIn('slow')
