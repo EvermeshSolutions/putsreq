@@ -1,0 +1,57 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'thor'
+require 'pusher-client'
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'putsreq/version'
+require 'httparty'
+
+class PutsReqCLI < Thor
+  desc 'forward', 'Forward requests from a PutsReq bucket to a given URL'
+  method_option :from, desc: 'PutsReq Bucket ID'
+  method_option :to, desc: 'Destination URL'
+  def forward
+    puts 'Press CTRL+c to cancel it'
+
+    PusherClient.logger.level = Logger::ERROR
+
+    options = { secure: true }
+
+    socket = PusherClient::Socket.new('3466d56fe2ef1fdd2943', options)
+
+    socket.subscribe('channel_requests_5831aeae6b1fc7000a00116f')
+
+    socket['channel_requests_5831aeae6b1fc7000a00116f'].bind('update_count') do |data|
+      puts data.inspect
+      # last_request = HTTParty.get("http://putsreq.com/am9kjt9OM2rPaqOgttXl/last.json")
+
+      # if previous_last_request.to_h['_id'] != last_request['_id']
+      #   options = { headers:  last_request['headers'] }
+
+      #   unless last_request['body'].to_s.empty?
+      #     options[:body] = last_request['body']
+      #   end
+
+      #   forward_request = HTTParty.send(last_request['request_method'].downcase.to_sym, 'http://putsreq.com/s0na4ONKN7ayEwtkyaes', options)
+
+      #   puts forward_request.code
+      # end
+
+      # previous_last_request = last_request
+    end
+
+    socket.connect
+  end
+
+  desc 'version', 'Show putsreq version'
+  def version
+    puts "putsreq #{PutsReq::VERSION}"
+  end
+
+  # default_command :db
+end
+
+PutsReqCLI.start
