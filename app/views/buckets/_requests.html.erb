@@ -1,5 +1,6 @@
 <div class="panel-group request-show" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
+    <span class="pull-right label label-info"  title="<%= recorded_request.created_at.utc %>"><%= time_ago_in_words recorded_request.created_at %> ago</span>
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
