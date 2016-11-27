@@ -8,13 +8,32 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
 require 'putsreq/version'
 require 'httparty'
+require 'uri'
 
 class PutsReqCLI < Thor
-  desc 'forward', 'Forward requests from a PutsReq bucket to a given URL'
-  method_option :from, desc: 'PutsReq Bucket ID'
-  method_option :to, desc: 'Destination URL'
+  no_commands do
+    def parse_bucket_token(p)
+      if p.start_with? 'http'
+        # from http://putsreq.com/token or http://putsreq.com/token/inspect
+        # to token
+        uri = URI(p)
+        return uri.path.split('/')[1]
+      end
+
+      p
+    end
+  end
+
+  desc 'forward', 'Forward requests from a PutsReq to a given URL'
+  method_option :token, desc: 'bucket token', required: true
+  method_option :to, desc: 'destination URL', required: true
   def forward
-    puts 'Press CTRL+c to cancel it'
+    token = parse_bucket_token(options[:token])
+    to    = options[:to]
+
+    puts "Starting to listen requests from #{token}"
+    puts "Forwarding to #{to}"
+    puts "Press CTRL+c to terminate"
 
     PusherClient.logger.level = Logger::ERROR
 
@@ -22,25 +41,22 @@ class PutsReqCLI < Thor
 
     socket = PusherClient::Socket.new('3466d56fe2ef1fdd2943', options)
 
-    socket.subscribe('channel_requests_5831aeae6b1fc7000a00116f')
+    channel = "channel_requests_#{token}"
 
-    socket['channel_requests_5831aeae6b1fc7000a00116f'].bind('update_count') do |data|
-      puts data.inspect
-      # last_request = HTTParty.get("http://putsreq.com/am9kjt9OM2rPaqOgttXl/last.json")
+    socket.subscribe(channel)
 
-      # if previous_last_request.to_h['_id'] != last_request['_id']
-      #   options = { headers:  last_request['headers'] }
+    socket[channel].bind('new') do |data|
+      last_request = JSON.parse(data)['request']
 
-      #   unless last_request['body'].to_s.empty?
-      #     options[:body] = last_request['body']
-      #   end
+      options = { headers:  last_request['headers'] }
 
-      #   forward_request = HTTParty.send(last_request['request_method'].downcase.to_sym, 'http://putsreq.com/s0na4ONKN7ayEwtkyaes', options)
+      options[:body] = last_request['body'] unless last_request['body'].to_s.empty?
 
-      #   puts forward_request.code
-      # end
+      forward_request = HTTParty.send(last_request['request_method'].downcase.to_sym,
+                                      to,
+                                      options)
 
-      # previous_last_request = last_request
+      puts "#{Time.now}\t#{last_request['request_method']}\t#{forward_request.code}"
     end
 
     socket.connect
@@ -50,8 +66,6 @@ class PutsReqCLI < Thor
   def version
     puts "putsreq #{PutsReq::VERSION}"
   end
-
-  # default_command :db
 end
 
 PutsReqCLI.start

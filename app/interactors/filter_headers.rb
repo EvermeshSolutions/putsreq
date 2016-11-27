@@ -16,6 +16,9 @@ class FilterHeaders
 
       key = key.sub('HTTP_', '').tr('_', '-')
 
+      next if key.upcase.start_with? 'CF-' # Ignore CloudFlare headers
+      next if key.upcase.start_with? 'SERVER-'
+
       next if %w(host transfer-encoding).include? key.downcase
 
       h[key] = value

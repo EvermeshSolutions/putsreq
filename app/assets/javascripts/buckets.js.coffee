@@ -62,19 +62,16 @@ RequestCountPoller =
     favicon = new Favico(bgColor: '#6C92C8', animation: 'none')
     favicon.badge($('#bucket-request-count').text())
 
-    bucket = $('#putsreq-url-input').data('bucket-id')
+    bucket = $('#putsreq-url-input').data('bucket-token')
 
     pusher = new Pusher('3466d56fe2ef1fdd2943')
     channel = pusher.subscribe("channel_requests_#{bucket}")
-    channel.bind 'update_count', (count) ->
+    channel.bind 'new', (data) ->
       try
-        previousCount = $('#bucket-request-count').text()
+        $('#bucket-request-count').text(data.count)
 
-        $('#bucket-request-count').text(count)
-
-        favicon.badge(count)
+        favicon.badge(data.count)
       catch error
 
-      if parseInt(count, 10) > parseInt(previousCount, 10) && $('#new-requests-info #new-requests-received').length == 0
-        $('#new-requests-info').hide().
-          append('<em><a id="new-requests-received" href="javascript:window.location.reload();">New requests found. Load newer requests?</a></em>').fadeIn('slow')
+      $('#new-requests-info').hide().
+        append('<em><a id="new-requests-received" href="javascript:window.location.reload();">New requests found. Load newer requests?</a></em>').fadeIn('slow')
