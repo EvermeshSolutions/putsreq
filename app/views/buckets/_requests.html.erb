@@ -23,7 +23,7 @@
     </div>
     <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
-        <pre><%= simple_format recorded_request.body_as_string %></pre>
+        <pre><%= sanitize recorded_request.body_as_string %></pre>
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@
     </div>
     <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
-        <pre><%= simple_format recorded_request.response.body_as_string %></pre>
+        <pre><%= sanitize recorded_request.response.body_as_string %></pre>
       </div>
     </div>
   </div>
