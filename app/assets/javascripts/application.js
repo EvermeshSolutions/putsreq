@@ -14,7 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require jquery.tipsy
-//= require zeroclipboard
+//= require clipboard
 //= require favico.js
 //
 //= require ace/ace

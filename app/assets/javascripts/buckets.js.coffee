@@ -2,26 +2,18 @@ App.buckets = {}
 
 App.buckets['share'] = App.buckets['show'] = ->
   App.buckets.initializeAce()
-
-  ZeroClipboard.config
-    moviePath: '/flash/ZeroClipboard.swf'
-
-  window.client = new ZeroClipboard $('#copy-button')
-  htmlBridge = '#global-zeroclipboard-html-bridge'
+  RequestCountPoller.start()
 
   tipsyConfig = title: 'Copy to Clipboard', copiedHint: 'Copied!'
 
-  $(htmlBridge).tipsy gravity: $.fn.tipsy.autoNS
-  $(htmlBridge).attr 'title', tipsyConfig.title
+  $copyButton = $('#copy-button')
+  $copyButton.tipsy(gravity: $.fn.tipsy.autoNS)
+  $copyButton.attr('title', tipsyConfig.title)
 
-  client.on 'complete', (client, args) ->
-    $('#putsreq-url-input').focus().blur()
-
-    $(htmlBridge).prop('title', tipsyConfig.copiedHint).tipsy 'show'
-    $(htmlBridge).attr 'original-title', tipsyConfig.title
-
-  RequestCountPoller.start()
-
+  clipboard = new Clipboard('#copy-button')
+  clipboard.on 'success', ->
+    $copyButton.prop('title', tipsyConfig.copiedHint).tipsy('show')
+    $copyButton.attr('original-title', tipsyConfig.title)
 
 App.buckets.initializeAce = ->
   autoResizeAce = ->
@@ -37,8 +29,7 @@ App.buckets.initializeAce = ->
     # its inner structure for adapting to a change in size
     editor.resize()
 
-  $('#putsreq-url-input').on 'click', ->
-    $(this).select()
+  $('#putsreq-url-input').on 'click', -> $(this).select()
 
   editor = ace.edit 'editor'
   editor.setTheme 'ace/theme/monokai'

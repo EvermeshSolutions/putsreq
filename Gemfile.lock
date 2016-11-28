@@ -134,9 +134,9 @@ GEM
       railties (= 4.0.13)
       sprockets-rails (~> 2.0)
     rails-assets-bootstrap-less (3.3.4)
+    rails-assets-clipboard (1.5.15)
     rails-assets-dispatcher (0.2.0)
     rails-assets-favico.js (0.3.10)
-    rails-assets-zeroclipboard (2.2.0)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
@@ -247,9 +247,9 @@ DEPENDENCIES
   rack-test
   rails (~> 4.0.4)
   rails-assets-bootstrap-less!
+  rails-assets-clipboard!
   rails-assets-dispatcher!
   rails-assets-favico.js!
-  rails-assets-zeroclipboard!
   rails_12factor
   redis
   rspec-rails (~> 3.3)

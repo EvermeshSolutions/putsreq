@@ -17,7 +17,7 @@
   <h3>Your PutsReq URL</h3>
   <div class="input-group putsreq-url">
     <input id="putsreq-url-input" data-bucket-token="<%= @bucket.token %>" type="text" value="<%= token_url(@bucket.token) %>" readonly="readonly"></input>
-    <span id="copy-button" data-clipboard-text="<%= token_url(@bucket.token) %>" class="input-group-addon hastip clipboard">
+    <span id="copy-button" class="input-group-addon hastip clipboard" data-clipboard-target="#putsreq-url-input">
       <span class="glyphicon glyphicon-link hastip"></span>
     </span>
   </div>

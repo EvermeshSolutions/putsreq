@@ -78,10 +78,10 @@ group :development, :test do
 end
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-zeroclipboard'
   gem 'rails-assets-favico.js'
   gem 'rails-assets-dispatcher'
   gem 'rails-assets-bootstrap-less'
+  gem 'rails-assets-clipboard'
 end
 
 gem 'dotiw'
