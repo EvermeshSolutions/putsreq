@@ -1,6 +1,9 @@
 class FilterHeaders
   include Interactor
 
+  BLACKLIST_HEADERS = %w(HOST CF X-REQUEST X-FORWARDED CONNECT-TIME TOTAL-ROUTE-TIME VIA).freeze
+  WHITELIST_HEADERS = %w(HTTP_ CONTENT).freeze
+
   delegate :headers, to: :context
 
   def call
@@ -12,12 +15,12 @@ class FilterHeaders
   def client_supplied_headers
     headers.to_h.each_with_object({}) do |(key, value), h|
       next unless value.to_s.present?
-      # Only saves user supplied headers HTTP_ or content-type/length
-      next unless key.start_with?('HTTP_') || %w(content-type content-length).include?(key.downcase)
+
+      next unless key.upcase.start_with?(*WHITELIST_HEADERS)
 
       key = key.sub('HTTP_', '').tr('_', '-')
 
-      next if key.start_with? 'CF-' # ignore CloudFare headers
+      next if key.upcase.start_with?(*BLACKLIST_HEADERS)
 
       h[key] = value
     end
