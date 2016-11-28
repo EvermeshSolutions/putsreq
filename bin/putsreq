@@ -24,9 +24,9 @@ class PutsReqCLI < Thor
     end
   end
 
-  desc 'forward', 'Forward requests from a PutsReq to a given URL'
-  method_option :token, desc: 'bucket token', required: true
-  method_option :to, desc: 'destination URL', required: true
+  desc 'forward', 'Forward requests from PutsReq to a given URL'
+  method_option :token, desc: 'PutsReq token',   required: true
+  method_option :to,    desc: 'destination URL', required: true
   def forward
     token = parse_bucket_token(options[:token])
     to    = options[:to]
@@ -62,9 +62,9 @@ class PutsReqCLI < Thor
     socket.connect
   end
 
-  desc 'version', 'Show putsreq version'
+  desc 'version', 'Show version'
   def version
-    puts "putsreq #{PutsReq::VERSION}"
+    puts "PutsReq #{PutsReq::VERSION}"
   end
 end
 
