@@ -1,0 +1,71 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'thor'
+require 'pusher-client'
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+
+require 'putsreq/version'
+require 'httparty'
+require 'uri'
+
+class PutsReqCLI < Thor
+  no_commands do
+    def parse_bucket_token(p)
+      if p.start_with? 'http'
+        # from http://putsreq.com/token or http://putsreq.com/token/inspect
+        # to token
+        uri = URI(p)
+        return uri.path.split('/')[1]
+      end
+
+      p
+    end
+  end
+
+  desc 'forward', 'Forward requests from PutsReq to a given URL'
+  method_option :token, desc: 'PutsReq token',   required: true
+  method_option :to,    desc: 'destination URL', required: true
+  def forward
+    token = parse_bucket_token(options[:token])
+    to    = options[:to]
+
+    puts "Starting to listen requests from #{token}"
+    puts "Forwarding to #{to}"
+    puts "Press CTRL+c to terminate"
+
+    PusherClient.logger.level = Logger::ERROR
+
+    options = { secure: true }
+
+    socket = PusherClient::Socket.new('3466d56fe2ef1fdd2943', options)
+
+    channel = "channel_requests_#{token}"
+
+    socket.subscribe(channel)
+
+    socket[channel].bind('new') do |data|
+      last_request = JSON.parse(data)['request']
+
+      options = { headers:  last_request['headers'] }
+
+      options[:body] = last_request['body'] unless last_request['body'].to_s.empty?
+
+      forward_request = HTTParty.send(last_request['request_method'].downcase.to_sym,
+                                      to,
+                                      options)
+
+      puts "#{Time.now}\t#{last_request['request_method']}\t#{forward_request.code}"
+    end
+
+    socket.connect
+  end
+
+  desc 'version', 'Show version'
+  def version
+    puts "PutsReq #{PutsReq::VERSION}"
+  end
+end
+
+PutsReqCLI.start
