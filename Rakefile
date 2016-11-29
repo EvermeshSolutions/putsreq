@@ -4,3 +4,5 @@
 require File.expand_path('../config/application', __FILE__)
 
 PutsReq::Application.load_tasks
+
+require 'bundler/gem_tasks'
