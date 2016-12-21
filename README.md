@@ -113,12 +113,13 @@ request.forwardTo = 'http://example.com/api';
 
 ### CLI
 
-Want to test a Webhook calls against your localhost? PutsReq makes it easy!
+Want to test Webhook calls against your localhost? PutsReq makes it easy!
 
-```shell
+```bash
 gem install putsreq
 
 putsreq forward --to http://localhost:3000 --token YOUR-TOKEN
+
 Listening requests from YOUR-TOKEN
 Forwarding to http://localhost:3000
 Press CTRL+c to terminate
