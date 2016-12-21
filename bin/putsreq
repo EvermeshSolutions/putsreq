@@ -28,10 +28,12 @@ class PutsReqCLI < Thor
   method_option :token, desc: 'PutsReq token',   required: true
   method_option :to,    desc: 'destination URL', required: true
   def forward
+    trap('SIGINT', 'EXIT')
+
     token = parse_bucket_token(options[:token])
     to    = options[:to]
 
-    puts "Starting to listen requests from #{token}"
+    puts "Listening requests from #{token}"
     puts "Forwarding to #{to}"
     puts "Press CTRL+c to terminate"
 
