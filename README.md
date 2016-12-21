@@ -111,6 +111,20 @@ request.body = parsedBody;
 request.forwardTo = 'http://example.com/api';
 ```
 
+### CLI
+
+Want to test a Webhook calls against your localhost? PutsReq makes it easy!
+
+```shell
+gem install putsreq
+
+putsreq forward --to http://localhost:3000 --token YOUR-TOKEN
+Listening requests from YOUR-TOKEN
+Forwarding to http://localhost:3000
+Press CTRL+c to terminate
+2016-12-21 20:49:54 -0200       POST    200
+```
+
 ### Ajax
 
 PutsReq supports [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing), so you can use it to test your Ajax calls.
