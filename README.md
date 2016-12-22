@@ -115,6 +115,8 @@ request.forwardTo = 'http://example.com/api';
 
 Want to test Webhook calls against your localhost? PutsReq makes it easy!
 
+You can think of it, as a kind of [ngrok](http://ngrok.io), but instead of creating a tunnel to your localhost, PutsReq polls requests from `YOUR-PUTSREQ-TOKEN` and forwards to your localhost.
+
 ```bash
 gem install putsreq
 
