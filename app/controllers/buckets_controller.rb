@@ -70,7 +70,8 @@ class BucketsController < ApplicationController
 
     response.headers.merge! recorded_response.headers.to_h
 
-    render text: recorded_response.body_as_string, status: recorded_response.status
+    render text: body_as_string(recorded_response),
+           status: recorded_response.status
   end
 
   private

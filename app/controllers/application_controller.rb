@@ -3,11 +3,44 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  helper_method :is_owner?
+  helper_method :is_owner?, :body_as_string, :headers_as_string
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
+
+  def body_as_string(req_or_res)
+    body = req_or_res.body
+
+    if body_json?(req_or_res) && body.is_a?(String)
+      # See https://github.com/phstc/putsreq/issues/31#issuecomment-271681249
+      JSON.pretty_generate(JSON.parse(body))
+    elsif body.is_a?(Hash)
+      # For responses body can be a hash
+      # body.to_h because body can be a BSON::Document
+      # which for some reason does format well with
+      # pretty_generate
+      JSON.pretty_generate(body.to_h)
+    else
+      body.to_s
+    end
+  rescue
+    body.to_s
+  end
+
+  def headers_as_string(req_or_res)
+    JSON.pretty_generate(req_or_res.headers.to_h)
+  end
+
+  def body_json?(req_or_res)
+    req_or_res.headers.to_h.each do |key, value|
+      if key =~ /^content-type$/i
+        return !!(value =~ /application\/json/i)
+      end
+    end
+
+    false
+  end
 
   def check_ownership!
     unless is_owner?(bucket)

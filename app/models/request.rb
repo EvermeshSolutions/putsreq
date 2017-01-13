@@ -20,29 +20,7 @@ class Request
 
   after_create :bump_requests_recorded
 
-  def body_as_string
-    if json? && body.is_a?(String)
-      # See https://github.com/phstc/putsreq/issues/31#issuecomment-271681249
-      JSON.pretty_generate(JSON.parse(body))
-    elsif body.is_a?(Hash)
-      # TODO review this, not sure if it will ever be a Hash
-      JSON.pretty_generate(body)
-    else
-      body.to_s
-    end
-  rescue
-    body.to_s
-  end
-
-  def headers_as_string
-    JSON.pretty_generate(headers.to_h)
-  end
-
   private
-
-  def json?
-    headers['CONTENT-TYPE'] == 'application/json'
-  end
 
   def bump_requests_recorded
     REDIS.incr 'requests_recorded'

@@ -10,7 +10,7 @@
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
-        <pre><%= simple_format recorded_request.headers_as_string %></pre>
+        <pre><%= headers_as_string(recorded_request) %></pre>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
     </div>
     <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
-        <pre><%= h recorded_request.body_as_string %></pre>
+        <pre><%= body_as_string(recorded_request) %></pre>
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
     </div>
     <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
-        <pre><%= h recorded_request.response.body_as_string %></pre>
+        <pre><%= body_as_string(recorded_request.response) %></pre>
       </div>
     </div>
   </div>
