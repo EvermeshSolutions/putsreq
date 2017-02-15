@@ -17,7 +17,6 @@ class ForwardRequest
   private
 
   def forward_to(built_request, forward_url)
-
     options = { timeout: 5,
                 headers: built_request['headers'],
                 body: body }
