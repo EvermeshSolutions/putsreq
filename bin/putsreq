@@ -22,33 +22,42 @@ class PutsReqCLI < Thor
 
       p
     end
-  end
 
-  desc 'forward', 'Forward requests from PutsReq to a given URL'
-  method_option :token, desc: 'PutsReq token',   required: true
-  method_option :to,    desc: 'destination URL', required: true
-  def forward
-    trap('SIGINT', 'EXIT')
+    def subscribe_and_forward(token, to)
+      puts "Listening requests from #{token}"
+      puts "Forwarding to #{to}"
+      puts 'Press CTRL+c to terminate'
 
-    token = parse_bucket_token(options[:token])
-    to    = options[:to]
+      PusherClient.logger.level = Logger::ERROR
 
-    puts "Listening requests from #{token}"
-    puts "Forwarding to #{to}"
-    puts "Press CTRL+c to terminate"
+      options = { secure: true }
 
-    PusherClient.logger.level = Logger::ERROR
+      socket = PusherClient::Socket.new('3466d56fe2ef1fdd2943', options)
 
-    options = { secure: true }
+      channel = "channel_requests_#{token}"
 
-    socket = PusherClient::Socket.new('3466d56fe2ef1fdd2943', options)
+      socket.subscribe(channel)
 
-    channel = "channel_requests_#{token}"
+      socket[channel].bind('new') do |data|
+        last_request = JSON.parse(data)['request']
 
-    socket.subscribe(channel)
+        options = { headers:  last_request['headers'] }
 
-    socket[channel].bind('new') do |data|
-      last_request = JSON.parse(data)['request']
+        options[:body] = last_request['body'] unless last_request['body'].to_s.empty?
+
+        forward_request = HTTParty.send(last_request['request_method'].downcase.to_sym,
+                                        to,
+                                        options)
+
+        puts "#{Time.now}\t#{last_request['request_method']}\t#{forward_request.code}"
+      end
+
+      socket.connect
+    end
+
+    def forward_request(token, to, id)
+      url = "http://putsreq.com/#{token}/requests/#{id}.json"
+      last_request = HTTParty.get(url)
 
       options = { headers:  last_request['headers'] }
 
@@ -60,8 +69,23 @@ class PutsReqCLI < Thor
 
       puts "#{Time.now}\t#{last_request['request_method']}\t#{forward_request.code}"
     end
+  end
 
-    socket.connect
+  desc 'forward', 'Forward requests from PutsReq to a given URL'
+  method_option :token, desc: 'PutsReq token',   required: true
+  method_option :to,    desc: 'destination URL', required: true
+  method_option :id,    desc: 'ID to forward a single request', required: false
+  def forward
+    trap('SIGINT', 'EXIT')
+
+    token = parse_bucket_token(options[:token])
+    to    = options[:to]
+
+    if id = options[:id]
+      forward_request(token, to, id)
+    else
+      subscribe_and_forward(token, to)
+    end
   end
 
   desc 'version', 'Show version'
