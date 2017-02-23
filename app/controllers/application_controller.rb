@@ -14,16 +14,23 @@ class ApplicationController < ActionController::Base
 
     if body_json?(req_or_res) && body.is_a?(String)
       # See https://github.com/phstc/putsreq/issues/31#issuecomment-271681249
-      JSON.pretty_generate(JSON.parse(body))
-    elsif body.is_a?(Hash)
+      return JSON.pretty_generate(JSON.parse(body))
+    end
+
+    if body.is_a?(Hash)
       # For responses body can be a hash
       # body.to_h because body can be a BSON::Document
       # which for some reason does format well with
       # pretty_generate
-      JSON.pretty_generate(body.to_h)
-    else
-      body.to_s
+      return JSON.pretty_generate(body.to_h)
     end
+
+    if body.is_a?(Array)
+      # see https://github.com/phstc/putsreq/issues/33
+      return JSON.pretty_generate(body.to_a)
+    end
+
+    body.to_s
   rescue
     body.to_s
   end
