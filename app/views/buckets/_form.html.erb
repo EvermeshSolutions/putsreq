@@ -24,7 +24,7 @@
   <div id="editor" name="editor" style="width: 100%; height: 150px"></div>
   <textarea id="response_builder" name="response_builder" style="display:none;"></textarea>
   <p>
-    <% if is_owner?(@bucket) %>
+    <% if owner?(@bucket) %>
       <%= render 'buttons' %>
     <% else %>
       <%= render 'readonly_buttons' %>

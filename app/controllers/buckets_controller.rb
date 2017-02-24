@@ -1,7 +1,7 @@
 class BucketsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :record
 
-  before_filter :check_ownership!, only: %i[clear destroy update]
+  before_filter :check_ownership!, only: %i(clear destroy update)
 
   def create
     new_bucket = { owner_token: owner_token }

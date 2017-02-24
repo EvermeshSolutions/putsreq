@@ -20,6 +20,14 @@ class Request
 
   after_create :bump_requests_recorded
 
+  def path
+    return unless url
+
+    u = URI(url)
+
+    url.gsub(/.*#{Regexp.escape(u.host)}(\:#{Regexp.escape(u.port.to_s)})?/, '')
+  end
+
   private
 
   def bump_requests_recorded

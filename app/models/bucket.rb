@@ -17,7 +17,7 @@ class Bucket
   index owner_token: 1
   index fork_id: 1
 
-  index({ updated_at: 1 }, { expire_after_seconds: 1.month })
+  index({ updated_at: 1 }, expire_after_seconds: 1.month)
 
   before_create :generate_token
 
