@@ -28,7 +28,6 @@ Mongo::Logger.logger.level = ::Logger::FATAL
 WebMock.disable_net_connect!(allow: 'codeclimate.com')
 
 RSpec.configure do |config|
-
   config.before do
     stub_request(:get, /pusherapp.com/)
   end
