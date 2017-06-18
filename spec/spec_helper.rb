@@ -23,6 +23,8 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each(&method(:require))
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
+Mongo::Logger.logger.level = ::Logger::FATAL
+
 WebMock.disable_net_connect!(allow: 'codeclimate.com')
 
 RSpec.configure do |config|
@@ -38,11 +40,11 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do
+  config.before do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after do
     DatabaseCleaner.clean
   end
 
