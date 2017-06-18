@@ -4,21 +4,18 @@ class BucketsController < ApplicationController
   before_filter :check_ownership!, only: %i(clear destroy update)
 
   def create
-    new_bucket = { owner_token: owner_token }
-    new_bucket[:user_id] = current_user.id if user_signed_in?
-
-    bucket = Bucket.create(new_bucket)
-
     redirect_to bucket_path(bucket.token)
   end
 
   def fork
-    forked_bucket = Bucket.create(owner_token:       owner_token,
-                                  response_builder:  bucket.response_builder,
-                                  name:              "Copy of #{bucket.name}",
-                                  fork:              bucket)
+    fork = Bucket.create(
+      owner_token:      owner_token,
+      response_builder: bucket.response_builder,
+      name:             "Copy of #{bucket.name}",
+      fork:             bucket
+    )
 
-    redirect_to bucket_path(forked_bucket.token)
+    redirect_to bucket_path(fork.token)
   end
 
   def clear

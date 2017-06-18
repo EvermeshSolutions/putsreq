@@ -75,7 +75,7 @@ class Bucket
   private
 
   def generate_token
-    self.token = loop do
+    self.token ||= loop do
       random_token = SecureRandom.urlsafe_base64(15).tr('_-', '0a')
       break random_token unless Bucket.where(token: random_token).exists?
     end

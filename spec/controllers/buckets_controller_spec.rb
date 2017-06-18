@@ -18,7 +18,7 @@ RSpec.describe BucketsController, type: :controller do
         to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
     end
 
-    it 'clears history' do
+    specify do
       RecordRequest.call(bucket: bucket, rack_request: rack_request)
 
       expect(bucket.requests.count).to eq(1)
@@ -34,7 +34,7 @@ RSpec.describe BucketsController, type: :controller do
   end
 
   describe 'POST #fork' do
-    it 'forks a bucket' do
+    specify do
       name = bucket.name
       expect {
         post :fork, token: bucket.token
@@ -52,7 +52,7 @@ RSpec.describe BucketsController, type: :controller do
   end
 
   describe 'PUT #update' do
-    it 'updates a bucket' do
+    specify do
       bucket_params = { 'name' => 'test123', 'response_builder' => 'response.body = "ok";' }
 
       put :update, token: bucket.token, bucket: bucket_params
@@ -66,7 +66,7 @@ RSpec.describe BucketsController, type: :controller do
   end
 
   describe 'POST #create' do
-    it 'creates a new bucket' do
+    specify do
       expect {
         post :create
       }.to change(Bucket, :count).by(1)
@@ -76,48 +76,55 @@ RSpec.describe BucketsController, type: :controller do
   end
 
   describe 'GET #show' do
-    it 'shows a bucket' do
+    specify do
       get :show, token: bucket.token
 
       expect(assigns(:bucket)).to eq(bucket)
-      expect(assigns(:requests).to_a).to eq(bucket.requests.to_a)
+      expect(assigns(:requests)).to be
     end
 
-    it 'renders not found' do
-      expect {
-        get :show, token: '123'
-      }.to raise_error(Mongoid::Errors::DocumentNotFound)
+    context 'when not found' do
+      it 'creates a new bucket' do
+        token = 'not-found'
+        expect {
+          get :show, token: token
+
+          expect(assigns(:bucket)).to eq(Bucket.find_by(token: token))
+        }.to change(Bucket, :count).by(1)
+      end
     end
   end
 
   describe 'GET #last' do
     context 'when found' do
-      let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+      context 'when JSON' do
+        let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
-      before do
-        stub_request(:get, 'http://example.com').
-          to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
+        before do
+          stub_request(:get, 'http://example.com').
+            to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
 
-        RecordRequest.call(bucket: bucket, rack_request: rack_request)
-      end
+          RecordRequest.call(bucket: bucket, rack_request: rack_request)
+        end
 
-      it 'renders JSON' do
-        get :last, token: bucket.token, format: :json
+        specify do
+          get :last, token: bucket.token, format: :json
 
-        expect(response.body).to be_present # TODO: test the contents
-        expect(response).to be_ok
+          expect(response.body).to be_present # TODO: test the contents
+          expect(response).to be_ok
+        end
       end
     end
 
     context 'when not found' do
-      it 'redirects to root' do
+      specify do
         get :last, token: bucket.token
 
         expect(response).to redirect_to(bucket_path(bucket.token))
       end
 
       context 'when JSON' do
-        it 'renders not_found' do
+        specify do
           get :last, token: bucket.token, format: :json
 
           expect(response.status).to eq(404)
@@ -128,32 +135,34 @@ RSpec.describe BucketsController, type: :controller do
 
   describe 'GET #last_response' do
     context 'when found' do
-      let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+      context 'when JSON' do
+        let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
-      before do
-        stub_request(:get, 'http://example.com').
-          to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
+        before do
+          stub_request(:get, 'http://example.com').
+            to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
 
-        RecordRequest.call(bucket: bucket, rack_request: rack_request)
-      end
+          RecordRequest.call(bucket: bucket, rack_request: rack_request)
+        end
 
-      it 'renders JSON' do
-        get :last_response, token: bucket.token, format: :json
+        specify do
+          get :last_response, token: bucket.token, format: :json
 
-        expect(response.body).to be_present # TODO: test the contents
-        expect(response).to be_ok
+          expect(response.body).to be
+          expect(response).to be_ok
+        end
       end
     end
 
     context 'when not found' do
-      it 'redirects to root' do
+      specify do
         get :last_response, token: bucket.token
 
         expect(response).to redirect_to(bucket_path(bucket.token))
       end
 
       context 'when JSON' do
-        it 'renders not_found' do
+        specify do
           get :last_response, token: bucket.token, format: :json
 
           expect(response.status).to eq(404)

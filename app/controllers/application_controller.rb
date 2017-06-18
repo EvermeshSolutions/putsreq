@@ -62,7 +62,11 @@ class ApplicationController < ActionController::Base
   end
 
   def bucket
-    @bucket ||= Bucket.find_by(token: params[:token])
+    @bucket ||= CreateOrRetrieveBucket.call(
+      token: params[:token],
+      owner_token: owner_token,
+      uwer_id: (current_user.id if user_signed_in?)
+    ).bucket
   end
 
   def configure_permitted_parameters
