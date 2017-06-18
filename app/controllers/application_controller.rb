@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
     @bucket ||= CreateOrRetrieveBucket.call(
       token: params[:token],
       owner_token: owner_token,
-      uwer_id: (current_user.id if user_signed_in?)
+      user_id: (current_user.id if user_signed_in?)
     ).bucket
   end
 
