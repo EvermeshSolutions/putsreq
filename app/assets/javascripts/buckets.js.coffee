@@ -56,7 +56,7 @@ RequestCountPoller =
     bucket = $('#putsreq-url-input').data('bucket-token')
 
     pusher = new Pusher('3466d56fe2ef1fdd2943')
-    channel = pusher.subscribe("channel_requests_#{bucket}")
+    channel = pusher.subscribe("presence-channel_requests_#{bucket}")
     channel.bind 'new', (data) ->
       try
         $('#bucket-request-count').text(data.count)

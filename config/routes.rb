@@ -13,4 +13,5 @@ PutsReq::Application.routes.draw do
   delete ':token/delete' => 'buckets#destroy', as: :bucket_destroy
   delete ':token/clear' => 'buckets#clear', as: :bucket_clear
   post ':token/fork' => 'buckets#fork', as: :bucket_fork
+  post 'pusher/auth' => 'pusher#auth'
 end
