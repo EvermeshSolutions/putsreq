@@ -104,6 +104,7 @@ GEM
       tzinfo (>= 0.3.37)
     multi_json (1.12.1)
     multi_xml (0.5.5)
+    oj (2.12.14)
     origin (2.2.2)
     orm_adapter (0.5.0)
     pry (0.10.4)
@@ -154,6 +155,8 @@ GEM
     ref (2.0.0)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
+    rollbar (2.15.0)
+      multi_json
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -240,6 +243,7 @@ DEPENDENCIES
   jquery-rails
   kaminari-mongoid
   mongoid
+  oj (~> 2.12.14)
   pry-byebug
   pusher
   quiet_assets
@@ -252,6 +256,7 @@ DEPENDENCIES
   rails-assets-favico.js!
   rails_12factor
   redis
+  rollbar
   rspec-rails (~> 3.3)
   sass-rails (~> 4.0.2)
   sdoc
