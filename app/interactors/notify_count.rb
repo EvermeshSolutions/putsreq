@@ -7,9 +7,7 @@ class NotifyCount
   def call
     return unless ENV['PUSHER_URL']
 
-    channel = Pusher["presence-channel_requests_#{token}"]
-
-    return if channel.users.empty?
+    channel = Pusher["channel_requests_#{token}"]
 
     channel.trigger(
       'new',
