@@ -54,6 +54,8 @@ class ApplicationController < ActionController::Base
   end
 
   def owner?(bucket)
+    return true unless bucket.user
+
     owner_token == bucket.owner_token || (user_signed_in? && bucket.user == current_user)
   end
 
