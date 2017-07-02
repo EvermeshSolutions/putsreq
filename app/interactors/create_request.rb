@@ -5,7 +5,7 @@ class CreateRequest
 
   def call
     context.request = bucket.requests.create(
-      body:           rack_request.body.read,
+      body:           parse_body(rack_request.body.read),
       content_length: rack_request.content_length,
       request_method: rack_request.request_method,
       ip:             rack_request.ip,
@@ -16,6 +16,15 @@ class CreateRequest
   end
 
   private
+
+  def parse_body(body)
+    # See https://rollbar.com/putsreq/putsreq/items/2/?item_page=0&#instances
+    if body.is_a?(Hash)
+      return JSON.dump(body)
+    end
+
+    body.to_s
+  end
 
   def filter_params(params)
     params.select do |key, value|
