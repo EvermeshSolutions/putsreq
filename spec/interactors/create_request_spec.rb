@@ -13,12 +13,15 @@ RSpec.describe CreateRequest do
       req = result.request
 
       expect(req).to be_persisted
-      expect(req.attributes).to include('body'           => rack_request.body.read,
-                                        'content_length' => rack_request.content_length,
-                                        'request_method' => rack_request.request_method,
-                                        'ip'             => rack_request.ip,
-                                        'url'            => rack_request.url,
-                                        'params'         => rack_request.params)
+      expect(req.attributes).to include(
+        'body'           => rack_request.body.read,
+        'content_length' => rack_request.content_length,
+        'request_method' => rack_request.request_method,
+        'ip'             => rack_request.ip,
+        'url'            => rack_request.url
+      )
+
+      expect(result.params).to eq(rack_request.params)
     end
 
     it 'skips lowercase headers (rack specific headers)' do

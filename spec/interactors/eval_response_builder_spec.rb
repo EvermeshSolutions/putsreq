@@ -2,17 +2,14 @@ require 'spec_helper'
 
 RSpec.describe EvalResponseBuilder do
   let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
-  let(:request) do
-    result = CreateRequest.call(bucket: bucket, rack_request: rack_request) # stub it?
-    result.request
-  end
+  let(:request_ctx) { CreateRequest.call(bucket: bucket, rack_request: rack_request) }
 
   describe '#call' do
     context 'when timeout' do
       let(:bucket) { Bucket.create response_builder: 'while(true){}' }
 
       it 'terminates builder' do
-        result = described_class.call(bucket: bucket, request: request, timeout: 0.1)
+        result = described_class.call(request_ctx)
         resp = result.built_response
 
         expect(resp).to eq('status'  => 500,
@@ -25,7 +22,7 @@ RSpec.describe EvalResponseBuilder do
       let(:bucket) { Bucket.create response_builder: nil }
 
       it 'uses default_response' do
-        result = described_class.call(bucket: bucket, request: request)
+        result = described_class.call(request_ctx)
         resp = result.built_response
 
         expect(resp).to eq('status'  => 200,
@@ -38,7 +35,7 @@ RSpec.describe EvalResponseBuilder do
       let(:bucket) { Bucket.create }
 
       it 'builds Hello World' do
-        result = described_class.call(bucket: bucket, request: request)
+        result = described_class.call(request_ctx)
         resp = result.built_response
 
         expect(resp).to eq('status'  => 200,
@@ -51,7 +48,7 @@ RSpec.describe EvalResponseBuilder do
       let(:bucket) { Bucket.create(response_builder: 'will fail') }
 
       it 'returns error response' do
-        result = described_class.call(bucket: bucket, request: request)
+        result = described_class.call(request_ctx)
         resp = result.built_response
 
         expect(resp).to eq('status'  => 500,

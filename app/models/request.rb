@@ -12,7 +12,6 @@ class Request
   field :request_method
   field :ip
   field :url
-  field :params, type: Hash
 
   index bucket_id: 1, created_at: -1
 

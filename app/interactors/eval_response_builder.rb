@@ -1,7 +1,7 @@
 class EvalResponseBuilder
   include Interactor
 
-  delegate :request, to: :context
+  delegate :request, :params, to: :context
 
   def call
     v8_ctx = V8::Context.new timeout: timeout
@@ -39,7 +39,7 @@ class EvalResponseBuilder
 
     v8_ctx['request']  = { 'request_method' => request.request_method,
                            'body'           => request.body,
-                           'params'         => request.params,
+                           'params'         => params,
                            'headers'        => request.headers }
   end
 
