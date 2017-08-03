@@ -14,5 +14,8 @@ class CreateRequest
     )
 
     context.params = rack_request.request_parameters
+  rescue
+    Rollbar.scope!(request: context.request)
+    raise
   end
 end
