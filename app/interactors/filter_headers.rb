@@ -14,12 +14,7 @@ class FilterHeaders
 
   def client_supplied_headers
     headers.to_h.each_with_object({}) do |(key, value), h|
-      key   = key.to_s
-      value = value.to_s
-
       next unless value.to_s.present?
-
-      next if [key.encoding.name, value.encoding.name] != ['UTF-8', 'UTF-8']
 
       next unless key.upcase.start_with?(*WHITELIST_HEADERS)
 
