@@ -22,14 +22,8 @@ class CreateRequest
   private
 
   def body(rack_request)
-    return 'multipart/form-data' if multipart_form_data?(rack_request)
-
-    body = rack_request.body.read.force_encoding(Encoding::UTF_8)
+    body = rack_request.body.read.encode('UTF-8', invalid: :replace, undef: :replace)
 
     body.is_utf8? ? body : nil
-  end
-
-  def multipart_form_data?(rack_request)
-    rack_request.env['CONTENT_TYPE'].to_s.downcase.include? 'multipart/form-data'
   end
 end
