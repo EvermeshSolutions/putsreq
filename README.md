@@ -31,7 +31,7 @@ cd putsreq
 
 bundle install
 
-rails s
+rails server
 
 open http://localhost:3000
 ```
