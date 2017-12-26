@@ -1,24 +1,21 @@
 source 'https://rubygems.org'
 
-ruby '2.3.3'
+ruby '2.4.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.0.4'
+gem 'rails', '~> 5.1.0'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.2'
+gem 'sass-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 1.2'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -35,15 +32,12 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'simplecov'
   gem 'stub_env'
-end
-
-group :development do
-  gem 'quiet_assets'
+  gem 'rails-controller-testing'
 end
 
 group :development, :test do
   gem 'pry-byebug'
-  gem 'rspec-rails', '~> 3.3'
+  gem 'rspec-rails'
   gem 'rack-test'
   gem 'database_cleaner'
   gem 'dotenv-rails'
@@ -57,10 +51,9 @@ source 'https://rails-assets.org' do
 end
 
 gem 'therubyracer'
-gem 'mongoid'
-gem 'bson_ext'
-gem 'httparty'
+gem 'mongoid', '~> 6'
 gem 'kaminari-mongoid'
+gem 'httparty'
 gem 'rack-cors', require: 'rack/cors'
 gem 'redis'
 gem 'bootstrap-sass', '~> 3.1.1'
@@ -69,4 +62,4 @@ gem 'devise'
 gem 'pusher'
 gem 'interactor', '~> 3.0'
 gem 'rollbar'
-gem 'oj', '~> 2.12.14'
+gem 'oj'

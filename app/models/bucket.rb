@@ -4,8 +4,8 @@ class Bucket
 
   has_many :forks, class_name: 'Bucket'
 
-  belongs_to :fork, class_name: 'Bucket'
-  belongs_to :user
+  belongs_to :fork, class_name: 'Bucket', required: false
+  belongs_to :user, required: false
 
   field :token
   field :name

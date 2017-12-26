@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Bucket do
-  let(:rack_request) { ActionController::TestRequest.new }
+  let(:rack_request) { ActionController::TestRequest.create({}) }
 
   let(:bucket_name) { 'My Bucket' }
   subject { described_class.create(name: bucket_name) }

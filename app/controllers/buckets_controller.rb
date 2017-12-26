@@ -1,7 +1,7 @@
 class BucketsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :record
 
-  before_filter :check_ownership!, only: %i(clear destroy update)
+  before_action :check_ownership!, only: %i(clear destroy update)
 
   def create
     redirect_to bucket_path(bucket.token)
@@ -76,7 +76,7 @@ class BucketsController < ApplicationController
   def render_request_not_found
     respond_to do |format|
       format.html { redirect_to bucket_path(bucket.token), alert: 'Please submit a request first' }
-      format.json { render nothing: true, status: 404 }
+      format.json { head :not_found }
     end
   end
 

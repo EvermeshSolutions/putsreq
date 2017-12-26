@@ -15,7 +15,7 @@
 //= require bootstrap
 //= require jquery.tipsy
 //= require clipboard
-//= require favico.js
+// require favico.js
 //
 //= require ace/ace
 //= require ace/theme-chrome

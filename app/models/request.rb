@@ -24,7 +24,7 @@ class Request
 
     u = URI(url)
 
-    url.gsub(/.*#{Regexp.escape(u.host)}(\:#{Regexp.escape(u.port.to_s)})?/, '')
+    url.gsub(/.*#{::Regexp.escape(u.host)}(\:#{::Regexp.escape(u.port.to_s)})?/, '')
   end
 
   private

@@ -1,7 +1,7 @@
 class NotifyCount
   include Interactor
 
-  delegate :bucket, :built_request, to: :context
+  delegate :bucket, :built_request, :built_response, to: :context
   delegate :token, to: :bucket
 
   def call
@@ -12,7 +12,9 @@ class NotifyCount
     channel.trigger(
       'new',
       count: bucket.requests_count,
-      request: built_request
+      id: context.request.id,
+      request: built_request,
+      response: built_response
     )
   rescue => e
     Rails.logger.error(e)
