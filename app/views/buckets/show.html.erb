@@ -1,3 +1,5 @@
+<%= javascript_pack_tag 'application' %>
+
 <% content_for :title, @bucket.name %>
 
 <ul class="nav">
@@ -36,6 +38,14 @@
 
 <p id="new-requests-info"><!-- placeholder: New requests found. Load newer requests? --></p>
 
+<div id="react-root">
+</div>
+
+<script type="application/json" id="bucket-json">
+    <%== @bucket.to_json %>
+</script>
+
+<script type="application/text">
 <div class="row">
   <div class="col-md-6">
     <% if @bucket.first_request_at %>
@@ -57,5 +67,6 @@
 <p><%= paginate @requests %></p>
 <%= render(partial: 'requests', collection: @requests, as: :recorded_request) || show_no_requests_found(@bucket) %>
 <p><%= paginate @requests %></p>
+</script>
 
 <script src="//js.pusher.com/2.2/pusher.min.js" type="text/javascript"></script>

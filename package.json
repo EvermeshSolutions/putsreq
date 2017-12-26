@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "@rails/webpacker": "^3.2.0",
+    "babel-preset-react": "^6.24.1",
+    "coffeescript": "1.12.7",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "prop-types": "^15.6.0",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "rxjs": "^5.4.3"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^2.9.7"
+  }
+}
