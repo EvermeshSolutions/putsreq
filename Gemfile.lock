@@ -95,6 +95,9 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.6)
+    kaminari-actionview (1.1.1)
+      actionview
+      kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
     kaminari-mongoid (1.0.1)
       kaminari-core (~> 1.0)
@@ -274,6 +277,7 @@ DEPENDENCIES
   httparty
   interactor (~> 3.0)
   jquery-rails
+  kaminari-actionview
   kaminari-mongoid
   mongoid (~> 6)
   oj

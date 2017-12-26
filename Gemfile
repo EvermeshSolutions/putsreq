@@ -53,6 +53,7 @@ end
 gem 'therubyracer'
 gem 'mongoid', '~> 6'
 gem 'kaminari-mongoid'
+gem 'kaminari-actionview'
 gem 'httparty'
 gem 'rack-cors', require: 'rack/cors'
 gem 'redis'
