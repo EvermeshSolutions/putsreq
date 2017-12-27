@@ -1,10 +1,12 @@
 <% if alert %>
   <div id="main-alert" class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert">x</button>
     <h4><%= alert %></h4>
   </div>
 <% end %>
 <% if notice %>
   <div id="main-alert" class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">x</button>
     <h4><%= notice %></h4>
   </div>
 <% end %>
