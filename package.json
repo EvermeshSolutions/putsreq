@@ -10,7 +10,8 @@
     "prop-types": "^15.6.0",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
-    "rxjs": "^5.4.3"
+    "rxjs": "^5.4.3",
+    "ramda-fantasy": "^0.8.0"
   },
   "devDependencies": {
     "webpack-dev-server": "^2.9.7"

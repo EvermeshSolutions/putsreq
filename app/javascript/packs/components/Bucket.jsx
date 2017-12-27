@@ -26,7 +26,7 @@ class Bucket extends React.Component {
       <div className="row">
         <div className="col-md-6">
           {this.renderFirstRequest()}
-          <Requests />
+          <Requests {...this.props} />
         </div>
         <div className="col-md-6"></div>
       </div>
