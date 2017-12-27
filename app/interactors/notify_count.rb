@@ -9,6 +9,8 @@ class NotifyCount
 
     channel = Pusher["channel_requests_#{token}"]
 
+    return unless channel.info[:occupied]
+
     channel.trigger(
       'new',
       count: bucket.requests_count,
