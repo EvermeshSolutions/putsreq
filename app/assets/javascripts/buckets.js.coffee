@@ -58,7 +58,6 @@ RequestCountPoller =
     pusher = new Pusher('3466d56fe2ef1fdd2943')
     channel = pusher.subscribe("channel_requests_#{bucket}")
     channel.bind 'new', (data) ->
-      console.log(data)
       localStorage.setItem(data.id, data)
       try
         $('#bucket-request-count').text(data.count)

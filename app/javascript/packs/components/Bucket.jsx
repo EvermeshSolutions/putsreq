@@ -8,18 +8,16 @@ class Bucket extends React.Component {
   }
 
   renderFirstRequest() {
-    if(!this.props.bucket || this.props.bucket.length === 0) { return }
+    if(!this.props.bucket.first_request_at) { return }
 
-    if(this.props.bucket.first_request_at) {
-      return (
-        <p>
-          <em>
-            First request at: {this.props.bucket.first_request_at} <br />
-            Last request at: {this.props.bucket.last_request_at} <br />
-          </em>
-        </p>
-      )
-    }
+    return (
+      <p>
+        <em>
+          First request at: {this.props.bucket.first_request_at} <br />
+          Last request at: {this.props.bucket.last_request_at} <br />
+        </em>
+      </p>
+    )
   }
 
   render() {
@@ -35,7 +33,7 @@ class Bucket extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  bucket: state.buckets
+  bucket: state.bucket
 })
 
 

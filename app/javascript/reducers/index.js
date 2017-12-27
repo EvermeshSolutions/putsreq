@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import buckets from './buckets'
+import bucket from './bucket'
 
-const rootReducer = combineReducers({ buckets })
+const rootReducer = combineReducers({ bucket })
 
 export default rootReducer
