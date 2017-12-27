@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Requests from './Requests'
 import { fetchBucket } from '../actions/bucket'
 
 class Bucket extends React.Component {
@@ -25,6 +26,7 @@ class Bucket extends React.Component {
       <div className="row">
         <div className="col-md-6">
           {this.renderFirstRequest()}
+          <Requests />
         </div>
         <div className="col-md-6"></div>
       </div>
