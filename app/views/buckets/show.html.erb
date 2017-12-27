@@ -42,7 +42,7 @@
 </div>
 
 <script type="application/json" id="bucket-json">
-    <%== @bucket.to_json %>
+    <%== BucketSerializer.new(@bucket).to_json %>
 </script>
 
 <script type="application/text">

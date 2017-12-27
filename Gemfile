@@ -35,8 +35,13 @@ group :test do
   gem 'rails-controller-testing'
 end
 
+group :development do
+  gem 'better_errors'
+end
+
 group :development, :test do
   gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'rack-test'
   gem 'database_cleaner'
@@ -65,3 +70,4 @@ gem 'interactor', '~> 3.0'
 gem 'rollbar'
 gem 'oj'
 gem 'webpacker', '~> 3.0'
+gem 'active_model_serializers'
