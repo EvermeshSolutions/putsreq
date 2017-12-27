@@ -52,6 +52,8 @@ GEM
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
+    binding_of_caller (0.7.3)
+      debug_inspector (>= 0.0.1)
     bootstrap-sass (3.1.1.1)
       sass (~> 3.2)
     bson (4.2.2)
@@ -74,6 +76,7 @@ GEM
       safe_yaml (~> 1.0.0)
     crass (1.0.3)
     database_cleaner (1.6.2)
+    debug_inspector (0.0.3)
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -289,6 +292,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   better_errors
+  binding_of_caller
   bootstrap-sass (~> 3.1.1)
   codeclimate-test-reporter
   coffee-rails

@@ -1,11 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-export default class Request extends React.Component {
+
+export default class Header extends React.Component {
   render() {
+    console.log(this.props.time_ago_in_words)
     return (
       <div className="panel panel-default">
-        <span className="pull-right label label-info"  title="2017-12-27 03:25:34 UTC">2 minutes ago</span>
+        <span className="pull-right label label-info" title={this.props.created_at}>{this.props.time_ago_in_words}</span>
         <div className="panel-heading" role="tab" id="headingOne">
           <h4 className="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -15,7 +18,7 @@ export default class Request extends React.Component {
         </div>
         <div id="collapseOne" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div className="panel-body">
-            <pre>{this.props.request.id}</pre>
+            <pre>{JSON.stringify(this.props.headers, null, 2)}</pre>
           </div>
         </div>
       </div>

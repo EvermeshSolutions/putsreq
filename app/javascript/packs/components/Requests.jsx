@@ -1,5 +1,5 @@
 import React from 'react'
-import Request from './Request'
+import Request from './request'
 import { connect } from 'react-redux'
 import { Maybe } from 'ramda-fantasy'
 import * as R from 'ramda'
