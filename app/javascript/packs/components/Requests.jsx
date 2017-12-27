@@ -8,7 +8,7 @@ export default class Requests extends React.Component {
   renderRequests() {
     return Maybe(R.path(['bucket', 'requests'], this.props)).getOrElse([]).map(function(request, i){
       return (
-        <Request request={request} key={i} />
+        <Request {...request} key={i} />
       )
     })
   }
