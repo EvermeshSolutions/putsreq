@@ -16,23 +16,29 @@
         <% end %>
       </header>
       <section class="start">
-        <% if @buckets.any?  %>
-          <div class="history">
-            <h4 class="bm0 tm0">History</h4>
-            <small>View and manage your buckets:</small>
-            <ul class="tm5">
-              <% @buckets.each do |bucket| %>
-                <li><%= link_to "#{bucket.name} (#{bucket.requests_count})", bucket_path(bucket.token) %></li>
-              <% end %>
-            </ul>
+        <div class="row">
+          <div class="col-md-8">
+            <h4>Record requests</h4>
+            <p>Change your target URL to a PutsReq URL to start recording your requests.</p>
+            <h4 class="tm20">Fake responses</h4>
+            <p>PutsReq is the easiest way to fake HTTP responses. You can define the response status, headers and body you want using <a href="https://github.com/phstc/putsreq#response-builder">JavaScript</a>.
+              <h4 class="tm20">Forward requests</h4>
+              <p>You can easily <a href="https://github.com/phstc/putsreq#forwardto">forward requests to another URL</a>, including <a href="https://github.com/phstc/putsreq#cli">localhost</a>.
           </div>
-        <% end %>
-        <h4>Record requests</h4>
-        <p>Change your target URL to a PutsReq URL to start recording your requests.</p>
-        <h4 class="tm20">Fake responses</h4>
-        <p>PutsReq is the easiest way to fake HTTP responses. You can define the response status, headers and body you want using <a href="https://github.com/phstc/putsreq#response-builder">JavaScript</a>.
-        <h4 class="tm20">Forward requests</h4>
-        <p>You can easily <a href="https://github.com/phstc/putsreq#forwardto">forward requests to another URL</a>, including <a href="https://github.com/phstc/putsreq#cli">localhost</a>.
+          <div class="col-md-4">
+            <% if @buckets.any?  %>
+              <div class="history">
+                <h4 class="bm0 tm0">History</h4>
+                <small>View and manage your buckets:</small>
+                <ul class="tm5">
+                  <% @buckets.each do |bucket| %>
+                    <li><%= link_to "#{bucket.name} (#{bucket.requests_count})", bucket_path(bucket.token) %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </section>
     </div>
   </div>
