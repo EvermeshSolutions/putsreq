@@ -1,5 +1,5 @@
 class RequestSerializer < ActiveModel::Serializer
-  attributes :id, :headers, :time_ago_in_words, :created_at, :request_method, :path, :body_as_string, :headers_as_string
+  attributes :id, :headers, :time_ago_in_words, :created_at, :request_method, :path, :request_body_as_string, :response_body_as_string, :headers_as_string
 
   def id
     object.id.to_s
@@ -9,10 +9,25 @@ class RequestSerializer < ActiveModel::Serializer
     "#{ApplicationController.helpers.time_ago_in_words(object.created_at)} ago"
   end
 
-  def body_as_string
-    body = object.body
 
-    if body_json? && body.is_a?(String)
+  def headers_as_string
+    JSON.pretty_generate(object.headers.to_h)
+  end
+
+  def request_body_as_string
+    body_as_string(object)
+  end
+
+  def response_body_as_string
+    body_as_string(object.response)
+  end
+
+  private
+
+  def body_as_string(req_or_res)
+    body = req_or_res.body
+
+    if body_json?(req_or_res) && body.is_a?(String)
       # See https://github.com/phstc/putsreq/issues/31#issuecomment-271681249
       return JSON.pretty_generate(JSON.parse(body))
     end
@@ -35,12 +50,8 @@ class RequestSerializer < ActiveModel::Serializer
     body.to_s
   end
 
-  def headers_as_string
-    JSON.pretty_generate(object.headers.to_h)
-  end
-
-  def body_json?
-    object.headers.to_h.each do |key, value|
+  def body_json?(req_or_res)
+    req_or_res.headers.to_h.each do |key, value|
       return !!(value =~ /application\/json/i) if key =~ /^content-type$/i
     end
 

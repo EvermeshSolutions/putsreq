@@ -39,6 +39,7 @@ class Bucket extends React.Component {
           </div>
           <div className="col-md-6"></div>
         </div>
+        <hr />
         <Requests {...this.props} />
       </div>
     )
