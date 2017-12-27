@@ -17,7 +17,7 @@ export default class Header extends React.Component {
         </div>
         <div id="collapseOne" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div className="panel-body">
-            <pre>{JSON.stringify(this.props.headers, null, 2)}</pre>
+            <pre>{this.props.headers_as_string}</pre>
           </div>
         </div>
       </div>
