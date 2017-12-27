@@ -12,13 +12,13 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Provider, connect } from 'react-redux'
 import store from '../store'
-import Requests from './components/Requests'
+import Bucket from './components/Bucket'
 
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
       <Provider store={store}>
-        <Requests />
+        <Bucket />
       </Provider>,
     document.getElementById('react-root'),
   )

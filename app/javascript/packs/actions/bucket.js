@@ -1,5 +1,6 @@
 import Rx from 'rxjs'
 import store from '../../store'
+import { bucketsActions } from '../../constants/actionTypes'
 
 const getJSONFromPage = (id) => JSON.parse(document.getElementById(id).innerText)
 
@@ -10,7 +11,7 @@ const fetchBucket = () => {
   })
     .subscribe((bucket) => {
       store.dispatch({
-        type: 'BUCKET_POPULATE',
+        type: bucketsActions.populate,
         bucket
       })
     })
