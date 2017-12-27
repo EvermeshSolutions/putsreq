@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 
 export default class Header extends React.Component {
   render() {
-    console.log(this.props.time_ago_in_words)
     return (
       <div className="panel panel-default">
         <span className="pull-right label label-info" title={this.props.created_at}>{this.props.time_ago_in_words}</span>

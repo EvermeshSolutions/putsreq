@@ -1,8 +1,5 @@
 class RequestSerializer < ActiveModel::Serializer
-  attribute :id
-  attribute :headers
-  attribute :time_ago_in_words
-  attribute :created_at
+  attributes :id, :headers, :time_ago_in_words, :created_at
 
   def id
     object.id.to_s

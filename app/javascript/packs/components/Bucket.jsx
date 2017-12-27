@@ -8,6 +8,14 @@ class Bucket extends React.Component {
     fetchBucket()
   }
 
+  renderFirstRequestLink() {
+    if(!this.props.bucket.first_request_id) { return }
+
+    return (
+      <em>Request ID: <a href={this.props.bucket.first_request_path} target="_blank">{this.props.bucket.first_request_id}</a></em>
+    )
+  }
+
   renderFirstRequest() {
     if(!this.props.bucket.first_request_at) { return }
 
@@ -16,6 +24,7 @@ class Bucket extends React.Component {
         <em>
           First request at: {this.props.bucket.first_request_at} <br />
           Last request at: {this.props.bucket.last_request_at} <br />
+          {this.renderFirstRequestLink()}
         </em>
       </p>
     )
