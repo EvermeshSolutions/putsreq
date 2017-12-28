@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Provider, connect } from 'react-redux'
 import store from '../store'
-import Bucket from './components/Bucket'
+import Bucket from '../components/Bucket'
 
 
 document.addEventListener('DOMContentLoaded', () => {

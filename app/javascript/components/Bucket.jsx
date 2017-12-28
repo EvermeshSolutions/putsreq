@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Request from './request'
 import ReactPaginate from 'react-paginate'
-import { fetchBucket } from '../actions/bucket'
+import { fetchBucket, handlePageChange } from '../actions'
 
 class Bucket extends React.Component {
   componentWillMount() {
@@ -60,7 +60,7 @@ class Bucket extends React.Component {
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
         containerClassName={"pagination"}
-        onPageChange={this.handlePageClick.bind(this)}
+        onPageChange={this.props.handlePageChange.bind(this)}
         subContainerClassName={"pages pagination"}
         activeClassName={"active"} />
     )
@@ -88,7 +88,8 @@ const mapStateToProps = (state) => ({
   bucket: state.bucket
 })
 
-
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  handlePageChange: handlePageChange
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bucket)
