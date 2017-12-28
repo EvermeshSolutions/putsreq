@@ -1,17 +1,25 @@
 class BucketSerializer < ActiveModel::Serializer
-  attributes :first_request_at, :last_request_at, :first_request_path, :first_request_id
+  attributes :last_request,  :first_request, :requests_count
 
-  has_many :requests
+  def last_request
+    RequestSerializer.new(object.last_request)
+  end
 
-  def first_request_id
-    return unless object.requests.first
+  def last_request_path
+    request_path(object.last_request.id)
+  end
 
-    object.requests.first.id.to_s
+  def first_request
+    RequestSerializer.new(object.first_request)
   end
 
   def first_request_path
-    return unless first_request_id
+    request_path(object.first_request.id)
+  end
 
-    Rails.application.routes.url_helpers.request_path(token: object.token, id: first_request_id, format: :json)
+  private
+
+  def request_path(id)
+    Rails.application.routes.url_helpers.request_path(token: object.bucket.token, id: id, format: :json)
   end
 end

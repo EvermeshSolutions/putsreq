@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Requests from './Requests'
+import ReactPaginate from 'react-paginate'
 import { fetchBucket } from '../actions/bucket'
 
 class Bucket extends React.Component {
@@ -9,21 +10,22 @@ class Bucket extends React.Component {
   }
 
   renderFirstRequestLink() {
-    if(!this.props.bucket.first_request_id) { return }
+    if(!this.props.bucket.first_request) { return }
 
     return (
-      <em>Request ID: <a href={this.props.bucket.first_request_path} target="_blank">{this.props.bucket.first_request_id}</a></em>
+      <em>Request ID: <a href={this.props.bucket.last_request_path} target="_blank">{this.props.bucket.last_request.id}</a></em>
     )
   }
 
   renderFirstRequest() {
-    if(!this.props.bucket.first_request_at) { return }
+    if(!this.props.bucket.first_request) { return }
 
     return (
       <p>
         <em>
-          First request at: {this.props.bucket.first_request_at} <br />
-          Last request at: {this.props.bucket.last_request_at} <br />
+          First request at: {this.props.bucket.first_request.created_at} <br />
+          Last request at: {this.props.bucket.last_request.created_at} <br />
+
           {this.renderFirstRequestLink()}
         </em>
       </p>
@@ -40,7 +42,18 @@ class Bucket extends React.Component {
           <div className="col-md-6"></div>
         </div>
         <hr />
-        <Requests {...this.props} />
+        <ReactPaginate previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={<a href="">...</a>}
+          breakClassName={"break-me"}
+          pageCount={this.props.requests_count}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"} />
+        <hr />
+        <Requests {...this.props.bucket} />
       </div>
     )
   }

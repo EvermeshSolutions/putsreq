@@ -61,11 +61,15 @@ class Bucket
   end
 
   def last_request_at
-    last_request.try(:created_at)
+    last_request&.created_at
+  end
+
+  def first_request
+    requests.order(:created_at.asc).first
   end
 
   def first_request_at
-    requests.order(:created_at.asc).first.try(:created_at)
+    first_request&.created_at
   end
 
   def requests_count
