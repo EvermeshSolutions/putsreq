@@ -4,7 +4,7 @@ import store from './store'
 const getJSONFromPage = (id) => JSON.parse(document.getElementById(id).innerText)
 
 const bucketsActions = {
-  handlePageChange: 'HANDLE_PAGE_CHANGE',
+  fetchBucketRequest: 'FETCH_BUCKET_REQUEST',
   populate: 'POPULATE'
 }
 
@@ -27,18 +27,20 @@ const handlePageChange = () => {
   }
 }
 
-const fetchBucket2 = (bucket, page) => {
+const fetchBucketRequest = (bucket, page) => {
   return function (dispatch) {
     return fetch(`${bucket.path}.json?page=${page}`)
       .then(
         response => response.json(),
         error => console.log('An error occurred.', error)
       )
-      .then(json =>
-            console.log(json)
-            // dispatch(receivePosts(subreddit, json))
+      .then(request =>
+            store.dispatch({
+              type: bucketActions.fetchBucketRequest,
+              request
+            })
            )
   }
 }
 
-export { fetchBucket, handlePageChange, fetchBucket2, bucketsActions }
+export { fetchBucket, handlePageChange, fetchBucketRequest, bucketsActions }
