@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Requests from './Requests'
+import Request from './request'
 import ReactPaginate from 'react-paginate'
 import { fetchBucket } from '../actions/bucket'
 
@@ -53,7 +53,7 @@ class Bucket extends React.Component {
           subContainerClassName={"pages pagination"}
           activeClassName={"active"} />
         <hr />
-        <Requests {...this.props.bucket} />
+        <Request {...this.props.bucket.last_request} />
       </div>
     )
   }

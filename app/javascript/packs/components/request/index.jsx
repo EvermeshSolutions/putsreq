@@ -6,7 +6,7 @@ import Response from './Response'
 export default class Request extends React.Component {
   render() {
     return (
-      <div>
+      <div className="panel-group request-show" id="accordion" role="tablist" aria-multiselectable="true">
         <Header headers_as_string={this.props.headers_as_string} time_ago_in_words={this.props.time_ago_in_words} created_at={this.props.created_at} />
         <div className="panel panel-default">
           <div className="panel-heading" role="tab" id="headingTwo">
