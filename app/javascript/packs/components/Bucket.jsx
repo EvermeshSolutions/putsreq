@@ -32,6 +32,30 @@ class Bucket extends React.Component {
     )
   }
 
+  handlePageClick(data) {
+    let selected = data.selected
+    let offset = Math.ceil(selected * this.props.perPage)
+
+    this.setState({offset: offset}, () => {
+      console.log(this)
+      $.ajax({
+        url      : this.props.bucket.path,
+        data     : {limit: this.props.perPage, offset: this.state.offset},
+        dataType : 'json',
+        type     : 'GET',
+
+        success: data => {
+          // this.setState({data: data.comments, pageCount: Math.ceil(data.meta.total_count / data.meta.limit)});
+          console.log(data)
+        },
+
+        error: (xhr, status, err) => {
+          console.error(this.props.bucket.path, status, err.toString());
+        }
+      })
+    })
+  }
+
   renderPagination() {
     return (
       <ReactPaginate previousLabel={"previous"}
@@ -42,6 +66,7 @@ class Bucket extends React.Component {
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
         containerClassName={"pagination"}
+        onPageChange={this.handlePageClick.bind(this)}
         subContainerClassName={"pages pagination"}
         activeClassName={"active"} />
     )

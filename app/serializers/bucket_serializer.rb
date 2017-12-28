@@ -1,5 +1,5 @@
 class BucketSerializer < ActiveModel::Serializer
-  attributes :last_request,  :first_request, :requests_count
+  attributes :last_request,  :first_request, :requests_count, :path
 
   def last_request
     RequestSerializer.new(object.last_request)
@@ -15,6 +15,10 @@ class BucketSerializer < ActiveModel::Serializer
 
   def first_request_path
     request_path(object.first_request.id)
+  end
+
+  def path
+    Rails.application.routes.url_helpers.bucket_path(token: object.token)
   end
 
   private
