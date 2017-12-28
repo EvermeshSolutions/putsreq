@@ -33,24 +33,18 @@ class Bucket extends React.Component {
   }
 
   handlePageClick(data) {
-    let selected = data.selected
-    let offset = Math.ceil(selected * this.props.perPage)
-
     this.setState({offset: offset}, () => {
-      console.log(this)
       $.ajax({
         url      : this.props.bucket.path,
-        data     : {limit: this.props.perPage, offset: this.state.offset},
+        data     : { page: data.selected },
         dataType : 'json',
         type     : 'GET',
-
-        success: data => {
+        success:(data) => {
           // this.setState({data: data.comments, pageCount: Math.ceil(data.meta.total_count / data.meta.limit)});
           console.log(data)
         },
-
         error: (xhr, status, err) => {
-          console.error(this.props.bucket.path, status, err.toString());
+          console.error(this.props.bucket.path, status, err.toString())
         }
       })
     })
