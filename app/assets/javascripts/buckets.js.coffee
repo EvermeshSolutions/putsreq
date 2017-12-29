@@ -2,7 +2,6 @@ App.buckets = {}
 
 App.buckets['share'] = App.buckets['show'] = ->
   App.buckets.initializeAce()
-  RequestCountPoller.start()
 
   tipsyConfig = title: 'Copy to Clipboard', copiedHint: 'Copied!'
 
@@ -47,23 +46,3 @@ App.buckets.initializeAce = ->
   # Whenever a change happens inside the ACE editor, update
   # the size again
   editor.getSession().on 'change', autoResizeAce
-
-RequestCountPoller =
-  start: ->
-    favicon = new Favico(bgColor: '#6C92C8', animation: 'none')
-    favicon.badge($('#bucket-request-count').text())
-
-    bucket = $('#putsreq-url-input').data('bucket-token')
-
-    pusher = new Pusher('3466d56fe2ef1fdd2943')
-    channel = pusher.subscribe("channel_requests_#{bucket}")
-    channel.bind 'new', (data) ->
-      localStorage.setItem(data.id, data)
-      try
-        $('#bucket-request-count').text(data.count)
-
-        favicon.badge(data.count)
-      catch error
-
-      $('#new-requests-info').hide().
-        html('<em><a id="new-requests-received" href="javascript:window.location.reload();">New requests found. Load newer requests?</a></em>').fadeIn('slow')
