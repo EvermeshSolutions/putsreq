@@ -7,6 +7,8 @@ const bucket = (state = {}, action) => {
     return { ...action.bucket, loading: false }
   case bucketsActions.loading:
     return { ...state, loading: true }
+  case bucketsActions.updateRequestCount:
+    return { ...state, requests_count: action.requests_count }
   default:
     return state
   }

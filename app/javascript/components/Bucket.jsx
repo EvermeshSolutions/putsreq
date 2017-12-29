@@ -22,26 +22,24 @@ class Bucket extends React.Component {
 
     return (
       <p>
-        <em>
-          First request at: {this.props.bucket.first_request.created_at} <br />
-          Last request at: {this.props.bucket.last_request.created_at} <br />
+        <em>First request at: {this.props.bucket.first_request.created_at}</em> <br />
+        <em>Last request at: {this.props.bucket.last_request.created_at}</em> <br />
 
-          {this.renderFirstRequestLink()}
-        </em>
+        {this.renderFirstRequestLink()}
       </p>
     )
   }
 
   handlePageChange(data) {
-    this.props.handlePageChange(this.props.bucket, data.selected)
+    const page = data.selected + 1
+    this.props.handlePageChange(this.props.bucket, page)
   }
 
   renderPagination() {
     return (
-      <ReactPaginate previousLabel={"previous"}
-        nextLabel={"next"}
-        breakLabel={<a href="">...</a>}
-        breakClassName={"break-me"}
+      <ReactPaginate previousLabel={"Previous"}
+        nextLabel={"Next"}
+        breakLabel={<span>...</span>}
         pageCount={this.props.bucket.requests_count}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}

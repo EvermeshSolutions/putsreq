@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import store from '../store'
 import Bucket from '../components/Bucket'
-import startRequestPoller from './request_poller'
+import RequestCount from '../components/RequestCount'
+import startRequestPoller from '../request_poller'
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
@@ -12,6 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
       </Provider>,
     document.getElementById('react-root')
   )
+
+  ReactDOM.render(
+      <Provider store={store}>
+        <RequestCount />
+      </Provider>,
+    document.getElementById('request-count-react-root')
+  )
 })
 
-$(() => startRequestPoller())
+$(() => startRequestPoller(store))
+
+window.xpto = (c) => {
+  store.dispatch({ type: 'UPDATE_REQUEST_COUNT', requests_count: c })
+}
