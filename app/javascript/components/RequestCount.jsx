@@ -3,10 +3,8 @@ import { connect } from 'react-redux'
 
 class RequestCount extends React.Component {
   render() {
-    if(!this.props.requests_count) { return null }
-
     return (
-      <h3>{this.props.requests_count}</h3>
+      <h3>{this.props.requests_count || 0}</h3>
     )
   }
 }

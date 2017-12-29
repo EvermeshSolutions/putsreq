@@ -5,8 +5,6 @@ import store from '../store'
 import Bucket from '../components/Bucket'
 import RequestCount from '../components/RequestCount'
 import startRequestPoller from '../request_poller'
-import { updateRequestsCount } from '../actions'
-
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
@@ -25,7 +23,3 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 $(() => startRequestPoller(store))
-
-window.xpto = (c) => {
-  updateRequestsCount(c)
-}

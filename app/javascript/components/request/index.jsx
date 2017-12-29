@@ -5,6 +5,12 @@ import Response from './Response'
 
 export default class Request extends React.Component {
   render() {
+    if(!this.props.id) {
+      return (
+        <h3>No requests found</h3>
+      )
+    }
+
     return (
       <div className="panel-group request-show" id="accordion" role="tablist" aria-multiselectable="true">
         <Header headers_as_string={this.props.headers_as_string} time_ago_in_words={this.props.time_ago_in_words} created_at={this.props.created_at} />

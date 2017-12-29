@@ -15,6 +15,7 @@ const favicon = new Favico({ bgColor: '#6C92C8', animation: 'none' })
 
 const updateRequestsCount = (count) => {
   favicon.badge(count)
+
   return store.dispatch({ type: bucketsActions.updateRequestCount, requests_count: count })
 }
 
@@ -27,9 +28,7 @@ const handlePageChange = (bucket, page) => {
         response => response.json(),
         error => console.log('An error occurred.', error)
       )
-      .then(json =>
-            dispatch({ type: bucketsActions.populate, bucket: json })
-           )
+      .then(json => dispatch({ type: bucketsActions.populate, bucket: json }))
   }
 }
 

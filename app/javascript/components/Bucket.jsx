@@ -36,6 +36,8 @@ class Bucket extends React.Component {
   }
 
   renderPagination() {
+    if(!this.props.bucket.request) { return }
+
     return (
       <ReactPaginate previousLabel={"Previous"}
         nextLabel={"Next"}
@@ -61,10 +63,8 @@ class Bucket extends React.Component {
           </div>
           <div className="col-md-6"></div>
         </div>
-        <hr />
         {this.renderPagination()}
-        <hr />
-        <Request {...this.props.bucket.last_request} />
+        <Request {...this.props.bucket.request} />
       </div>
     )
   }
