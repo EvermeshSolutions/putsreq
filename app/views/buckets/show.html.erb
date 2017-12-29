@@ -1,12 +1,12 @@
 <%= javascript_pack_tag 'application' %>
 
-<% content_for :title, @bucket.name %>
+<% content_for :title, bucket.name %>
 
 <ul class="nav">
   <li class="logo"><a href="/"><%= image_tag 'logo.png' %></a></li>
-  <li><a href="<%= "/#{@bucket.token}/inspect" %>">Inspect</a></li>
-  <li><a href="<%= "/#{@bucket.token}/last" %>" title="JSON-formatted">Last Request</a></li>
-  <li><a href="<%= "/#{@bucket.token}/last_response" %>" title="JSON-formatted">Last Response</a></li>
+  <li><a href="<%= "/#{bucket.token}/inspect" %>">Inspect</a></li>
+  <li><a href="<%= "/#{bucket.token}/last" %>" title="JSON-formatted">Last Request</a></li>
+  <li><a href="<%= "/#{bucket.token}/last_response" %>" title="JSON-formatted">Last Response</a></li>
   <% if user_signed_in? %>
     <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete %></li>
   <% else %>
@@ -18,7 +18,7 @@
 <section class="putsreq-url-box">
   <h3>Your PutsReq URL</h3>
   <div class="input-group putsreq-url">
-    <input id="putsreq-url-input" data-bucket-token="<%= @bucket.token %>" type="text" value="<%= token_url(@bucket.token) %>" readonly="readonly"></input>
+    <input id="putsreq-url-input" data-bucket-token="<%= bucket.token %>" type="text" value="<%= token_url(bucket.token) %>" readonly="readonly"></input>
     <span id="copy-button" class="input-group-addon hastip clipboard" data-clipboard-target="#putsreq-url-input">
       <span class="glyphicon glyphicon-link hastip"></span>
     </span>
@@ -29,7 +29,7 @@
 
 <section>
   <h4>Sample Request using cURL</h4>
-  <code>curl -i -X POST -d 'name=Pablo' <%= token_url(@bucket.token) %></code>
+  <code>curl -i -X POST -d 'name=Pablo' <%= token_url(bucket.token) %></code>
 </section>
 
 <hr/>
@@ -42,7 +42,7 @@
 </div>
 
 <script type="application/json" id="bucket-json">
-  <%== BucketSerializer.new(@bucket).to_json %>
+  <%== BucketSerializer.new(bucket).to_json %>
 </script>
 
 <script src="//js.pusher.com/2.2/pusher.min.js" type="text/javascript"></script>

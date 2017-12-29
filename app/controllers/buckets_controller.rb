@@ -31,7 +31,7 @@ class BucketsController < ApplicationController
   end
 
   def show
-    @requests = bucket.requests.page(params[:page]).per 1
+    # @requests = bucket.requests.page(params[:page]).per 1
 
     respond_to do |format|
       format.html { render }
