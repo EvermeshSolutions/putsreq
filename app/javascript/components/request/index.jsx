@@ -29,7 +29,6 @@ export default class Request extends React.Component {
           </div>
         </div>
         <Response response_body_as_string={this.props.response_body_as_string} />
-        <hr />
       </div>
     )
   }

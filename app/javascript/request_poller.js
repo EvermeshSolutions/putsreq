@@ -8,7 +8,7 @@ export default function startRequestPoller(store) {
 
   channel.bind('new', (data) => {
     try {
-      updateRequestsCount(data.count)
+      updateRequestsCount(store.getState().bucket, data.count)(store.dispatch)
     } catch(error) {}
   })
 }
