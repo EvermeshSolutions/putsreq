@@ -1,5 +1,6 @@
 const bucketsActions = {
-  populate: 'POPULATE'
+  populate: 'POPULATE',
+  loading: 'LOADING'
 }
 
 export { bucketsActions }
