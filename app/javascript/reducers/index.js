@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { bucketsActions } from './actions'
+import { bucketsActions } from '../actionTypes'
 
 const bucket = (state = {}, action) => {
   switch (action.type) {

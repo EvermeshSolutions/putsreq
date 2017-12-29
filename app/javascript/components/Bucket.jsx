@@ -2,11 +2,11 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Request from './request'
 import ReactPaginate from 'react-paginate'
-import { fetchBucket, handlePageChange } from '../actions'
+import { fetchFromPage, handlePageChange } from '../actions'
 
 class Bucket extends React.Component {
   componentWillMount() {
-    fetchBucket()
+    this.props.fetchFromPage()
   }
 
   renderFirstRequestLink() {
@@ -32,22 +32,8 @@ class Bucket extends React.Component {
     )
   }
 
-  handlePageClick(data) {
-    this.setState({offset: offset}, () => {
-      $.ajax({
-        url      : this.props.bucket.path,
-        data     : { page: data.selected },
-        dataType : 'json',
-        type     : 'GET',
-        success:(data) => {
-          // this.setState({data: data.comments, pageCount: Math.ceil(data.meta.total_count / data.meta.limit)});
-          console.log(data)
-        },
-        error: (xhr, status, err) => {
-          console.error(this.props.bucket.path, status, err.toString())
-        }
-      })
-    })
+  handlePageChange(data) {
+    this.props.handlePageChange(this.props.bucket, data.selected)
   }
 
   renderPagination() {
@@ -60,13 +46,15 @@ class Bucket extends React.Component {
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
         containerClassName={"pagination"}
-        onPageChange={this.props.handlePageChange.bind(this)}
+        onPageChange={this.handlePageChange.bind(this)}
         subContainerClassName={"pages pagination"}
         activeClassName={"active"} />
     )
   }
 
   render() {
+    if(!this.props.bucket) { return }
+
     return (
       <div>
         <div className="row">
@@ -89,7 +77,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  handlePageChange: handlePageChange
+  handlePageChange: handlePageChange,
+  fetchFromPage: fetchFromPage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Bucket)
