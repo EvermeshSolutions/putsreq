@@ -5,7 +5,6 @@ class RequestSerializer < ActiveModel::Serializer
     :time_ago_in_words,
     :created_at,
     :request_method,
-    :path,
     :request_body_as_string,
     :response_body_as_string,
     :headers_as_string,

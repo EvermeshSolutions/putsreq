@@ -21,7 +21,7 @@ const handlePageChange = (bucket, page) => {
         error => console.log('An error occurred.', error)
       )
       .then(json =>
-            dispatch({ type: bucketsActions.populate, bucket: getJSONFromPage('bucket-json') })
+            dispatch({ type: bucketsActions.populate, bucket: json })
            )
   }
 }

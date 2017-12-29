@@ -13,6 +13,9 @@ class Bucket
   field :response_builder, default: -> { default_response_builder }
   field :history_start_at, type: Time
 
+  # temporally hack
+  attr_accessor :request
+
   index token: 1
   index owner_token: 1
   index fork_id: 1

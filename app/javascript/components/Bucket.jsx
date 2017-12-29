@@ -10,10 +10,10 @@ class Bucket extends React.Component {
   }
 
   renderFirstRequestLink() {
-    if(!this.props.bucket.first_request) { return }
+    if(!this.props.bucket.request) { return }
 
     return (
-      <em>Request ID: <a href={this.props.bucket.last_request_path} target="_blank">{this.props.bucket.last_request.id}</a></em>
+      <em>Request ID: <a href={this.props.bucket.request.path} target="_blank">{this.props.bucket.request.id}</a></em>
     )
   }
 

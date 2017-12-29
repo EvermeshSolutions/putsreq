@@ -31,6 +31,8 @@ class BucketsController < ApplicationController
   end
 
   def show
+    bucket.request = bucket.requests.page(params[:page]).per(1).first
+
     respond_to do |format|
       format.html { render }
       format.json { render json: bucket, serializer: BucketSerializer }
