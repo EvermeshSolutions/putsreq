@@ -11,6 +11,13 @@ const fetchFromPage = () => {
   })
 }
 
+const favicon = new Favico({ bgColor: '#6C92C8', animation: 'none' })
+
+const updateRequestsCount = (count) => {
+  favicon.badge(count)
+  return store.dispatch({ type: bucketsActions.updateRequestCount, requests_count: count })
+}
+
 const handlePageChange = (bucket, page) => {
   return (dispatch) => {
     dispatch({ type: bucketsActions.loading })
@@ -26,4 +33,4 @@ const handlePageChange = (bucket, page) => {
   }
 }
 
-export { fetchFromPage, handlePageChange }
+export { fetchFromPage, handlePageChange, updateRequestsCount }

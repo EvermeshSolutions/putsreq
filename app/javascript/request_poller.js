@@ -1,8 +1,6 @@
-import { bucketsActions } from './actionTypes.js'
+import { updateRequestsCount } from './actions'
 
 export default function startRequestPoller(store) {
-  const favicon = new Favico({ bgColor: '#6C92C8', animation: 'none' })
-
   const bucket = $('#putsreq-url-input').data('bucket-token')
 
   const pusher = new Pusher('3466d56fe2ef1fdd2943')
@@ -10,9 +8,7 @@ export default function startRequestPoller(store) {
 
   channel.bind('new', (data) => {
     try {
-      favicon.badge(data.count)
-
-      store.dispatch({ type: bucketsActions.updateRequestCount, requests_count: data.count })
+      updateRequestsCount(count)
     } catch(error) {}
   })
 }
