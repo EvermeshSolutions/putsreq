@@ -36,6 +36,7 @@ class Bucket
     # I couldn't make has_many + conditions work with Mongoid
     # responses must be filtered by created_at
     # see clear_history
+
     Response.where(bucket_id: id).gte(created_at: history_start_at || created_at).order(:created_at.desc)
   end
 
