@@ -35,6 +35,14 @@ class Bucket extends React.Component {
     this.props.handlePageChange(page)
   }
 
+  currentPage() {
+    if(this.props.bucket.page) {
+      return this.props.bucket.page - 1
+    }
+
+    return 0
+  }
+
   renderPagination() {
     if(!this.props.bucket.request) { return }
 
@@ -47,6 +55,8 @@ class Bucket extends React.Component {
           pageRangeDisplayed={5}
           containerClassName={"pagination"}
           onPageChange={this.handlePageChange.bind(this)}
+          forcePage={this.currentPage()}
+          disableInitialCallback={true}
           subContainerClassName={"pages pagination"}
           activeClassName={"active"} />
       )

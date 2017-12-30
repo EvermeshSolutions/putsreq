@@ -17,19 +17,31 @@ const favicon = new Favico({ bgColor: '#6C92C8', animation: 'none' })
 
 const updateRequestsCount = (count) => {
   return (dispatch, getState) => {
+    const previous_count = getState().bucket.requests_count
+    let page = getState().bucket.page || 0
+
+    if(count > previous_count) {
+      page += (count - previous_count)
+    } else if (count < previous_count) {
+      page -= previous_count - count
+      // do no update the pagination
+      // in case the page no longer exists
+      if(page < 0) { page = getState().bucket.page }
+    }
+
     favicon.badge(count)
+
+    dispatch({ type: bucketsActions.updateRequestsCount, requests_count: count, page })
 
     if(count == 1) {
       return fetchPage(1)(dispatch, getState)
-    } else {
-      return dispatch({ type: bucketsActions.updateRequestsCount, requests_count: count })
     }
   }
 }
 
 const handlePageChange = (page) => {
   return (dispatch, getState) => {
-    dispatch({ type: bucketsActions.loading })
+    dispatch({ type: bucketsActions.loading, page })
 
     fetchPage(page)(dispatch, getState)
   }
