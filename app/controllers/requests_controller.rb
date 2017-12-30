@@ -3,7 +3,7 @@ class RequestsController < ApplicationController
     request = Request.find(params[:id])
 
     respond_to do |format|
-      format.html { render text: request.body }
+      format.html { render plain: request.body }
       format.json { render json: JSON.pretty_generate(request.attributes) }
     end
   end

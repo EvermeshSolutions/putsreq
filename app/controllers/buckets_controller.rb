@@ -52,7 +52,7 @@ class BucketsController < ApplicationController
     return render_request_not_found unless last_request = bucket.last_request
 
     respond_to do |format|
-      format.html { render text: last_request.body }
+      format.html { render plain: last_request.body }
       format.json { render json: JSON.pretty_generate(last_request.attributes) }
     end
   end
@@ -61,7 +61,7 @@ class BucketsController < ApplicationController
     return render_request_not_found unless last_response = bucket.last_response
 
     respond_to do |format|
-      format.html { render text: last_response.body }
+      format.html { render plain: last_response.body }
       format.json { render json: JSON.pretty_generate(last_response.attributes) }
     end
   end
