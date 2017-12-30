@@ -6,7 +6,7 @@ const bucket = (state = {}, action) => {
   case bucketsActions.populate:
     return { ...action.bucket, loading: false, page: action.page }
   case bucketsActions.loading:
-    return { ...state, loading: true, page: action.page }
+    return { ...state, loading: true }
   case bucketsActions.updateRequestsCount:
     return { ...state, requests_count: action.requests_count, page: action.page }
   default:

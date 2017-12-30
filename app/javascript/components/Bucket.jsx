@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Request from './request'
-import ReactPaginate from 'react-paginate'
+import Pagination from './Pagination'
 import { fetchFromPage, handlePageChange } from '../actions'
 
 class Bucket extends React.Component {
@@ -30,36 +30,20 @@ class Bucket extends React.Component {
     )
   }
 
-  handlePageChange(data) {
-    const page = data.selected + 1
+  handlePageChange(page) {
     this.props.handlePageChange(page)
-  }
-
-  currentPage() {
-    if(this.props.bucket.page) {
-      return this.props.bucket.page - 1
-    }
-
-    return 0
   }
 
   renderPagination() {
     if(!this.props.bucket.request) { return }
 
     return (
-        <ReactPaginate previousLabel={"Previous"}
-          nextLabel={"Next"}
-          breakLabel={<span>...</span>}
+      <Pagination
           pageCount={this.props.bucket.requests_count}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          containerClassName={"pagination"}
+          page={this.props.bucket.page}
           onPageChange={this.handlePageChange.bind(this)}
-          forcePage={this.currentPage()}
-          disableInitialCallback={true}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"} />
-      )
+      />
+    )
   }
 
   renderRequestOrLoading() {
