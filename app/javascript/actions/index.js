@@ -13,29 +13,29 @@ const fetchFromPage = () => {
 
 const favicon = new Favico({ bgColor: '#6C92C8', animation: 'none' })
 
-const updateRequestsCount = (bucket, count) => {
-  return (dispatch) => {
+const updateRequestsCount = (count) => {
+  return (dispatch, getState) => {
     favicon.badge(count)
 
     if(count == 1) {
-      return fetchPage(bucket, count)(dispatch)
+      return fetchPage(1)(dispatch, getState)
     } else {
       return dispatch({ type: bucketsActions.updateRequestCount, requests_count: count })
     }
   }
 }
 
-const handlePageChange = (bucket, page) => {
-  return (dispatch) => {
+const handlePageChange = (page) => {
+  return (dispatch, getState) => {
     dispatch({ type: bucketsActions.loading })
 
-    fetchPage(bucket, page)(dispatch)
+    fetchPage(page)(dispatch, getState)
   }
 }
 
-const fetchPage = (bucket, page) => {
-  return (dispatch) => {
-    fetch(`${bucket.path}.json?page=${page}`)
+const fetchPage = (page) => {
+  return (dispatch, getState) => {
+    fetch(`${getState().bucket.path}.json?page=${page}`)
       .then(
         response => response.json(),
         error => console.log('An error occurred.', error)

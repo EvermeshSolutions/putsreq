@@ -7,8 +7,6 @@ export default function startRequestPoller(store) {
   const channel = pusher.subscribe(`channel_requests_${bucket}`)
 
   channel.bind('new', (data) => {
-    try {
-      updateRequestsCount(store.getState().bucket, data.count)(store.dispatch)
-    } catch(error) {}
+    updateRequestsCount(data.count)(store.dispatch, store.getState)
   })
 }

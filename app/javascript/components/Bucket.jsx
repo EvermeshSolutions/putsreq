@@ -32,7 +32,7 @@ class Bucket extends React.Component {
 
   handlePageChange(data) {
     const page = data.selected + 1
-    this.props.handlePageChange(this.props.bucket, page)
+    this.props.handlePageChange(page)
   }
 
   renderPagination() {
