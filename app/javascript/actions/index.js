@@ -1,14 +1,16 @@
-import store from '../store'
 import fetch from 'cross-fetch'
 import { bucketsActions } from '../actionTypes'
 
 const getJSONFromPage = (id) => JSON.parse(document.getElementById(id).innerText)
 
 const fetchFromPage = () => {
-  return store.dispatch({
+  const bucket = getJSONFromPage('bucket-json')
+  favicon.badge(bucket.requests_count)
+
+  return {
     type: bucketsActions.populate,
-    bucket: getJSONFromPage('bucket-json')
-  })
+    bucket
+  }
 }
 
 const favicon = new Favico({ bgColor: '#6C92C8', animation: 'none' })
@@ -20,7 +22,7 @@ const updateRequestsCount = (count) => {
     if(count == 1) {
       return fetchPage(1)(dispatch, getState)
     } else {
-      return dispatch({ type: bucketsActions.updateRequestCount, requests_count: count })
+      return dispatch({ type: bucketsActions.updateRequestsCount, requests_count: count })
     }
   }
 }
@@ -40,7 +42,7 @@ const fetchPage = (page) => {
         response => response.json(),
         error => console.log('An error occurred.', error)
       )
-      .then(json => dispatch({ type: bucketsActions.populate, bucket: json }))
+      .then(bucket => dispatch({ type: bucketsActions.populate, bucket, page }))
   }
 }
 

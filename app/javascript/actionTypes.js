@@ -1,7 +1,7 @@
 const bucketsActions = {
   populate: 'POPULATE',
   loading: 'LOADING',
-  updateRequestCount: 'UPDATE_REQUEST_COUNT'
+  updateRequestsCount: 'UPDATE_REQUESTS_COUNT'
 }
 
 export { bucketsActions }
