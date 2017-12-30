@@ -30,7 +30,7 @@ class PutsReqCLI < Thor
 
       PusherClient.logger.level = Logger::ERROR
 
-      options = { secure: true }
+      options = { cluster: 'mt1', secure: true }
 
       socket = PusherClient::Socket.new('3466d56fe2ef1fdd2943', options)
 
