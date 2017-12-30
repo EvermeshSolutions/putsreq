@@ -28,6 +28,7 @@ Rollbar.configure do |config|
   config.exception_level_filters.merge!('Mongoid::Errors::DocumentNotFound' => 'ignore')
   config.exception_level_filters.merge!('ActionController::RoutingError' => 'ignore')
   config.exception_level_filters.merge!('ActionDispatch::ParamsParser::ParseError' => 'ignore')
+  config.exception_level_filters.merge!('ActionDispatch::Http::Parameters::ParseError' => 'ignore')
   #
   # You can also specify a callable, which will be called with the exception instance.
   # config.exception_level_filters.merge!('MyCriticalException' => lambda { |e| 'critical' })
