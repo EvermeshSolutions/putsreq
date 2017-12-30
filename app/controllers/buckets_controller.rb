@@ -73,7 +73,7 @@ class BucketsController < ApplicationController
     response.headers.merge! recorded_response.headers.to_h
 
     render plain: body_as_string(recorded_response),
-           status: recorded_response.status
+      status: recorded_response.status
   end
 
   private

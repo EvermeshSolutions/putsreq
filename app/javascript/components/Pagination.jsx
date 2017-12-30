@@ -20,39 +20,23 @@ export default class Pagination extends React.Component {
   }
 
   firstClassNames() {
-    if(!this.props.page) { return }
-
-    if(this.props.page <= 1) {
-      return 'disabled'
-    }
+    if(this.props.page <= 1) { return 'disabled' }
   }
 
   previousClassNames() {
-    if(!this.props.page) { return }
-
     const previousPage = this.props.page - 1
 
-    if(previousPage <= 0) {
-      return 'disabled'
-    }
+    if(previousPage <= 0) { return 'disabled' }
   }
 
   nextClassNames() {
-    if(!this.props.page) { return }
-
     const nextPage = this.props.page + 1
 
-    if(nextPage > this.props.pageCount) {
-      return 'disabled'
-    }
+    if(nextPage > this.props.pageCount) { return 'disabled' }
   }
 
   lastClassNames() {
-    if(!this.props.page) { return }
-
-    if(this.props.page >= this.props.pageCount) {
-      return 'disabled'
-    }
+    if(this.props.page >= this.props.pageCount) { return 'disabled' }
   }
 
   render() {

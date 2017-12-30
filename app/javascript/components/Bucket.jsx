@@ -35,8 +35,6 @@ class Bucket extends React.Component {
   }
 
   renderPagination() {
-    if(!this.props.bucket.request) { return }
-
     return (
       <Pagination
           pageCount={this.props.bucket.requests_count}

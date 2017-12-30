@@ -18,13 +18,19 @@ const favicon = new Favico({ bgColor: '#6C92C8', animation: 'none' })
 
 const updateRequestsCount = (count) => {
   return (dispatch, getState) => {
+    if(count === getState().bucket.requests_count) { return }
+
     favicon.badge(count)
 
-    dispatch({ type: bucketsActions.updateRequestsCount, requests_count: count, page: null })
+    let page = getState().bucket.page || 1
 
-    if(count == 1) {
-      return fetchPage(1)(dispatch, getState)
+    if(count > getState().bucket.request_count) {
+      page = (count - getState().bucket.requests_count) + page
     }
+
+    dispatch({ type: bucketsActions.updateRequestsCount, requests_count: count, page: page })
+
+    if(count === 1) { return fetchPage(1)(dispatch, getState) }
   }
 }
 
@@ -38,7 +44,7 @@ const handlePageChange = (page) => {
 
 const fetchPage = (page) => {
   return (dispatch, getState) => {
-    fetch(`${getState().bucket.path}.json?page=${page}`)
+    fetch(`${getState().bucket.path}.json?page=${1000}`)
       .then(
         response => response.json(),
         error => console.log('An error occurred.', error)
