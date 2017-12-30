@@ -44,7 +44,7 @@ const handlePageChange = (page) => {
 
 const fetchPage = (page) => {
   return (dispatch, getState) => {
-    fetch(`${getState().bucket.path}.json?page=${1000}`)
+    fetch(`${getState().bucket.path}.json?page=${page}`)
       .then(
         response => response.json(),
         error => console.log('An error occurred.', error)
