@@ -39,17 +39,27 @@ class Bucket extends React.Component {
     if(!this.props.bucket.request) { return }
 
     return (
-      <ReactPaginate previousLabel={"Previous"}
-        nextLabel={"Next"}
-        breakLabel={<span>...</span>}
-        pageCount={this.props.bucket.requests_count}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        containerClassName={"pagination"}
-        onPageChange={this.handlePageChange.bind(this)}
-        subContainerClassName={"pages pagination"}
-        activeClassName={"active"} />
-    )
+        <ReactPaginate previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={<span>...</span>}
+          pageCount={this.props.bucket.requests_count}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          containerClassName={"pagination"}
+          onPageChange={this.handlePageChange.bind(this)}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"} />
+      )
+  }
+
+  renderRequestOrLoading() {
+    if(this.props.bucket.loading) {
+      return (
+        <div><em><strong>Loading...</strong></em></div>
+      )
+    }
+
+    return (<Request {...this.props.bucket.request} />)
   }
 
   render() {
@@ -64,7 +74,7 @@ class Bucket extends React.Component {
           <div className="col-md-6"></div>
         </div>
         {this.renderPagination()}
-        <Request {...this.props.bucket.request} />
+        {this.renderRequestOrLoading()}
       </div>
     )
   }
