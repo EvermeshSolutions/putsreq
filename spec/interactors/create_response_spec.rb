@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe CreateResponse do
-  let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '') }
+  let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' =>  '') }
   let(:bucket)       { Bucket.create(name: 'My Bucket') }
 
   let(:request) do

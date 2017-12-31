@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe CreateRequest do
-  let(:rack_request) { ActionController::TestRequest.new }
+  let(:rack_request) { ActionController::TestRequest.create({}) }
   let(:bucket)       { Bucket.create(name: 'My Bucket') }
 
   describe '#call' do

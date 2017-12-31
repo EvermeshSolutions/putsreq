@@ -1,7 +1,7 @@
 class BucketsController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :record
 
-  before_filter :check_ownership!, only: %i(clear destroy update)
+  before_action :check_ownership!, only: %i(clear destroy update)
 
   def create
     redirect_to bucket_path(bucket.token)
@@ -31,7 +31,12 @@ class BucketsController < ApplicationController
   end
 
   def show
-    @requests = bucket.requests.page(params[:page]).per 1
+    bucket.request = bucket.requests.page(params[:page]).per(1).first
+
+    respond_to do |format|
+      format.html { render }
+      format.json { render json: bucket, serializer: BucketSerializer }
+    end
   end
 
   def update
@@ -47,7 +52,7 @@ class BucketsController < ApplicationController
     return render_request_not_found unless last_request = bucket.last_request
 
     respond_to do |format|
-      format.html { render text: last_request.body }
+      format.html { render plain: last_request.body }
       format.json { render json: JSON.pretty_generate(last_request.attributes) }
     end
   end
@@ -56,7 +61,7 @@ class BucketsController < ApplicationController
     return render_request_not_found unless last_response = bucket.last_response
 
     respond_to do |format|
-      format.html { render text: last_response.body }
+      format.html { render plain: last_response.body }
       format.json { render json: JSON.pretty_generate(last_response.attributes) }
     end
   end
@@ -67,8 +72,8 @@ class BucketsController < ApplicationController
 
     response.headers.merge! recorded_response.headers.to_h
 
-    render text: body_as_string(recorded_response),
-           status: recorded_response.status
+    render plain: body_as_string(recorded_response),
+      status: recorded_response.status
   end
 
   private
@@ -76,7 +81,7 @@ class BucketsController < ApplicationController
   def render_request_not_found
     respond_to do |format|
       format.html { redirect_to bucket_path(bucket.token), alert: 'Please submit a request first' }
-      format.json { render nothing: true, status: 404 }
+      format.json { head :not_found }
     end
   end
 

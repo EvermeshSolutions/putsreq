@@ -4,14 +4,17 @@ class Bucket
 
   has_many :forks, class_name: 'Bucket'
 
-  belongs_to :fork, class_name: 'Bucket'
-  belongs_to :user
+  belongs_to :fork, class_name: 'Bucket', required: false
+  belongs_to :user, required: false
 
   field :token
   field :name
   field :owner_token
   field :response_builder, default: -> { default_response_builder }
   field :history_start_at, type: Time
+
+  # temporally hack
+  attr_accessor :request
 
   index token: 1
   index owner_token: 1
@@ -33,6 +36,7 @@ class Bucket
     # I couldn't make has_many + conditions work with Mongoid
     # responses must be filtered by created_at
     # see clear_history
+
     Response.where(bucket_id: id).gte(created_at: history_start_at || created_at).order(:created_at.desc)
   end
 
@@ -61,11 +65,15 @@ class Bucket
   end
 
   def last_request_at
-    last_request.try(:created_at)
+    last_request&.created_at
+  end
+
+  def first_request
+    requests.order(:created_at.asc).first
   end
 
   def first_request_at
-    requests.order(:created_at.asc).first.try(:created_at)
+    first_request&.created_at
   end
 
   def requests_count

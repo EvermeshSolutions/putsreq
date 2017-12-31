@@ -11,7 +11,7 @@ RSpec.describe BucketsController, type: :controller do
   end
 
   describe 'DELETE #clear' do
-    let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+    let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
     before do
       stub_request(:get, 'http://example.com').
@@ -24,7 +24,7 @@ RSpec.describe BucketsController, type: :controller do
       expect(bucket.requests.count).to eq(1)
       expect(bucket.responses.count).to eq(1)
 
-      delete :clear, token: bucket.token
+      delete :clear, params: { token: bucket.token }
 
       bucket.reload
 
@@ -37,7 +37,7 @@ RSpec.describe BucketsController, type: :controller do
     specify do
       name = bucket.name
       expect {
-        post :fork, token: bucket.token
+        post :fork, params: { token: bucket.token }
 
         expect(bucket.forks.count).to eq 1
 
@@ -55,7 +55,7 @@ RSpec.describe BucketsController, type: :controller do
     specify do
       bucket_params = { 'name' => 'test123', 'response_builder' => 'response.body = "ok";' }
 
-      put :update, token: bucket.token, bucket: bucket_params
+      put :update, params: { token: bucket.token, bucket: bucket_params }
 
       bucket.reload
 
@@ -77,7 +77,7 @@ RSpec.describe BucketsController, type: :controller do
 
   describe 'GET #show' do
     specify do
-      get :show, token: bucket.token
+      get :show, params: { token: bucket.token }
 
       expect(assigns(:bucket)).to eq(bucket)
       expect(assigns(:requests)).to be
@@ -87,7 +87,7 @@ RSpec.describe BucketsController, type: :controller do
       it 'creates a new bucket' do
         token = 'not-found'
         expect {
-          get :show, token: token
+          get :show, params: { token: token }
 
           expect(assigns(:bucket)).to eq(Bucket.find_by(token: token))
         }.to change(Bucket, :count).by(1)
@@ -98,7 +98,7 @@ RSpec.describe BucketsController, type: :controller do
   describe 'GET #last' do
     context 'when found' do
       context 'when JSON' do
-        let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+        let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
         before do
           stub_request(:get, 'http://example.com').
@@ -108,7 +108,7 @@ RSpec.describe BucketsController, type: :controller do
         end
 
         specify do
-          get :last, token: bucket.token, format: :json
+          get :last, params: { token: bucket.token }, format: :json
 
           expect(response.body).to be_present # TODO: test the contents
           expect(response).to be_ok
@@ -118,14 +118,14 @@ RSpec.describe BucketsController, type: :controller do
 
     context 'when not found' do
       specify do
-        get :last, token: bucket.token
+        get :last, params: { token: bucket.token }
 
         expect(response).to redirect_to(bucket_path(bucket.token))
       end
 
       context 'when JSON' do
         specify do
-          get :last, token: bucket.token, format: :json
+          get :last, params: { token: bucket.token }, format: :json
 
           expect(response.status).to eq(404)
         end
@@ -136,7 +136,7 @@ RSpec.describe BucketsController, type: :controller do
   describe 'GET #last_response' do
     context 'when found' do
       context 'when JSON' do
-        let(:rack_request) { ActionController::TestRequest.new('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+        let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
 
         before do
           stub_request(:get, 'http://example.com').
@@ -146,7 +146,7 @@ RSpec.describe BucketsController, type: :controller do
         end
 
         specify do
-          get :last_response, token: bucket.token, format: :json
+          get :last_response, params: { token: bucket.token }, format: :json
 
           expect(response.body).to be
           expect(response).to be_ok
@@ -156,14 +156,14 @@ RSpec.describe BucketsController, type: :controller do
 
     context 'when not found' do
       specify do
-        get :last_response, token: bucket.token
+        get :last_response, params: { token: bucket.token }
 
         expect(response).to redirect_to(bucket_path(bucket.token))
       end
 
       context 'when JSON' do
         specify do
-          get :last_response, token: bucket.token, format: :json
+          get :last_response, params: { token: bucket.token }, format: :json
 
           expect(response.status).to eq(404)
         end
