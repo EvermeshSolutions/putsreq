@@ -79,8 +79,7 @@ RSpec.describe BucketsController, type: :controller do
     specify do
       get :show, params: { token: bucket.token }
 
-      expect(assigns(:bucket)).to eq(bucket)
-      expect(assigns(:requests)).to be
+      expect(assigns(:_bucket)).to eq(bucket)
     end
 
     context 'when not found' do
@@ -89,7 +88,7 @@ RSpec.describe BucketsController, type: :controller do
         expect {
           get :show, params: { token: token }
 
-          expect(assigns(:bucket)).to eq(Bucket.find_by(token: token))
+          expect(assigns(:_bucket)).to eq(Bucket.find_by(token: token))
         }.to change(Bucket, :count).by(1)
       end
     end

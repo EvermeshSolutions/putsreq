@@ -29,8 +29,8 @@ WebMock.disable_net_connect!(allow: 'codeclimate.com')
 
 RSpec.configure do |config|
   config.before do
-    stub_request(:get, /pusherapp.com/)
-    stub_request(:post, /pusherapp.com/)
+    stub_request(:get, /pusher.com/)
+    stub_request(:post, /pusher.com/)
   end
 
   config.order = 'random'
