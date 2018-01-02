@@ -36,12 +36,12 @@ export default class Request extends Component {
 }
 
 Response.propTypes = {
-  request_method: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
-  request_body_as_string: PropTypes.string.isRequired,
-  response_body_as_string: PropTypes.string.isRequired,
-  created_at: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  time_ago_in_words: PropTypes.string.isRequired,
-  headers_as_string: PropTypes.string.isRequired
+  request_method: PropTypes.string,
+  path: PropTypes.string,
+  request_body_as_string: PropTypes.string,
+  response_body_as_string: PropTypes.string,
+  created_at: PropTypes.string,
+  id: PropTypes.string,
+  time_ago_in_words: PropTypes.string,
+  headers_as_string: PropTypes.string
 }
