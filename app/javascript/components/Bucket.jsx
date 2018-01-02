@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Request from './request'
 import Pagination from './Pagination'
 import { fetchFromPage, handlePageChange } from '../actions'
+import PropTypes from 'prop-types'
 
-class Bucket extends React.Component {
+class Bucket extends Component {
   componentWillMount() {
     this.props.fetchFromPage()
   }
@@ -72,6 +73,10 @@ class Bucket extends React.Component {
       </div>
     )
   }
+}
+
+Bucket.propTypes = {
+  bucket: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({

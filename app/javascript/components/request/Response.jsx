@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-export default class Response extends React.Component {
+export default class Response extends Component {
   render() {
     return (
       <div className="panel panel-default">
@@ -20,4 +21,8 @@ export default class Response extends React.Component {
       </div>
     )
   }
+}
+
+Response.propTypes = {
+  response_body_as_string: PropTypes.string.isRequired
 }

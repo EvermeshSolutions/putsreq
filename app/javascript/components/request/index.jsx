@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Header from './Header'
 import Response from './Response'
+import PropTypes from 'prop-types'
 
-export default class Request extends React.Component {
+export default class Request extends Component {
   render() {
     if(!this.props.id) {
       return (
-        <h3>No requests found</h3>
+        <p>No requests found</p>
       )
     }
 
@@ -32,4 +33,15 @@ export default class Request extends React.Component {
       </div>
     )
   }
+}
+
+Response.propTypes = {
+  request_method: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
+  request_body_as_string: PropTypes.string.isRequired,
+  response_body_as_string: PropTypes.string.isRequired,
+  created_at: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  time_ago_in_words: PropTypes.string.isRequired,
+  headers_as_string: PropTypes.string.isRequired
 }

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-export default class Header extends React.Component {
+export default class Header extends Component {
   render() {
     return (
       <div className="panel panel-default">
@@ -21,4 +22,10 @@ export default class Header extends React.Component {
       </div>
     )
   }
+}
+
+Header.propTypes = {
+  created_at: PropTypes.string.isRequired,
+  time_ago_in_words: PropTypes.string.isRequired,
+  headers_as_string: PropTypes.string.isRequired
 }

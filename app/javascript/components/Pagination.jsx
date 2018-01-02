@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-export default class Pagination extends React.Component {
+export default class Pagination extends Component {
   handleFirstPage() {
     this.props.onPageChange(1)
   }
@@ -57,4 +58,10 @@ export default class Pagination extends React.Component {
       </ul>
     )
   }
+}
+
+Pagination.propTypes = {
+  page: PropTypes.number.isRequired,
+  pageCount: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired
 }

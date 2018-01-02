@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-class RequestCount extends React.Component {
+class RequestCount extends Component {
   render() {
     return (
       <h3>{this.props.requests_count || 0}</h3>
     )
   }
+}
+
+RequestCount.propTypes = {
+  requests_count: PropTypes.number
 }
 
 const mapStateToProps = (state) => ({
