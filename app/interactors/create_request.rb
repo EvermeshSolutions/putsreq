@@ -13,13 +13,17 @@ class CreateRequest
       headers:        FilterHeaders.call(headers: rack_request.env).headers
     )
 
-    context.params = rack_request.request_parameters
+    context.params = params
   rescue
     Rollbar.scope!(request: context.request)
     raise
   end
 
   private
+
+  def params
+    rack_request.params.to_h.except('controller', 'action', 'token')
+  end
 
   def body(rack_request)
     body = rack_request.body.read.encode('UTF-8', invalid: :replace, undef: :replace)
