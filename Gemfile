@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.2'
+ruby '2.5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.0'
@@ -65,7 +65,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'redis'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'dotiw'
-gem 'devise'
+gem 'devise', '~> 4.4.0'
 gem 'pusher'
 gem 'interactor', '~> 3.0'
 gem 'rollbar'
