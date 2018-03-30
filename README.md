@@ -159,6 +159,15 @@ PutsReq supports [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_shar
 
 https://github.com/phstc/putsreq_integration_sample
 
+### Production
+
+In production (Heroku), PutsReq runs on mLab sandbox, with a storage of 496 MB. For avoiding getting exceeding the capacity, the `requests` and `responses` collections must be converted into capped collections, limited to 200 MB each.
+
+```
+db.runCommand({ "convertToCapped": "requests",  size: 20000000 });
+db.runCommand({ "convertToCapped": "responses", size: 20000000 });
+```
+
 ### License
 
 Please see [LICENSE](https://github.com/phstc/putsreq/blob/master/LICENSE) for licensing details.
