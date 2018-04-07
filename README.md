@@ -161,7 +161,7 @@ https://github.com/phstc/putsreq_integration_sample
 
 ### Production
 
-In production (Heroku), PutsReq runs on mLab sandbox, with a storage of 496 MB. For avoiding getting exceeding the capacity, the `requests` and `responses` collections must be converted into capped collections.
+In production (Heroku), PutsReq runs on mLab sandbox, with a storage of 500 MB. For avoiding getting exceeding the capacity, the `requests` and `responses` collections must be converted into capped collections.
 
 ```
 db.runCommand({ "convertToCapped": "requests",  size: 15000000 });
