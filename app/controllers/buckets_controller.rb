@@ -1,7 +1,23 @@
 class BucketsController < ApplicationController
+  include ActionController::Live
+
   skip_before_action :verify_authenticity_token, only: :record
 
   before_action :check_ownership!, only: %i(clear destroy update)
+
+  def new_requests
+    response.headers['Content-Type'] = 'text/event-stream'
+    sse = SSE.new(response.stream, event: 'time')
+    begin
+      # loop do
+        sse.write({ :time => Time.now })
+        # sleep 1
+      # end
+    rescue ClientDisconnected
+    ensure
+      sse.close
+    end
+  end
 
   def create
     redirect_to bucket_path(bucket.token)

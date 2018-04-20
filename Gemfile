@@ -2,28 +2,13 @@ source 'https://rubygems.org'
 
 ruby '2.5.0'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.0'
-
-# Use SCSS for stylesheets
 gem 'sass-rails'
-
-# Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-
-# Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails'
-
-# Use jquery as the JavaScript library
 gem 'jquery-rails'
 
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
-end
-
 group :production do
-  gem 'unicorn'
   gem 'rails_12factor'
 end
 
@@ -72,3 +57,4 @@ gem 'rollbar'
 gem 'oj'
 gem 'webpacker', '~> 3.0'
 gem 'active_model_serializers'
+gem 'puma'

@@ -1,5 +1,8 @@
 App.buckets = {}
 
+source = new EventSource('/new_requests')
+source.addEventListener('time', (event) -> console.log(event.data))
+
 App.buckets['share'] = App.buckets['show'] = ->
   App.buckets.initializeAce()
 
