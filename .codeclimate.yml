@@ -28,5 +28,4 @@ engines:
   rubocop:
     enabled: true
 exclude_paths:
-  - "*/vendor/assets/**"
-  - "*/javascripts/vendor/**"
+  - "**/vendor/**/*"
