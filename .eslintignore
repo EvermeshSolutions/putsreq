@@ -1,0 +1,4 @@
+**/*{.,-}min.js
+/vendor/assets/javascript
+/public
+/node_modules

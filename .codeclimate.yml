@@ -1,7 +1,31 @@
 # Remove any languages you don't want analyzed.
-languages:
-   Ruby: true
-   JavaScript: true
+engines:
+  brakeman:
+    enabled: true
+  bundler-audit:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby
+      - javascript:
+          mass_threshold: 120
+  eslint:
+    enabled: true
+    channel: "eslint-4"
+    checks:
+      no-alert:
+        enabled: false
+  fixme:
+    enabled: true
+  flog:
+    enabled: true
+    config:
+      score_threshold: 25.0
+  reek:
+    enabled: true
+  rubocop:
+    enabled: true
 exclude_paths:
-  - "*/vendor/assets/**"
-  - "*/javascripts/vendor/**"
+  - "**/vendor/**/*"

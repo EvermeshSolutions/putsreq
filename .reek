@@ -1,0 +1,12 @@
+DuplicateMethodCall:
+  enabled: false
+FeatureEnvy:
+  enabled: false
+IrresponsibleModule:
+  enabled: false
+NilCheck:
+  enabled: false
+UtilityFunction:
+  enabled: false
+PrimaDonnaMethod:
+  enabled: false
