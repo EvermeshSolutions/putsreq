@@ -4,10 +4,6 @@ FeatureEnvy:
   enabled: false
 IrresponsibleModule:
   enabled: false
-LongParameterList:
-  exclude:
-    - 'CloverClient'
-    - 'Spree::ProductApiStorage'
 NilCheck:
   enabled: false
 UtilityFunction:

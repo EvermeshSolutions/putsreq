@@ -1,0 +1,22 @@
+{
+  "parser": "babel-eslint",
+  "globals": {
+    "$": false,
+    "browser": false,
+    "ga": false,
+    "google": false,
+    "React": false,
+    "ReactDOM": false,
+    "FormData": false,
+    "beforeEach": false,
+    "it": false,
+    "xit": false,
+    "describe": false,
+    "jest": false,
+    "test": false,
+    "expect": false,
+    "Favico": false,
+    "EventSource": false
+  },
+  "extends": ["standard", "standard-jsx", "standard-react"]
+}
