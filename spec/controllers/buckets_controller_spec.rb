@@ -11,11 +11,11 @@ RSpec.describe BucketsController, type: :controller do
   end
 
   describe 'DELETE #clear' do
-    let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+    let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' => '{"message":"Hello World"}') }
 
     before do
-      stub_request(:get, 'http://example.com').
-        to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
+      stub_request(:get, 'http://example.com')
+        .to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
     end
 
     specify do
@@ -97,11 +97,11 @@ RSpec.describe BucketsController, type: :controller do
   describe 'GET #last' do
     context 'when found' do
       context 'when JSON' do
-        let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+        let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' => '{"message":"Hello World"}') }
 
         before do
-          stub_request(:get, 'http://example.com').
-            to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
+          stub_request(:get, 'http://example.com')
+            .to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
 
           RecordRequest.call(bucket: bucket, rack_request: rack_request)
         end
@@ -135,11 +135,11 @@ RSpec.describe BucketsController, type: :controller do
   describe 'GET #last_response' do
     context 'when found' do
       context 'when JSON' do
-        let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+        let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' => '{"message":"Hello World"}') }
 
         before do
-          stub_request(:get, 'http://example.com').
-            to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
+          stub_request(:get, 'http://example.com')
+            .to_return(body: '', status: 202, headers: { 'Content-Type' => 'text/plain' })
 
           RecordRequest.call(bucket: bucket, rack_request: rack_request)
         end

@@ -1,13 +1,12 @@
 AllCops:
   Exclude:
-    - '**/bin/*'
-    - '**/config/**/*'
     - '**/Gemfile'
-    - '**/*_sample.rb'
-    - '**/*.gemspec'
-    - '**/unicorn.rb'
-    - 'ci-build.rb'
-    - 'vendor/bundle/**/*'
+    - '**/simple_form.rb'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'bin/**/*'
+    - 'vendor/**/*'
+  TargetRubyVersion: 2.5
 
 Metrics/PerceivedComplexity:
   Enabled: false
@@ -32,10 +31,15 @@ Metrics/AbcSize:
 Metrics/LineLength:
   Max: 125
 
-Style/PerlBackrefs:
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+    - "config/routes"
+
+Style/Alias:
   Enabled: false
 
-Style/TrailingBlankLines:
+Style/PerlBackrefs:
   Enabled: false
 
 # Override the HoundCI custom rules (they do not use Rubocop defaults)
@@ -45,26 +49,13 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: single_quotes
 
-Style/ExtraSpacing:
-  # disabling that in favour of using:
-  # long_field_test_1 = 1
-  # field_test_2      = 2
-  # etc               = 3
-  Enabled: false
-
 Style/BlockDelimiters:
-  Enabled: false
-
-Style/Blocks:
   Enabled: false
 
 Style/CollectionMethods:
   Enabled: false
 
 Style/SignalException:
-  Enabled: false
-
-Style/SpaceAroundEqualsInParameterDefault:
   Enabled: false
 
 Style/Documentation:
@@ -76,14 +67,25 @@ Style/ClassAndModuleChildren:
 Style/CommentAnnotation:
   Enabled: false
 
-Style/DotPosition:
-  EnforcedStyle: leading
-
 Style/GuardClause:
   Enabled: false
 
 Style/RegexpLiteral:
   Enabled: false
+
+Layout/TrailingBlankLines:
+  Enabled: false
+
+Layout/ExtraSpacing:
+  # disabling that in favour of using:
+  # long_field_test_1 = 1
+  # field_test_2      = 2
+  # etc               = 3
+  Enabled: false
+
+Layout/DotPosition:
+  EnforcedStyle: leading
+
 
 Lint/HandleExceptions:
   Enabled: false
@@ -107,4 +109,22 @@ Style/SingleLineBlockParams:
   Enabled: false
 
 Style/RescueModifier:
+  Enabled: false
+
+Style/ColonMethodCall:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/RescueStandardError:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Naming/FileName:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
   Enabled: false

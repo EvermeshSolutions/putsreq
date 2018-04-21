@@ -79,4 +79,6 @@ PutsReq::Application.configure do
   config.log_formatter = ::Logger::Formatter.new
 
   config.action_mailer.default_url_options = { host: 'putsreq.com' }
+
+  config.allow_concurrency = true
 end

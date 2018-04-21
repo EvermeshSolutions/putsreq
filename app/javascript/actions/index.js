@@ -1,7 +1,7 @@
 import fetch from 'cross-fetch'
 import { bucketsActions } from '../actionTypes'
 
-const getJSONFromPage = (id) => JSON.parse(document.getElementById(id).innerText)
+const getJSONFromPage = id => JSON.parse(document.getElementById(id).innerText)
 
 const fetchFromPage = () => {
   const bucket = getJSONFromPage('bucket-json')
@@ -16,25 +16,33 @@ const fetchFromPage = () => {
 
 const favicon = new Favico({ bgColor: '#6C92C8', animation: 'none' })
 
-const updateRequestsCount = (count) => {
+const updateRequestsCount = count => {
   return (dispatch, getState) => {
-    if(count === getState().bucket.requests_count) { return }
+    if (count === getState().bucket.requests_count) {
+      return
+    }
 
     favicon.badge(count)
 
     let page = getState().bucket.page || 1
 
-    if(count > getState().bucket.request_count) {
-      page = (count - getState().bucket.requests_count) + page
+    if (count > getState().bucket.request_count) {
+      page = count - getState().bucket.requests_count + page
     }
 
-    dispatch({ type: bucketsActions.updateRequestsCount, requests_count: count, page: page })
+    dispatch({
+      type: bucketsActions.updateRequestsCount,
+      requests_count: count,
+      page: page
+    })
 
-    if(count === 1) { return fetchPage(1)(dispatch, getState) }
+    if (count === 1) {
+      return fetchPage(1)(dispatch, getState)
+    }
   }
 }
 
-const handlePageChange = (page) => {
+const handlePageChange = page => {
   return (dispatch, getState) => {
     dispatch({ type: bucketsActions.loading })
 
@@ -42,7 +50,7 @@ const handlePageChange = (page) => {
   }
 }
 
-const fetchPage = (page) => {
+const fetchPage = page => {
   return (dispatch, getState) => {
     fetch(`${getState().bucket.path}.json?page=${page}`)
       .then(

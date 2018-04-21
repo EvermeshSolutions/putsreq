@@ -8,16 +8,16 @@ import startRequestPoller from '../request_poller'
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-      <Provider store={store}>
-        <Bucket />
-      </Provider>,
+    <Provider store={store}>
+      <Bucket />
+    </Provider>,
     document.getElementById('react-root')
   )
 
   ReactDOM.render(
-      <Provider store={store}>
-        <RequestCount />
-      </Provider>,
+    <Provider store={store}>
+      <RequestCount />
+    </Provider>,
     document.getElementById('request-count-react-root')
   )
 })

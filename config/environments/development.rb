@@ -31,5 +31,7 @@ PutsReq::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
+  config.allow_concurrency = true
+
   config.assets.quiet = true
 end
