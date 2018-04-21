@@ -1,0 +1,16 @@
+DuplicateMethodCall:
+  enabled: false
+FeatureEnvy:
+  enabled: false
+IrresponsibleModule:
+  enabled: false
+LongParameterList:
+  exclude:
+    - 'CloverClient'
+    - 'Spree::ProductApiStorage'
+NilCheck:
+  enabled: false
+UtilityFunction:
+  enabled: false
+PrimaDonnaMethod:
+  enabled: false
