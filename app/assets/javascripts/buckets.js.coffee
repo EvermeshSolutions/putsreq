@@ -13,7 +13,7 @@ App.buckets['share'] = App.buckets['show'] = ->
   clipboard.on 'success', ->
     $copyButton.prop('title', tipsyConfig.copiedHint).tipsy('show')
     $copyButton.attr('original-title', tipsyConfig.title)
-    
+
 App.buckets.initializeAce = ->
   autoResizeAce = ->
     # http://stackoverflow.com/questions/11584061/
