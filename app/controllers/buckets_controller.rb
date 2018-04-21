@@ -5,14 +5,11 @@ class BucketsController < ApplicationController
 
   before_action :check_ownership!, only: %i(clear destroy update)
 
-  def new_requests
+  def requests_count
     response.headers['Content-Type'] = 'text/event-stream'
-    sse = SSE.new(response.stream, event: 'time')
+    sse = SSE.new(response.stream, event: 'requests_count')
     begin
-      # loop do
-        sse.write({ :time => Time.now })
-        # sleep 1
-      # end
+      sse.write(requests_count: bucket.requests.count)
     rescue ClientDisconnected
     ensure
       sse.close
