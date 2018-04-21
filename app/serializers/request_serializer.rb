@@ -19,7 +19,6 @@ class RequestSerializer < ActiveModel::Serializer
     "#{ApplicationController.helpers.time_ago_in_words(object.created_at)} ago"
   end
 
-
   def headers_as_string
     JSON.pretty_generate(object.headers.to_h)
   end

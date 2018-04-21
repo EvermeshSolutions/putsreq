@@ -28,7 +28,7 @@ class EvalResponseBuilder
 
     # filter allowed parameters
     context.built_response = JSON.parse(context.built_response).select do |key, value|
-      %w(status headers body).include?(key) && value.to_s.present?
+      %w[status headers body].include?(key) && value.to_s.present?
     end
   end
 

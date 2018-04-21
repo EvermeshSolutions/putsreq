@@ -3,7 +3,7 @@ class BucketsController < ApplicationController
 
   skip_before_action :verify_authenticity_token, only: :record
 
-  before_action :check_ownership!, only: %i(clear destroy update)
+  before_action :check_ownership!, only: %i[clear destroy update]
 
   def requests_count
     response.headers['Content-Type'] = 'text/event-stream'
@@ -86,7 +86,7 @@ class BucketsController < ApplicationController
     response.headers.merge! recorded_response.headers.to_h
 
     render plain: body_as_string(recorded_response),
-      status: recorded_response.status
+           status: recorded_response.status
   end
 
   private

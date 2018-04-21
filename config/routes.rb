@@ -3,7 +3,7 @@ PutsReq::Application.routes.draw do
 
   root to: 'home#index'
 
-  get ":token/requests_count" => 'buckets#requests_count'
+  get ':token/requests_count' => 'buckets#requests_count'
   post 'buckets' => 'buckets#create', as: :buckets
   get ':token/inspect' => 'buckets#show', as: :bucket
   get ':token/last' => 'buckets#last', as: :bucket_last

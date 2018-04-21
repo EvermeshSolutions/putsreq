@@ -8,8 +8,8 @@ RSpec.describe Bucket do
 
   describe '#clear_history' do
     it 'filters history' do
-      stub_request(:get, 'http://example.com').
-        to_return(body: %(It's me, Luigi!), status: 202, headers: { 'Content-Type' => 'text/plain' })
+      stub_request(:get, 'http://example.com')
+        .to_return(body: %(It's me, Luigi!), status: 202, headers: { 'Content-Type' => 'text/plain' })
 
       RecordRequest.call(bucket: subject, rack_request: rack_request)
 

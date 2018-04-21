@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe EvalResponseBuilder do
-  let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' =>  '{"message":"Hello World"}') }
+  let(:rack_request) { ActionController::TestRequest.create('RAW_POST_DATA' => '{"message":"Hello World"}') }
   let(:request_ctx) { CreateRequest.call(bucket: bucket, rack_request: rack_request) }
 
   describe '#call' do
