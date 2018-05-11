@@ -2,7 +2,7 @@
 [![Code Climate](https://codeclimate.com/github/phstc/putsreq/badges/gpa.svg)](https://codeclimate.com/github/phstc/putsreq)
 [![Test Coverage](https://codeclimate.com/github/phstc/putsreq/badges/coverage.svg)](https://codeclimate.com/github/phstc/putsreq/coverage)
 [![Backers on Open Collective](https://opencollective.com/putsreq/backers/badge.svg)](#backers)
- [![Sponsors on Open Collective](https://opencollective.com/putsreq/sponsors/badge.svg)](#sponsors) 
+[![Sponsors on Open Collective](https://opencollective.com/putsreq/sponsors/badge.svg)](#sponsors)
 
 ## PutsReq
 
@@ -49,16 +49,16 @@ Here is the list of request attributes you can access to create your responses:
 ```javascript
 // curl -X POST -H 'X-MyHeader: MyHeaderValue' -d 'name=Pablo' https://putsreq.com/<YOUR-TOKEN>
 
-request.request_method;
+request.request_method
 // => POST
 
-request.body;
+request.body
 // => name=Pablo
 
-request.params.name;
+request.params.name
 // => Pablo
 
-request.headers['HTTP_X_MYHEADER'];
+request.headers['HTTP_X_MYHEADER']
 // => MyHeaderValue
 ```
 
@@ -67,26 +67,26 @@ Parsing a JSON request:
 ```javascript
 // curl -i -X POST -H 'Content-Type: application/json' -d '{"message":"Hello World"}' https://putsreq.com/<YOUR-TOKEN>
 
-var parsedBody = JSON.parse(request.body);
+var parsedBody = JSON.parse(request.body)
 
-parsedBody.message;
+parsedBody.message
 // => Hello World
 ```
 
 #### response
 
 ```javascript
-response.status  = 200;  // default value
-response.headers = {};   // default value
-response.body    = 'ok'; // default value
+response.status = 200 // default value
+response.headers = {} // default value
+response.body = 'ok' // default value
 ```
 
 Returning a JSON response:
 
 ```javascript
-response.headers['Content-Type'] = 'application/json';
+response.headers['Content-Type'] = 'application/json'
 
-response.body = { 'message': 'Hello World' };
+response.body = { message: 'Hello World' }
 ```
 
 #### forwardTo
@@ -94,7 +94,7 @@ response.body = { 'message': 'Hello World' };
 If you only want to log your requests, you can use PutsReq as a proxy to forward them.
 
 ```javascript
-request.forwardTo = 'http://example.com/api';
+request.forwardTo = 'http://example.com/api'
 ```
 
 You can also modify the requests before forwarding them.
@@ -103,14 +103,14 @@ You can also modify the requests before forwarding them.
 // add or change a header
 request.headers['X-MyNewHeader'] = 'MyHeaderValue'
 
-var parsedBody = JSON.parse(request.body);
+var parsedBody = JSON.parse(request.body)
 
 // add or change a value
-parsedBody['my_new_key'] = 'my new value';
+parsedBody['my_new_key'] = 'my new value'
 
-request.body = parsedBody;
+request.body = parsedBody
 
-request.forwardTo = 'http://example.com/api';
+request.forwardTo = 'http://example.com/api'
 ```
 
 ### CLI
@@ -172,16 +172,14 @@ db.runCommand({ "convertToCapped": "responses", size: 15000000 });
 
 ## Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+This project exists thanks to all the people who contribute.
 <a href="graphs/contributors"><img src="https://opencollective.com/putsreq/contributors.svg?width=890&button=false" /></a>
-
 
 ## Backers
 
 Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/putsreq#backer)]
 
 <a href="https://opencollective.com/putsreq#backers" target="_blank"><img src="https://opencollective.com/putsreq/backers.svg?width=890"></a>
-
 
 ## Sponsors
 
@@ -197,8 +195,6 @@ Support this project by becoming a sponsor. Your logo will show up here with a l
 <a href="https://opencollective.com/putsreq/sponsor/7/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/7/avatar.svg"></a>
 <a href="https://opencollective.com/putsreq/sponsor/8/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/8/avatar.svg"></a>
 <a href="https://opencollective.com/putsreq/sponsor/9/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/9/avatar.svg"></a>
-
-
 
 ### License
 
