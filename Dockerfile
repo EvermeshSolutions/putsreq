@@ -9,11 +9,6 @@ ADD Gemfile                      /app/
 ADD Gemfile.lock                 /app/
 RUN bundle install
 
-## install node modules
-ADD package.json         /app/
-ADD package-lock.json    /app/
-# RUN npm install
-
 ## Add & compile Webpack code in order from least likely to most likely to change to improve layer caching.
 ADD .babelrc                            /app/.babelrc
 ADD .postcssrc.yml                      /app/.postcssrc.yml
@@ -25,7 +20,6 @@ ADD config/webpack                      /app/config/webpack
 ADD config/locales                      /app/config/locales
 ADD app/assets                          /app/app/assets
 ADD app/javascript                      /app/app/javascript
-# RUN npm run build
 
 ## Add APP code in order from least likely to most likely to change to improve layer caching.
 ADD config.ru                           /app/config.ru
