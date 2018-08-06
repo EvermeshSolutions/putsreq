@@ -14,7 +14,7 @@ Check this post: [Play Rock-paper-scissors with Slack and PutsReq](http://www.pa
 
 The Response Builder is the place where you can create your responses using JavaScript V8.
 
-Here is the list of request attributes you can access to create your responses:
+Check the list below with the request attributes you can access to create your own responses:
 
 #### request
 
@@ -63,13 +63,13 @@ response.body = { message: 'Hello World' }
 
 #### forwardTo
 
-If you only want to log your requests, you can use PutsReq as a proxy to forward them.
+If you only want to log your requests, you can use PutsReq just as a proxy for your requests.
 
 ```javascript
 request.forwardTo = 'http://example.com/api'
 ```
 
-You can also modify the requests before forwarding them.
+But you can always modify requests before forwarding them.
 
 ```javascript
 // add or change a header
@@ -87,7 +87,7 @@ request.forwardTo = 'http://example.com/api'
 
 ### CLI
 
-Want to test Webhook calls against your localhost? PutsReq makes it easy!
+Do want to test Webhook calls against your localhost? PutsReq makes it easy!
 
 You can think of it, as a kind of [ngrok](http://ngrok.io), but instead of creating a tunnel to your localhost, PutsReq polls requests from `YOUR-PUTSREQ-TOKEN` and forwards to your localhost.
 
