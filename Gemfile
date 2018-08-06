@@ -7,6 +7,8 @@ gem 'sass-rails'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails'
 gem 'jquery-rails'
+gem 'sprockets', '~> 3.7.2'
+
 
 group :production do
   gem 'rails_12factor'
