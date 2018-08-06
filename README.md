@@ -1,8 +1,6 @@
 [![Build Status](https://travis-ci.org/phstc/putsreq.svg)](https://travis-ci.org/phstc/putsreq)
 [![Code Climate](https://codeclimate.com/github/phstc/putsreq/badges/gpa.svg)](https://codeclimate.com/github/phstc/putsreq)
 [![Test Coverage](https://codeclimate.com/github/phstc/putsreq/badges/coverage.svg)](https://codeclimate.com/github/phstc/putsreq/coverage)
-[![Backers on Open Collective](https://opencollective.com/putsreq/backers/badge.svg)](#backers)
-[![Sponsors on Open Collective](https://opencollective.com/putsreq/sponsors/badge.svg)](#sponsors)
 
 ## PutsReq
 
@@ -12,37 +10,11 @@ Check this post: [Play Rock-paper-scissors with Slack and PutsReq](http://www.pa
 
 ### Getting Started
 
-Steps to run PutsReq in development.
-
-#### Install MongoDB
-
-```bash
-brew install mongo
-
-mongod
-```
-
-#### Start PutsReq
-
-```
-cd ~/workspace
-
-git clone git@github.com:phstc/putsreq.git
-
-cd putsreq
-
-bundle install
-
-rails server
-
-open http://localhost:3000
-```
-
 ### Response Builder
 
 The Response Builder is the place where you can create your responses using JavaScript V8.
 
-Here is the list of request attributes you can access to create your responses:
+Check the list below with the request attributes you can access to create your own responses:
 
 #### request
 
@@ -91,13 +63,13 @@ response.body = { message: 'Hello World' }
 
 #### forwardTo
 
-If you only want to log your requests, you can use PutsReq as a proxy to forward them.
+If you only want to log your requests, you can use PutsReq just as a proxy for your requests.
 
 ```javascript
 request.forwardTo = 'http://example.com/api'
 ```
 
-You can also modify the requests before forwarding them.
+But you can always modify requests before forwarding them.
 
 ```javascript
 // add or change a header
@@ -115,7 +87,7 @@ request.forwardTo = 'http://example.com/api'
 
 ### CLI
 
-Want to test Webhook calls against your localhost? PutsReq makes it easy!
+Do want to test Webhook calls against your localhost? PutsReq makes it easy!
 
 You can think of it, as a kind of [ngrok](http://ngrok.io), but instead of creating a tunnel to your localhost, PutsReq polls requests from `YOUR-PUTSREQ-TOKEN` and forwards to your localhost.
 
@@ -161,40 +133,36 @@ PutsReq supports [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_shar
 
 https://github.com/phstc/putsreq_integration_sample
 
+### Steps to run PutsReq in development
+
+For following the instructions below, you will need to install [Docker](https://www.docker.com/get-docker).
+
+```shell
+cd ~/workspace
+
+git clone git@github.com:phstc/putsreq.git
+
+docker-compose up -d
+
+open http://localhost:3000
+
+docker-compose logs --follow --tail=100 app
+```
+
+#### Running tests
+
+```shell
+docker-compose run app bundle exec rspec
+```
+
 ### Production
 
-In production (Heroku), PutsReq runs on mLab sandbox, with a storage of 500 MB. For avoiding getting exceeding the capacity, the `requests` and `responses` collections must be converted into capped collections.
+In production (Heroku), PutsReq runs on mLab sandbox, with a storage of 500 MB. For avoiding exceeding the capacity, the `requests` and `responses` collections must be converted into capped collections.
 
+```javascript
+db.runCommand({ convertToCapped: 'requests', size: 15000000 })
+db.runCommand({ convertToCapped: 'responses', size: 15000000 })
 ```
-db.runCommand({ "convertToCapped": "requests",  size: 15000000 });
-db.runCommand({ "convertToCapped": "responses", size: 15000000 });
-```
-
-## Contributors
-
-This project exists thanks to all the people who contribute.
-<a href="graphs/contributors"><img src="https://opencollective.com/putsreq/contributors.svg?width=890&button=false" /></a>
-
-## Backers
-
-Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/putsreq#backer)]
-
-<a href="https://opencollective.com/putsreq#backers" target="_blank"><img src="https://opencollective.com/putsreq/backers.svg?width=890"></a>
-
-## Sponsors
-
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/putsreq#sponsor)]
-
-<a href="https://opencollective.com/putsreq/sponsor/0/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/putsreq/sponsor/1/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/putsreq/sponsor/2/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/putsreq/sponsor/3/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/putsreq/sponsor/4/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/putsreq/sponsor/5/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/putsreq/sponsor/6/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/putsreq/sponsor/7/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/putsreq/sponsor/8/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/putsreq/sponsor/9/website" target="_blank"><img src="https://opencollective.com/putsreq/sponsor/9/avatar.svg"></a>
 
 ### License
 

@@ -3,13 +3,13 @@ development:
     default:
       database: puts_req
       hosts:
-        - localhost:27017
+        - db
 test:
   clients:
     default:
       database: puts_req_test
       hosts:
-        - localhost:27017
+        - db
 production:
   clients:
     default:
