@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "@rails/webpacker": "~>3.4.3",
+    "babel-preset-react": "~>6.24.1",
+    "coffeescript": "1.12.7",
+    "cross-fetch": "~>1.1.1",
+    "prop-types": "~>15.6.1",
+    "ramda-fantasy": "~>0.8.0",
+    "react": "~>16.3.2",
+    "react-dom": "~>16.3.2",
+    "react-redux": "~>5.0.7",
+    "redux": "~>3.7.2",
+    "redux-devtools-extension": "~>2.13.2",
+    "redux-thunk": "~>2.2.0",
+    "rxjs": "~>5.5.10"
+  },
+  "devDependencies": {
+    "hoek": "~> 5.0.3",
+    "prettier": "1.12.1",
+    "ssri": "~>5.2.2",
+    "webpack-dev-server": "~>3.1.3"
+  }
+}
