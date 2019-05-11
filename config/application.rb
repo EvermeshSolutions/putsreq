@@ -6,6 +6,7 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'sprockets/railtie'
 # require "rails/test_unit/railtie"
+require 'rack/throttle'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -38,5 +39,7 @@ module PutsReq
     config.to_prepare do
       Devise::SessionsController.layout 'devise'
     end
+
+    config.middleware.use Rack::Throttle::Minute, max: 60, cache: Redis.new, key_prefix: :throttle
   end
 end

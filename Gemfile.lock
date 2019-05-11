@@ -163,6 +163,9 @@ GEM
       rack
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
+    rack-throttle (0.7.0)
+      bundler (>= 1.0.0)
+      rack (>= 1.0.0)
     rails (5.1.6)
       actioncable (= 5.1.6)
       actionmailer (= 5.1.6)
@@ -310,6 +313,7 @@ DEPENDENCIES
   pusher-client
   rack-cors
   rack-test
+  rack-throttle
   rails (~> 5.1.0)
   rails-assets-bootstrap-less!
   rails-assets-clipboard!
@@ -333,4 +337,4 @@ RUBY VERSION
    ruby 2.5.0p0
 
 BUNDLED WITH
-   1.16.1
+   1.17.3
