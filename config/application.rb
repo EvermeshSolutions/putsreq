@@ -40,6 +40,6 @@ module PutsReq
       Devise::SessionsController.layout 'devise'
     end
 
-    config.middleware.use Rack::Throttle::Minute, max: 30, cache: Redis.new, key_prefix: :throttle
+    config.middleware.use Rack::Throttle::Minute, max: 30, cache: SafeRedis.new, key_prefix: :throttle
   end
 end
