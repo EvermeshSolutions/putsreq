@@ -19,6 +19,8 @@
     "hoek": "~> 5.0.3",
     "prettier": "1.12.1",
     "ssri": "~>5.2.2",
-    "webpack-dev-server": "~>3.1.3"
+    "webpack-dev-server": "~>3.1.3",
+    "tar": ">=4.4.2",
+    "cryptiles": ">=4.1.2"
   }
 }
