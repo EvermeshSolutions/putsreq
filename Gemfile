@@ -2,24 +2,24 @@ source 'https://rubygems.org'
 
 ruby '2.5.0'
 
-gem 'rails', '~> 5.1.0'
-gem 'sass-rails'
-gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails'
 gem 'jquery-rails'
-gem 'sprockets', '~> 3.7.2'
 gem 'rack-throttle'
+gem 'rails', '~> 5.1.0'
+gem 'sass-rails'
+gem 'sprockets', '~> 3.7.2'
+gem 'uglifier', '>= 1.3.0'
 
 group :production do
   gem 'rails_12factor'
 end
 
 group :test do
-  gem 'webmock'
   gem 'codeclimate-test-reporter', require: nil
+  gem 'rails-controller-testing'
   gem 'simplecov'
   gem 'stub_env'
-  gem 'rails-controller-testing'
+  gem 'webmock'
 end
 
 group :development do
@@ -28,36 +28,41 @@ group :development do
 end
 
 group :development, :test do
-  gem 'pry-byebug'
-  gem 'pry-rails'
-  gem 'rspec-rails'
-  gem 'rack-test'
   gem 'database_cleaner'
   gem 'dotenv-rails'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'rack-test'
+  gem 'rspec-rails'
 end
 
 source 'https://rails-assets.org' do
-  gem 'rails-assets-favico.js'
-  gem 'rails-assets-dispatcher'
   gem 'rails-assets-bootstrap-less'
   gem 'rails-assets-clipboard'
+  gem 'rails-assets-dispatcher'
+  gem 'rails-assets-favico.js'
 end
 
-gem 'therubyracer'
-gem 'mongoid', '~> 6'
-gem 'kaminari-mongoid'
-gem 'kaminari-actionview'
+gem 'active_model_serializers'
+gem 'bootstrap-sass', '>= 3.4.1'
+gem 'devise', '>= 4.6.0'
+gem 'dotiw'
+gem 'ffi', '>= 1.9.24'
 gem 'httparty'
+gem 'interactor', '~> 3.0'
+gem 'kaminari-actionview'
+gem 'kaminari-mongoid'
+gem 'loofah', '>= 2.2.3'
+gem 'mongoid', '~> 6'
+gem 'nokogiri', '>= 1.8.5'
+gem 'oj'
+gem 'puma'
+gem 'pusher'
+gem 'pusher-client'
+gem 'rack', '>= 2.0.6'
 gem 'rack-cors', require: 'rack/cors'
 gem 'redis'
-gem 'bootstrap-sass', '~> 3.1.1'
-gem 'dotiw'
-gem 'devise', '~> 4.4.0'
-gem 'pusher'
-gem 'interactor', '~> 3.0'
 gem 'rollbar'
-gem 'oj'
+gem 'therubyracer'
 gem 'webpacker', '~> 3.0'
-gem 'active_model_serializers'
-gem 'puma'
-gem 'pusher-client'
+
