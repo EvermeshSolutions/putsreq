@@ -43,6 +43,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-favico.js'
 end
 
+gem 'actionview', '>= 5.1.6.2'
 gem 'active_model_serializers'
 gem 'bootstrap-sass', '>= 3.4.1'
 gem 'devise', '>= 4.6.0'
