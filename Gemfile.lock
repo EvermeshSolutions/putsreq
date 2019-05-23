@@ -161,14 +161,13 @@ GEM
       websocket (~> 1.0)
     pusher-signature (0.1.8)
     rack (2.0.7)
+    rack-attack (6.0.0)
+      rack (>= 1.0, < 3)
     rack-cors (1.0.2)
     rack-proxy (0.6.3)
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rack-throttle (0.7.0)
-      bundler (>= 1.0.0)
-      rack (>= 1.0.0)
     rails (5.1.7)
       actioncable (= 5.1.7)
       actionmailer (= 5.1.7)
@@ -322,9 +321,9 @@ DEPENDENCIES
   pusher
   pusher-client
   rack (>= 2.0.6)
+  rack-attack
   rack-cors
   rack-test
-  rack-throttle
   rails (~> 5.1.0)
   rails-assets-bootstrap-less!
   rails-assets-clipboard!

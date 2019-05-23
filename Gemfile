@@ -4,7 +4,7 @@ ruby '2.5.0'
 
 gem 'coffee-rails'
 gem 'jquery-rails'
-gem 'rack-throttle'
+gem 'rack-attack'
 gem 'rails', '~> 5.1.0'
 gem 'sass-rails'
 gem 'sprockets', '~> 3.7.2'
