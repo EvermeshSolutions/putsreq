@@ -31,7 +31,8 @@ services:
   - mongodb
 
 before_install:
- - gem update bundler
+  - gem uninstall bundler
+  - gem install bundler --version '1.7.3'
 
 after_script:
    - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
