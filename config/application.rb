@@ -40,8 +40,8 @@ module PutsReq
       Devise::SessionsController.layout 'devise'
     end
 
-    if ENV['REDISTOGO_URL'].present?
-      redis = Redis.new(url: ENV['REDISTOGO_URL'])
+    if ENV['REDIS_URL'].present?
+      redis = Redis.new(url: ENV['REDIS_URL'])
       config.middleware.use Rack::Throttle::Minute, max: 60, cache: redis, key_prefix: :throttle
     end
   end

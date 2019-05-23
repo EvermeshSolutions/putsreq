@@ -1,6 +1,6 @@
 class SafeRedis
   def initialize
-    @redis = Redis.new url: ENV['REDISTOGO_URL']
+    @redis = Redis.new url: ENV['REDIS_URL']
   rescue => ex
     # Bad URI i.e. URI::InvalidURIError
     Rails.logger.error(ex)
