@@ -4,12 +4,20 @@ services:
     image: mongo:3.0.15-wheezy
     volumes:
       - ./tmp/db:/var/lib/mongo/data
+  redis:
+    image: redis:alpine
   app:
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/app
     ports:
       - '3000:3000'
+    environment:
+      - MONGO_URI=db
+      - REDIS_URL=redis://redis
+      - DEVISE_SECRET_KEY=123
+      - SECRET_TOKEN=123
     depends_on:
       - db
+      - redis
