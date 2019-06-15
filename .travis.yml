@@ -2,12 +2,13 @@ script:
   - 'bundle exec rspec'
 
 env:
-  - SENDGRID_PASSWORD=123
-  - SENDGRID_USERNAME=123
-  - DEVISE_SECRET_KEY=123
-  - SECRET_TOKEN=123
-  - MONGO_URI=localhost:27017
-  - REDIS_URL=redis://localhost:6379
+  global:
+    - SENDGRID_PASSWORD=123
+    - SENDGRID_USERNAME=123
+    - DEVISE_SECRET_KEY=123
+    - SECRET_TOKEN=123
+    - MONGO_URI=localhost:27017
+    - REDIS_URL=redis://localhost:6379
 
 branches:
   only:
