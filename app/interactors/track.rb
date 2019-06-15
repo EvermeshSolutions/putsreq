@@ -5,6 +5,8 @@ class Track
   delegate :token, to: :bucket
 
   def call
+    return unless enabled?
+
     tracker.event(category: 'bucket', action: 'record', label: token, value: 1)
   rescue => e
     Rollbar.error(e, token: token)
@@ -21,10 +23,21 @@ class Track
   end
 
   def client_id
-    nil
+    # since there's no identification in the requests,
+    # the only way to aggregate requests per "user" is per ip
+    # https://stackoverflow.com/a/31854739/464685
+    rack_request.ip
+  end
+
+  def enabled?
+    google_analytics_tracking_id.present?
+  end
+
+  def google_analytics_tracking_id
+    ENV['GOOGLE_ANALYTICS_TRACKING_ID']
   end
 
   def tracker
-    @_tracker ||= Staccato.tracker('UA-50754009-1', client_id, global_context)
+    @_tracker ||= Staccato.tracker(google_analytics_tracking_id, client_id, global_context)
   end
 end

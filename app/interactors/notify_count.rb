@@ -5,7 +5,7 @@ class NotifyCount
   delegate :token, to: :bucket
 
   def call
-    return unless ENV['PUSHER_URL']
+    return unless enabled?
 
     channel_name = "channel_requests_#{token}"
     channel = pusher_client.channel_info(channel_name)
@@ -25,6 +25,14 @@ class NotifyCount
   end
 
   private
+
+  def enabled?
+    pusher_url.present?
+  end
+
+  def pusher_url
+    ENV['PUSHER_URL']
+  end
 
   def pusher_client
     @_pusher_client ||= Pusher::Client.new(
