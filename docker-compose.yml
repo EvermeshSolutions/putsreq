@@ -8,6 +8,8 @@ services:
     image: redis:alpine
   app:
     build: .
+    tty: true
+    stdin_open: true
     command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/app
