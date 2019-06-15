@@ -8,11 +8,11 @@ class NotifyCount
     return unless enabled?
 
     channel_name = "channel_requests_#{token}"
-    channel = pusher_client.channel_info(channel_name)
+    channel = pusher.channel_info(channel_name)
 
     return unless channel[:occupied]
 
-    pusher_client.trigger(
+    pusher.trigger(
       channel_name,
       'new',
       count: bucket.requests_count,
@@ -34,7 +34,7 @@ class NotifyCount
     ENV['PUSHER_URL']
   end
 
-  def pusher_client
+  def pusher
     @_pusher_client ||= Pusher::Client.new(
       app_id: ENV['PUSHER_APP_ID'],
       key: ENV['PUSHER_KEY'],
