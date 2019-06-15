@@ -1,3 +1,4 @@
+language: ruby
 script:
   - ./bin/webpack
   - 'bundle exec rspec'
@@ -11,6 +12,7 @@ env:
     - MONGO_URI=localhost:27017
     - REDIS_URL=redis://localhost:6379
     - RAILS_ENV=test
+    - NODE_ENV=test
 
 branches:
   only:
