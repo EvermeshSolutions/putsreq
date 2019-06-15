@@ -21,8 +21,8 @@ class PutsReqCLI < Thor
     end
 
     def base_url
-      'http://localhost:3000/'
-      # https://putsreq.com/
+      # 'http://localhost:3000/'
+      'https://putsreq.com/'
     end
 
     def subscribe_and_forward(token, to)
