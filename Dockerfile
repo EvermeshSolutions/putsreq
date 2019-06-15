@@ -15,6 +15,10 @@ ADD Gemfile                      /app/
 ADD Gemfile.lock                 /app/
 RUN bundle install
 
+ADD package.json                 /app/
+ADD yarn.lock                    /app/
+RUN yarn install
+
 ## Add & compile Webpack code in order from least likely to most likely to change to improve layer caching.
 ADD .babelrc                            /app/.babelrc
 ADD .postcssrc.yml                      /app/.postcssrc.yml
