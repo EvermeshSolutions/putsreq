@@ -33,4 +33,6 @@ PutsReq::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  config.public_file_server.enabled = true
 end
