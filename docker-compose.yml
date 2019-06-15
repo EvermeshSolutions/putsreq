@@ -13,11 +13,8 @@ services:
       - .:/app
     ports:
       - '3000:3000'
-    environment:
-      - MONGO_URI=db
-      - REDIS_URL=redis://redis
-      - DEVISE_SECRET_KEY=123
-      - SECRET_TOKEN=123
+    env_file:
+      - env.docker
     depends_on:
       - db
       - redis
