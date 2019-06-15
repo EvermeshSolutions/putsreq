@@ -76,15 +76,16 @@ class PutsReqCLI < Thor
       )
 
       puts [
-        Time.zone.now,
+        Time.now,
         request['request_method'],
         forward_request.code
       ].join("\t")
     end
 
-    def forward_request_by_id(token, to, id)
+    def find_request(token, id)
       url = "#{base_url}/#{token}/requests/#{id}.json"
-      forward_request(to, get(url))
+      response = get(url)
+      response.parsed_response if response.ok?
     end
   end
 
@@ -99,7 +100,11 @@ class PutsReqCLI < Thor
     to = options[:to]
 
     if id = options[:id]
-      forward_request_by_id(token, to, id)
+      if request = find_request(token, id)
+        forward_request(to, request)
+      else
+        puts "Request #{id} not found"
+      end
     else
       subscribe_and_forward(token, to)
     end
