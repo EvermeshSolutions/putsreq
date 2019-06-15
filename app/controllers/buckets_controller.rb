@@ -1,5 +1,4 @@
 class BucketsController < ApplicationController
-
   skip_before_action :verify_authenticity_token, only: :record
 
   before_action :check_ownership!, only: %i[clear destroy update]
