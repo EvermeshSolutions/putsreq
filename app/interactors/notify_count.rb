@@ -21,7 +21,7 @@ class NotifyCount
       response: built_response
     )
   rescue => e
-    Rails.logger.error(e)
+    Rollbar.error(e, token: token)
   end
 
   private
