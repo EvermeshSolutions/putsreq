@@ -14,7 +14,7 @@
       </ul>
       <%= yield %>
       <hr />
-      <strong>Requests Recorded: <%= REDIS.get 'requests_recorded' %></strong>
+      <strong>Requests Recorded: <%= Rails.cache.fetch('requests_recorded', raw: true) { 0 } %></strong>
     </div>
   </body>
 </html>

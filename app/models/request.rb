@@ -30,6 +30,6 @@ class Request
   private
 
   def bump_requests_recorded
-    REDIS.incr 'requests_recorded'
+    Rails.cache.increment 'requests_recorded'
   end
 end
