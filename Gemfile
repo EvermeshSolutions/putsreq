@@ -25,7 +25,6 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'rubocop'
   gem 'rubocop-rails'
 end
 
@@ -69,4 +68,3 @@ gem 'redis-rails'
 gem 'rollbar'
 gem 'therubyracer'
 gem 'webpacker', '~> 3.0'
-
