@@ -1,4 +1,6 @@
+language: ruby
 script:
+  - ./bin/webpack
   - 'bundle exec rspec'
 
 env:
@@ -10,6 +12,7 @@ env:
     - MONGO_URI=localhost:27017
     - REDIS_URL=redis://localhost:6379
     - RAILS_ENV=test
+    - NODE_ENV=test
 
 branches:
   only:
@@ -34,7 +37,6 @@ before_script:
    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
    - chmod +x ./cc-test-reporter
    - ./cc-test-reporter before-build
-   - bundle exec rails webpacker:compile
 services:
   - mongodb
   - redis
