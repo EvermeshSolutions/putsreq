@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "prettier": "prettier --write app/{assets/javascripts,javascript}/**/*.{js,es6} --ignore-path=.gitignore"
+  },
   "dependencies": {
     "@rails/webpacker": "3.5",
     "babel-preset-react": "^6.24.1",
