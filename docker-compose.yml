@@ -14,7 +14,7 @@ services:
     ports:
       - '3000:3000'
     env_file:
-      - env.docker
+      - .env.docker
     depends_on:
       - db
       - redis
