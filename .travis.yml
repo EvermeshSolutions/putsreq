@@ -1,7 +1,7 @@
 language: ruby
 script:
-  - ./bin/webpack
-  - 'bundle exec rspec'
+  - bundle exec rails webpacker:compile
+  - bundle exec rails spec
 
 env:
   global:
