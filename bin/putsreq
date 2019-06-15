@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
-
 require 'thor'
-require 'pusher-client'
+# require 'pusher-client'
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
@@ -12,15 +10,20 @@ require 'uri'
 
 class PutsReqCLI < Thor
   no_commands do
-    def parse_bucket_token(p)
-      if p.start_with? 'http'
+    def parse_bucket_token(token)
+      if token.start_with? 'http'
         # from http://putsreq.com/token or http://putsreq.com/token/inspect
         # to token
-        uri = URI(p)
+        uri = URI(token)
         return uri.path.split('/')[1]
       end
 
-      p
+      token
+    end
+
+    def base_url
+      'http://localhost:3000/'
+      # https://putsreq.com/
     end
 
     def subscribe_and_forward(token, to)
@@ -28,46 +31,59 @@ class PutsReqCLI < Thor
       puts "Forwarding to #{to}"
       puts 'Press CTRL+c to terminate'
 
-      PusherClient.logger.level = Logger::ERROR
+      last_request_id = last_request_id(token)
 
-      options = { cluster: 'mt1', secure: true }
+      loop do
+        url = "#{base_url}#{token}/requests.json?last_request_id=#{last_request_id}"
 
-      socket = PusherClient::Socket.new('3466d56fe2ef1fdd2943', options)
+        parsed_response = get(url).parsed_response
 
-      channel = "channel_requests_#{token}"
+        parsed_response.each do |request|
+          forward_request(to, request)
+          last_request_id = request.dig('_id', '$oid')
+        end
 
-      socket.subscribe(channel)
+        timeout = parsed_response.none? ? 5 : 2.5
 
-      socket[channel].bind('new') do |data|
-        last_request = JSON.parse(data)['request']
-
-        options = { headers:  last_request['headers'] }
-
-        options[:body] = last_request['body'] unless last_request['body'].to_s.empty?
-
-        forward_request = HTTParty.send(last_request['request_method'].downcase.to_sym,
-                                        to,
-                                        options)
-
-        puts "#{Time.now}\t#{last_request['request_method']}\t#{forward_request.code}"
+        sleep timeout
       end
-
-      socket.connect
     end
 
-    def forward_request(token, to, id)
-      url = "http://putsreq.com/#{token}/requests/#{id}.json"
-      last_request = HTTParty.get(url)
+    def get(url, timeout = 5)
+      response = HTTParty.get(url)
+      if response.code == 429
+        timeout = [30, timeout + 5].min
+        sleep timeout
+        return get(url, timeout)
+      end
 
-      options = { headers:  last_request['headers'] }
+      response
+    end
 
-      options[:body] = last_request['body'] unless last_request['body'].to_s.empty?
+    def last_request_id(token)
+      url = "#{base_url}#{token}/last.json"
+      response = get(url)
+      response.dig('_id', '$oid')
+    end
 
-      forward_request = HTTParty.send(last_request['request_method'].downcase.to_sym,
-                                      to,
-                                      options)
+    def forward_request(to, request)
+      options = { headers:  request['headers'] }
+      options[:body] = request['body'] unless request['body'].to_s.empty?
 
-      puts "#{Time.now}\t#{last_request['request_method']}\t#{forward_request.code}"
+      forward_request = HTTParty.send(
+        request['request_method'].downcase.to_sym,
+        to,
+        options
+      )
+
+      require 'pry-byebug'; binding.pry
+
+      puts "#{Time.now}\t#{request['request_method']}\t#{forward_request.code}"
+    end
+
+    def forward_request_by_id(token, to, id)
+      url = "#{base_url}/#{token}/requests/#{id}.json"
+      forward_request(to, get(url))
     end
   end
 
@@ -82,7 +98,7 @@ class PutsReqCLI < Thor
     to    = options[:to]
 
     if id = options[:id]
-      forward_request(token, to, id)
+      forward_request_by_id(token, to, id)
     else
       subscribe_and_forward(token, to)
     end
