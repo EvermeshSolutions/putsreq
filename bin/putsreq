@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 require 'thor'
-# require 'pusher-client'
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 
@@ -63,7 +62,7 @@ class PutsReqCLI < Thor
     def last_request_id(token)
       url = "#{base_url}#{token}/last.json"
       response = get(url)
-      response.dig('_id', '$oid')
+      response.parsed_response.dig('_id', '$oid') if response.ok?
     end
 
     def forward_request(to, request)
@@ -76,9 +75,11 @@ class PutsReqCLI < Thor
         options
       )
 
-      require 'pry-byebug'; binding.pry
-
-      puts "#{Time.now}\t#{request['request_method']}\t#{forward_request.code}"
+      puts [
+        Time.zone.now,
+        request['request_method'],
+        forward_request.code
+      ].join("\t")
     end
 
     def forward_request_by_id(token, to, id)
@@ -95,7 +96,7 @@ class PutsReqCLI < Thor
     trap('SIGINT', 'EXIT')
 
     token = parse_bucket_token(options[:token])
-    to    = options[:to]
+    to = options[:to]
 
     if id = options[:id]
       forward_request_by_id(token, to, id)
