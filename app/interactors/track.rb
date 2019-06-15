@@ -8,7 +8,7 @@ class Track
   def call
     return unless enabled?
 
-    tracker.event(category: 'bucket', action: 'record', label: token, value: 1, non_interactive: true)
+    tracker.event(category: 'bucket', action: 'record', label: token, value: 1) # , non_interactive: true)
   rescue => e
     Rollbar.error(e, token: token)
   end
