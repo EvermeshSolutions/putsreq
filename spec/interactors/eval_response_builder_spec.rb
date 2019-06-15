@@ -12,9 +12,9 @@ RSpec.describe EvalResponseBuilder do
         result = described_class.call(request_ctx)
         resp = result.built_response
 
-        expect(resp).to eq('status'  => 500,
+        expect(resp).to eq('status' => 500,
                            'headers' => { 'Content-Type' => 'text/plain' },
-                           'body'    => 'Script Timed Out')
+                           'body' => 'Script Timed Out')
       end
     end
 
@@ -25,9 +25,9 @@ RSpec.describe EvalResponseBuilder do
         result = described_class.call(request_ctx)
         resp = result.built_response
 
-        expect(resp).to eq('status'  => 200,
+        expect(resp).to eq('status' => 200,
                            'headers' => {},
-                           'body'    => 'ok')
+                           'body' => 'ok')
       end
     end
 
@@ -38,9 +38,9 @@ RSpec.describe EvalResponseBuilder do
         result = described_class.call(request_ctx)
         resp = result.built_response
 
-        expect(resp).to eq('status'  => 200,
+        expect(resp).to eq('status' => 200,
                            'headers' => {},
-                           'body'    => 'Hello World')
+                           'body' => 'Hello World')
       end
     end
 
@@ -51,9 +51,9 @@ RSpec.describe EvalResponseBuilder do
         result = described_class.call(request_ctx)
         resp = result.built_response
 
-        expect(resp).to eq('status'  => 500,
+        expect(resp).to eq('status' => 500,
                            'headers' => { 'Content-Type' => 'text/plain' },
-                           'body'    => 'Unexpected identifier at <eval>:1:10')
+                           'body' => 'Unexpected identifier at <eval>:1:10')
       end
     end
   end

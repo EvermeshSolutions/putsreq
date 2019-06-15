@@ -4,8 +4,8 @@ class Bucket
 
   has_many :forks, class_name: 'Bucket'
 
-  belongs_to :fork, class_name: 'Bucket', required: false
-  belongs_to :user, required: false
+  belongs_to :fork, class_name: 'Bucket', optional: true
+  belongs_to :user, optional: true
 
   field :token
   field :name
@@ -45,11 +45,11 @@ class Bucket
     # so we filter these objects by the history_start_at to "clear"
     # db.runCommand({ "convertToCapped": "requests",  size: 25000000 });
     # db.runCommand({ "convertToCapped": "responses", size: 25000000 });
-    update_attribute :history_start_at, Time.now
+    update_attribute :history_start_at, Time.zone.now
   end
 
   def name
-    if (name = read_attribute(:name)).blank?
+    if (name = self[:name]).blank?
       token
     else
       name
@@ -76,9 +76,7 @@ class Bucket
     first_request&.created_at
   end
 
-  def requests_count
-    requests.count
-  end
+  delegate :count, to: :requests, prefix: true
 
   private
 

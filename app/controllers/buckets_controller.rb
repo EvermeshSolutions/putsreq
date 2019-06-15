@@ -22,10 +22,10 @@ class BucketsController < ApplicationController
 
   def fork
     fork = Bucket.create(
-      owner_token:      owner_token,
+      owner_token: owner_token,
       response_builder: bucket.response_builder,
-      name:             "Copy of #{bucket.name}",
-      fork:             bucket
+      name: "Copy of #{bucket.name}",
+      fork: bucket
     )
 
     redirect_to bucket_path(fork.token)
@@ -56,7 +56,7 @@ class BucketsController < ApplicationController
     update_bucket = bucket_params
     update_bucket[:user_id] = current_user.id if user_signed_in?
 
-    bucket.update_attributes update_bucket
+    bucket.update update_bucket
 
     redirect_to bucket_path(bucket.token)
   end

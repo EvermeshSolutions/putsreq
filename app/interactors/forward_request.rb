@@ -9,9 +9,9 @@ class ForwardRequest
     # use the response from the forwarded URL
     context.built_response = forward_to(built_request, forward_url)
   rescue => e
-    context.built_response = { 'status'  => 500,
+    context.built_response = { 'status' => 500,
                                'headers' => { 'Content-Type' => 'text/plain' },
-                               'body'    => e.message }
+                               'body' => e.message }
   end
 
   private
@@ -23,9 +23,9 @@ class ForwardRequest
 
     forwarded_response = HTTParty.send(built_request['request_method'].downcase.to_sym, forward_url, options)
 
-    { 'status'  => forwarded_response.code,
+    { 'status' => forwarded_response.code,
       'headers' => FilterHeaders.call(headers: forwarded_response.headers).headers,
-      'body'    => forwarded_response.body }
+      'body' => forwarded_response.body }
   end
 
   def body

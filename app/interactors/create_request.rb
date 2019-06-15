@@ -5,12 +5,12 @@ class CreateRequest
 
   def call
     context.request = bucket.requests.create(
-      body:           body(rack_request),
+      body: body(rack_request),
       content_length: rack_request.content_length,
       request_method: rack_request.request_method,
-      ip:             rack_request.ip,
-      url:            rack_request.url,
-      headers:        FilterHeaders.call(headers: rack_request.env).headers
+      ip: rack_request.ip,
+      url: rack_request.url,
+      headers: FilterHeaders.call(headers: rack_request.env).headers
     )
 
     context.params = params

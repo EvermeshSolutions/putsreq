@@ -11,8 +11,8 @@ RSpec.describe ForwardRequest do
 
       result = described_class.call(built_request: built_request)
 
-      expect(result.built_response).to include('status'  => 202,
-                                               'body'    => "It's me, Luigi!")
+      expect(result.built_response).to include('status' => 202,
+                                               'body' => "It's me, Luigi!")
     end
 
     context 'when forward raises an error' do
@@ -22,8 +22,8 @@ RSpec.describe ForwardRequest do
         result = described_class.call(built_request: built_request)
         resp = result.built_response
 
-        expect(resp).to include('status'  => 500,
-                                'body'    => 'error error')
+        expect(resp).to include('status' => 500,
+                                'body' => 'error error')
       end
     end
 

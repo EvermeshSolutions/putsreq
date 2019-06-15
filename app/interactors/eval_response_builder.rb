@@ -12,9 +12,9 @@ class EvalResponseBuilder
 
     eval_response(v8_ctx)
   rescue => e
-    context.built_response = { 'status'  => 500,
+    context.built_response = { 'status' => 500,
                                'headers' => { 'Content-Type' => 'text/plain' },
-                               'body'    => e.message }
+                               'body' => e.message }
   end
 
   private
@@ -33,14 +33,14 @@ class EvalResponseBuilder
   end
 
   def initialize_response_builder_attrs(v8_ctx)
-    v8_ctx['response'] = { 'status'  => 200,
+    v8_ctx['response'] = { 'status' => 200,
                            'headers' => {},
-                           'body'    => 'ok' }
+                           'body' => 'ok' }
 
     v8_ctx['request']  = { 'request_method' => request.request_method,
-                           'body'           => request.body,
-                           'params'         => params,
-                           'headers'        => request.headers }
+                           'body' => request.body,
+                           'params' => params,
+                           'headers' => request.headers }
   end
 
   def eval_response_builder(v8_ctx)

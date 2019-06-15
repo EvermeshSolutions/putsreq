@@ -14,7 +14,7 @@ class FilterHeaders
 
   def client_supplied_headers
     headers.to_h.each_with_object({}) do |(key, value), h|
-      next unless value.to_s.present?
+      next if value.to_s.blank?
 
       next unless key.upcase.start_with?(*WHITELIST_HEADERS)
 

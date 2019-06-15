@@ -6,7 +6,7 @@ RSpec.describe CreateRequest do
 
   describe '#call' do
     it 'copies required attributes' do
-      now = Time.now
+      now = Time.zone.now
       allow(Time).to receive(:now) { now }
 
       result = described_class.call(bucket: bucket, rack_request: rack_request)
@@ -14,11 +14,11 @@ RSpec.describe CreateRequest do
 
       expect(req).to be_persisted
       expect(req.attributes).to include(
-        'body'           => rack_request.body.read,
+        'body' => rack_request.body.read,
         'content_length' => rack_request.content_length,
         'request_method' => rack_request.request_method,
-        'ip'             => rack_request.ip,
-        'url'            => rack_request.url
+        'ip' => rack_request.ip,
+        'url' => rack_request.url
       )
 
       expect(result.params).to eq(rack_request.params)
