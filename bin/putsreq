@@ -12,9 +12,9 @@ class PutsReqCLI < Thor
   end
 
   desc 'forward', 'Forward requests from PutsReq to a given URL'
-  method_option :token, desc: 'PutsReq token', required: true
-  method_option :to, desc: 'destination URL', required: true
-  method_option :id, desc: 'ID to forward a single request', required: false
+  method_option :token, desc: 'Token to subscribe', required: true
+  method_option :to, desc: 'URL to forward requests', required: true
+  method_option :id, desc: 'Request ID to forward a single request', required: false
   method_option :local, desc: 'Use localhost as a base URL', required: false, default: false
   def forward
     trap('SIGINT', 'EXIT')
