@@ -3,6 +3,7 @@ class Track
 
   delegate :bucket, :rack_request, to: :context
   delegate :token, to: :bucket
+  delegate :ip, :user_agent, to: :rack_request
 
   def call
     return unless enabled?
@@ -16,9 +17,9 @@ class Track
 
   def global_context
     {
-      user_ip: rack_request.ip,
+      user_ip: ip,
       ssl: true,
-      user_agent: rack_request.user_agent
+      user_agent: user_agent
     }
   end
 
@@ -26,7 +27,7 @@ class Track
     # since there's no identification in the requests,
     # the only way to aggregate requests per "user" is per ip
     # https://stackoverflow.com/a/31854739/464685
-    rack_request.ip
+    ip
   end
 
   def enabled?
