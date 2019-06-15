@@ -38,5 +38,7 @@ module PutsReq
     config.to_prepare do
       Devise::SessionsController.layout 'devise'
     end
+
+    config.middleware.use Rack::Attack
   end
 end
