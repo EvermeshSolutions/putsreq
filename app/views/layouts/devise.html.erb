@@ -14,7 +14,7 @@
       </ul>
       <%= yield %>
       <hr />
-      <strong>Requests Recorded: <%= Rails.cache.fetch('requests_recorded', raw: true) { 0 } %></strong>
+      <strong>Requests Recorded: <%= requests_recorded %></strong>
     </div>
   </body>
 </html>

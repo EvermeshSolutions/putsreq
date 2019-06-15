@@ -11,4 +11,8 @@ module ApplicationHelper
   def show_no_requests_found(_bucket)
     content_tag(:p, 'No requests found.')
   end
+
+  def requests_recorded
+    number_with_delimiter(Rails.cache.fetch('requests_recorded', raw: true) { 0 })
+  end
 end
