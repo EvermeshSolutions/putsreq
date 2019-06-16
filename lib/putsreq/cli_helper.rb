@@ -67,7 +67,7 @@ module PutsReq
     private
 
     def find_request(id)
-      url = "#{base_url}/#{token}/requests/#{id}.json"
+      url = "#{base_url}#{token}/requests/#{id}.json"
       response = get(url)
       response.parsed_response if response.ok?
     end
