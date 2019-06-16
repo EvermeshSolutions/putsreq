@@ -13,6 +13,31 @@ module PutsReq
     subject { described_class.new(token, to, local) }
 
     describe '#subscribe_and_forward' do
+      it 'subscribes and forwards' do
+        request = {
+          '_id' => {
+            '$oid' => id
+          },
+          'headers' => headers,
+          'body' => body,
+          'request_method' => 'get'
+        }
+
+        expect(HTTParty).to receive(:get).with("https://putsreq.com/#{token}/last.json").and_return(
+          double(code: 200, ok?: true, parsed_response: request)
+        )
+        expect(HTTParty).to receive(:get).with("https://putsreq.com/#{token}/requests.json?last_request_id=#{id}").and_return(
+          double(code: 200, ok?: true, parsed_response: [request])
+        )
+        expect(HTTParty).to receive(:get).with(to, headers: headers, body: body).and_return(OpenStruct.new(code: 200))
+
+        expect(HTTParty).to receive(:get).with("https://putsreq.com/#{token}/requests.json?last_request_id=#{id}").and_return(
+          double(code: 200, ok?: false)
+        )
+
+        subject.subscribe_and_forward
+      end
+
       context 'when not found' do
         it 'exits' do
           request = {
