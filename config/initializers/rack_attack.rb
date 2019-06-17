@@ -20,5 +20,5 @@ Rack::Attack.throttled_response = lambda do |env|
     'RateLimit-Reset' => (now + (match_data[:period] - now % match_data[:period])).to_s
   }
 
-  [429, headers, ['Your are requests are being temporally throttled. Please contact for increasing limits.\n']]
+  [429, headers, ['Your requests are being temporally throttled. Please contact for increasing your limits.\n']]
 end
