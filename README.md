@@ -216,11 +216,6 @@ docker volume create --name=putsreq_mongodb
 
 The rationale for creating the external volume is https://stackoverflow.com/questions/53870416/data-does-not-persist-to-host-volume-with-docker-compose-yml-for-mongodb. Otherwise, data stored in MongoDB might get lost as already observed by @ddavtian within #51.
 
-#### Ready-made Docker image on Docker Hub
-Additionally, the Docker image on https://hub.docker.com/r/daqzilla/putsreq has been amended using the patch [putsreq-production.patch.txt](https://github.com/phstc/putsreq/files/4554757/putsreq-production.patch.txt).
-
-While we recognize it is not the most performant way to compile and serve assets like that on a production instance (precompiling and serving them from a webserver in a static manner should be preferred), it perfectly fits our bill.
-
 #### Reverse-proxy configuration for Nginx
 Last but not least, this Nginx snippet has been used for configuring a HTTP reverse proxy to the PutsReq instance:
 ```
@@ -245,6 +240,14 @@ server {
 
 }
 ```
+
+#### Ready-made Docker image on Docker Hub
+The Docker image on https://hub.docker.com/r/daqzilla/putsreq has been amended using the patch [putsreq-production.patch.txt](https://github.com/phstc/putsreq/files/4554757/putsreq-production.patch.txt).
+
+It is not the most performant way to compile and serve assets like that on a production instance, precompiling and serving them from a webserver in a static manner should be preferred.
+
+#### Outlook
+Improving this quick&dirty production-configuration would be nice, pull requests are welcome. In order to make that possible, a) the image on Docker Hub should be republished without the amendments but with precompiled assets and b) the Nginx snippet should be adjusted to serve the assets statically.
 
 
 ### License
