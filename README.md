@@ -164,6 +164,89 @@ db.runCommand({ convertToCapped: 'requests', size: 15000000 })
 db.runCommand({ convertToCapped: 'responses', size: 15000000 })
 ```
 
+### Production setup through Docker
+
+This walks you through a quick guideline in order to setup PutsReq on your own server through Docker and Docker Compose. Please read this section carefully and know what you are doing in order not to lose any data.
+
+#### Configuration
+The `docker-compose.yml` file.
+```
+version: '3.6'
+services:
+  db:
+    image: mongo:3.6.17
+    tty: true
+    stdin_open: true
+    volumes:
+      - data:/data/db
+  redis:
+    image: redis:alpine
+  app:
+    image: daqzilla/putsreq
+    tty: true
+    stdin_open: true
+    command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails server -p 3000 -b '0.0.0.0'"
+    ports:
+      - '5050:3000'
+    env_file:
+      - .env.docker
+    depends_on:
+      - db
+      - redis
+volumes:
+  data:
+    external:
+      name: putsreq_mongodb
+```
+
+The `.env.docker` file.
+```
+RAILS_ENV=production
+MONGOLAB_URI=mongodb://db
+REDIS_URL=redis://redis
+DEVISE_SECRET_KEY=123
+SECRET_TOKEN=123
+```
+
+#### External Docker volume FTW
+The external volume referenced within the `docker-compose.yml` file has been created by invoking:
+```
+docker volume create --name=putsreq_mongodb
+```
+
+The rationale for creating the external volume is https://stackoverflow.com/questions/53870416/data-does-not-persist-to-host-volume-with-docker-compose-yml-for-mongodb. Otherwise, data stored in MongoDB might get lost as already observed by @ddavtian within #51.
+
+#### Ready-made Docker image on Docker Hub
+Additionally, the Docker image on https://hub.docker.com/r/daqzilla/putsreq has been amended using the patch [putsreq-production.patch.txt](https://github.com/phstc/putsreq/files/4554757/putsreq-production.patch.txt).
+
+While we recognize it is not the most performant way to compile and serve assets like that on a production instance (precompiling and serving them from a webserver in a static manner should be preferred), it perfectly fits our bill.
+
+#### Reverse-proxy configuration for Nginx
+Last but not least, this Nginx snippet has been used for configuring a HTTP reverse proxy to the PutsReq instance:
+```
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+
+    server_name putsreq.example.org;
+
+    #include snippets/snakeoil.conf;
+    include snippets/ssl/putsreq.example.org;
+
+    proxy_buffering off;
+
+    location / {
+        proxy_set_header        Host               $http_host;
+        proxy_set_header        X-Real-IP          $remote_addr;
+        proxy_set_header        X-Forwarded-For    $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto  $scheme;
+        proxy_pass              http://localhost:5050/;
+    }
+
+}
+```
+
+
 ### License
 
 Please see [LICENSE](https://github.com/phstc/putsreq/blob/master/LICENSE) for licensing details.
