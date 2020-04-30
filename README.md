@@ -247,8 +247,27 @@ The Docker image on https://hub.docker.com/r/daqzilla/putsreq has been amended u
 It is not the most performant way to compile and serve assets like that on a production instance, precompiling and serving them from a webserver in a static manner should be preferred.
 
 #### Outlook
-Improving this quick&dirty production-configuration would be nice, pull requests are welcome. In order to make that possible, a) the image on Docker Hub should be republished without the amendments but with precompiled assets and b) the Nginx snippet should be adjusted to serve the assets statically.
+Improving this quick & dirty production-configuration would be nice, pull requests are welcome. In order to make that possible,
+a) the image on Docker Hub should be republished without the amendments but with precompiled assets and
+b) the Nginx snippet should be adjusted to serve the assets in a static manner.
 
+The Docker images published to https://hub.docker.com/u/daqzilla have been built like that:
+```
+# Acquire sources
+git clone https://github.com/phstc/putsreq
+cd putsreq
+
+# Apply patch
+wget https://github.com/phstc/putsreq/files/4554757/putsreq-production.patch.txt
+patch -p1 < putsreq-production.patch.txt
+
+# Build
+docker build --tag daqzilla/putsreq:latest .
+
+# Upload
+docker login
+docker push daqzilla/putsreq
+```
 
 ### License
 
