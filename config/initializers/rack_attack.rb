@@ -8,8 +8,8 @@ class PutsReqThrottle
 
     private
 
-    DEFAULT_LIMIT = 45
-    DEFAULT_PERIOD = 60
+    DEFAULT_LIMIT = ENV.fetch('THROTTLE_LIMIT', 45)
+    DEFAULT_PERIOD = ENV.fetch('THROTTLE_PERIOD', 60)
 
     def requests_count_path?(path)
       path.end_with?('/requests_count')
