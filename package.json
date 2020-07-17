@@ -7,7 +7,7 @@
     "babel-preset-react": "^6.24.1",
     "coffeescript": "1.12.7",
     "cross-fetch": "~>1.1.1",
-    "lodash": "~> 4.17.13",
+    "lodash": "~> 4.17.19",
     "prop-types": "^15.7.2",
     "ramda-fantasy": "~>0.8.0",
     "react": "^16.8.6",
